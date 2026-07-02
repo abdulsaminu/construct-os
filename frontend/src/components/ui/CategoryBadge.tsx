@@ -1,0 +1,16 @@
+import React from 'react';
+
+interface Props {
+  score: number;
+}
+
+export const CategoryBadge: React.FC<Props> = ({ score }) => {
+  let text = 'Healthy';
+  let styles = 'bg-success/20 text-success';
+  
+  if (score > 80) { text = 'Critical'; styles = 'bg-danger/20 text-danger'; }
+  else if (score > 60) { text = 'Warning'; styles = 'bg-warning/20 text-warning'; }
+  else if (score > 30) { text = 'Watch'; styles = 'bg-primary/20 text-primary'; }
+
+  return <span className={`px-3 py-1 rounded-lg text-xs font-bold ${styles}`}>{text}</span>;
+};

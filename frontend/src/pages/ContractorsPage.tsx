@@ -1,0 +1,58 @@
+import React, { useEffect, useState } from 'react';
+import { fetcher } from '../lib/api';
+import { Contractor } from '../types';
+import { PageHeader } from '../components/layout/PageHeader';
+import { RegisterDrawer } from '../components/contractors/RegisterDrawer';
+import { ContractorTable } from '../components/contractors/ContractorTable';
+import { ContractorDetailDrawer } from '../components/contractors/ContractorDetailDrawer';
+import { EmptyState } from '../components/ui/EmptyState';
+import { TableSkeleton } from '../components/ui/Skeleton';
+import { UserPlus } from 'lucide-react';
+
+export const ContractorsPage = () => {
+  const [contractors, setContractors] = useState<Contractor[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [selectedContractor, setSelectedContractor] = useState<Contractor | null>(null);
+
+  const loadData = async () => {
+    setIsLoading(true);
+    try {
+      setContractors(await fetcher<Contractor[]>('/contractors'));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => { loadData(); }, []);
+
+  return (
+    <div>
+      <PageHeader 
+        title="Contractors" 
+        action={
+          <button onClick={() => setIsRegisterOpen(true)} className="bg-primary hover:bg-primary-hover text-white px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 transition-colors">
+            <UserPlus size={16} /> Register Contractor
+          </button>
+        }
+      />
+
+      {isLoading ? (
+        <div className="bg-surface rounded-2xl border border-border-main p-6">
+          <TableSkeleton rows={5} />
+        </div>
+      ) : contractors.length === 0 ? (
+        <EmptyState icon={UserPlus} title="No Contractors" description="Register your first contractor to assign payouts." />
+      ) : (
+        <div className="bg-surface rounded-2xl border border-border-main p-6">
+          <ContractorTable contractors={contractors} onSelect={setSelectedContractor} />
+        </div>
+      )}
+
+      <RegisterDrawer isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} onSuccess={loadData} />
+      <ContractorDetailDrawer isOpen={!!selectedContractor} contractor={selectedContractor} onClose={() => setSelectedContractor(null)} />
+    </div>
+  );
+};
