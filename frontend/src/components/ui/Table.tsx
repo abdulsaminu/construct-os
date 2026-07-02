@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 interface Column {
   key: string;
@@ -13,18 +13,22 @@ interface Props {
   emptyMessage?: string;
 }
 
-export const Table: React.FC<Props> = ({ columns, data, emptyMessage = "No data available." }) => {
+export const Table = memo<Props>(({ columns, data, emptyMessage = "No data available." }) => {
   if (data.length === 0) {
     return <p className="text-sm text-text-dim text-center py-8">{emptyMessage}</p>;
   }
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-left">
+      <table className="w-full text-left" role="table">
         <thead>
-          <tr className="border-b border-border-main text-text-dim text-xs uppercase tracking-wider">
+          <tr className="border-b border-border-main text-text-dim text-caption uppercase tracking-wider">
             {columns.map((col) => (
-              <th key={col.key} className={`pb-3 font-medium ${col.align === 'right' ? 'text-right' : ''}`}>
+              <th
+                key={col.key}
+                className={`pb-3 font-medium ${col.align === 'right' ? 'text-right' : ''}`}
+                scope="col"
+              >
                 {col.header}
               </th>
             ))}
@@ -32,9 +36,16 @@ export const Table: React.FC<Props> = ({ columns, data, emptyMessage = "No data 
         </thead>
         <tbody className="divide-y divide-border-main/50">
           {data.map((row, idx) => (
-            <tr key={idx} className="animate-in fade-in duration-200">
+            <tr
+              key={idx}
+              className="table-row hover:bg-elevated/50 transition-colors duration-fast ease-out"
+              style={{ animationDelay: `${idx * 30}ms` }}
+            >
               {columns.map((col) => (
-                <td key={col.key} className={`py-3 text-sm ${col.align === 'right' ? 'text-right' : 'text-text-main'}`}>
+                <td
+                  key={col.key}
+                  className={`py-3 text-small ${col.align === 'right' ? 'text-right tabular-nums' : 'text-text-main'}`}
+                >
                   {col.render(row)}
                 </td>
               ))}
@@ -44,4 +55,4 @@ export const Table: React.FC<Props> = ({ columns, data, emptyMessage = "No data 
       </table>
     </div>
   );
-};
+});

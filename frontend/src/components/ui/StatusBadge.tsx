@@ -13,7 +13,7 @@ export const StatusBadge: React.FC<Props> = ({ status }) => {
   };
 
   return (
-    <span className={`px-3 py-1 rounded-full text-xs font-bold ${styles[status] || 'bg-white/10 text-text-dim'}`}>
+    <span className={`px-3 py-1 rounded-badge text-xs font-bold ${styles[status] || 'bg-white/10 text-text-dim'}`}>
       {status.replace('_', ' ').toUpperCase()}
     </span>
   );

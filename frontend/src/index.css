@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== Base ===== */
 body {
   margin: 0;
   padding: 0;
@@ -13,7 +14,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Custom Scrollbar */
+/* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -27,4 +28,156 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #4B5563;
+}
+
+/* ===== Focus — WCAG AA, Blue 2px ===== */
+*:focus-visible {
+  outline: 2px solid #356DFF;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove default focus outline — focus-visible handles it */
+*:focus {
+  outline: none;
+}
+
+/* ===== Tabular Numerics for Financial Displays ===== */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Retain instant feedback for interactive states */
+  [data-interactive] {
+    transition: none !important;
+  }
+}
+
+/* ===== Component Layer ===== */
+@layer components {
+  /* --- Skeleton Shimmer --- */
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      #1A2438 25%,
+      #243049 50%,
+      #1A2438 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  /* --- Card Interaction --- */
+  .card-interactive {
+    @apply transition-all duration-normal ease-out;
+  }
+  .card-interactive:hover {
+    @apply -translate-y-0.5 shadow-level-2 border-white/10;
+  }
+  .card-interactive:active {
+    @apply scale-[0.99];
+  }
+
+  /* --- Button Base --- */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white
+           rounded-btn font-semibold text-sm
+           hover:bg-primary-hover hover:shadow-level-2
+           active:scale-[0.98]
+           disabled:opacity-40 disabled:pointer-events-none
+           transition-all duration-fast ease-out
+           focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-transparent text-text-muted
+           rounded-btn font-semibold text-sm
+           hover:bg-white/5 hover:text-text-main
+           active:scale-[0.98]
+           disabled:opacity-40 disabled:pointer-events-none
+           transition-all duration-fast ease-out;
+  }
+
+  /* --- Search Input --- */
+  .search-input {
+    @apply transition-all duration-normal ease-out;
+  }
+  .search-input:focus-within {
+    @apply border-primary shadow-[0_0_0_3px_rgba(53,109,255,0.25)];
+  }
+  .search-input:focus-within input::placeholder {
+    @apply opacity-0 transition-opacity duration-fast;
+  }
+
+  /* --- Dropdown --- */
+  .dropdown-panel {
+    @apply animate-scale-in origin-top;
+  }
+
+  /* --- Dialog Backdrop --- */
+  .dialog-backdrop {
+    @apply bg-black/60 backdrop-blur-sm;
+    animation: fade-in 200ms ease-out;
+  }
+
+  .dialog-content {
+    @apply animate-scale-in;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* --- Drawer --- */
+  .drawer-panel {
+    @apply animate-slide-in-right;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* --- Toast Container --- */
+  .toast-enter {
+    @apply animate-toast-in;
+  }
+  .toast-exit {
+    @apply animate-toast-out;
+  }
+
+  /* --- Progress Bar (animate once) --- */
+  .progress-bar-fill {
+    animation: progress-fill 400ms ease-out forwards;
+  }
+
+  /* --- Page Transition --- */
+  .page-enter {
+    animation: fade-in 200ms ease-out;
+  }
+
+  /* --- Accordion Content --- */
+  .accordion-content {
+    @apply overflow-hidden transition-all duration-normal ease-out;
+  }
+
+  /* --- Table Row Fade --- */
+  .table-row {
+    animation: fade-in 200ms ease-out;
+  }
+}
+
+/* ===== Responsive: Mobile Sidebar as Bottom Sheet ===== */
+@media (max-width: 639px) {
+  .sidebar-mobile-drawer {
+    @apply fixed inset-x-0 bottom-0 top-auto h-auto max-h-[70vh]
+           rounded-t-dialog rounded-b-none border-t border-border-main border-l-0 border-r-0
+           z-50;
+    animation: fade-in 200ms ease-out;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }

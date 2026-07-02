@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const Badge: React.FC<Props> = ({ text, color = 'bg-white/10 text-text-dim' }) => (
-  <span className={`px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${color}`}>
+  <span className={`px-3 py-1 rounded-badge text-xs font-bold whitespace-nowrap ${color}`}>
     {text}
   </span>
 );

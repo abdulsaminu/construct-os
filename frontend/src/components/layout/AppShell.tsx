@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
+import { ToastProvider } from '../ui/Toast';
 
-// Define Page Meta Data centrally to feed TopBar
 export const PAGE_META: Record<string, { title: string; description: string }> = {
   'dashboard': { title: 'Dashboard', description: 'System overview and key metrics' },
   'treasury': { title: 'Treasury', description: 'Capital pool management and deposits' },
@@ -28,26 +28,31 @@ export const AppShell: React.FC<Props> = ({ activePage, onNavigate, children }) 
   const meta = PAGE_META[activePage] || PAGE_META['dashboard'];
 
   return (
-    <div className="min-h-screen bg-bg flex">
-      <Sidebar
-        activePage={activePage}
-        onNavigate={onNavigate}
-        collapsed={collapsed}
-        onToggleCollapse={() => setCollapsed(!collapsed)}
-        mobileOpen={mobileOpen}
-        onCloseMobile={() => setMobileOpen(false)}
-      />
-
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${collapsed ? 'lg:ml-20' : 'lg:ml-[280px]'}`}>
-        <TopBar
-          title={meta.title}
-          description={meta.description}
-          onMenuClick={() => setMobileOpen(true)}
+    <ToastProvider>
+      <div className="min-h-screen bg-bg flex">
+        <Sidebar
+          activePage={activePage}
+          onNavigate={onNavigate}
+          collapsed={collapsed}
+          onToggleCollapse={() => setCollapsed(!collapsed)}
+          mobileOpen={mobileOpen}
+          onCloseMobile={() => setMobileOpen(false)}
         />
-        <main className="flex-1 p-6 overflow-y-auto">
-          {children}
-        </main>
+
+        <div className={`flex-1 flex flex-col transition-[margin] duration-complex transition-timing-panel ${collapsed ? 'lg:ml-20' : 'lg:ml-[280px]'}`}>
+          <TopBar
+            title={meta.title}
+            description={meta.description}
+            onMenuClick={() => setMobileOpen(true)}
+          />
+          <main className="flex-1 p-6 overflow-y-auto" role="main">
+            {/* Page transition: fade + 8px upward */}
+            <div key={activePage} className="page-enter">
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </ToastProvider>
   );
 };

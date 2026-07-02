@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const Panel: React.FC<Props> = ({ children, className = '' }) => (
-  <div className={`bg-surface rounded-2xl border border-border-main p-6 shadow-soft ${className}`}>
+  <div className={`bg-surface rounded-card border border-border-main p-6 shadow-level-1 card-interactive ${className}`}>
     {children}
   </div>
 );
