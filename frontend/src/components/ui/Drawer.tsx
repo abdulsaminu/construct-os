@@ -55,10 +55,10 @@ export const Drawer: React.FC<Props> = ({ isOpen, onClose, title, children }) =>
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="drawer-panel relative w-full max-w-md bg-surface border-l border-border-main h-full overflow-y-auto shadow-level-3 rounded-dialog"
+        className="drawer-panel relative w-full max-w-md bg-surface border-l border-border-main h-full overflow-y-auto shadow-floating rounded-dialog"
       >
         <div className="sticky top-0 bg-surface z-10 p-6 border-b border-border-main flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-text-main">{title}</h2>
+          <h2 className="text-title font-semibold text-text-main">{title}</h2>
           <button
             onClick={onClose}
             className="p-2 rounded-btn hover:bg-elevated text-text-muted transition-colors"

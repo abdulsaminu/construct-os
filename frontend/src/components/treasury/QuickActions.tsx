@@ -16,22 +16,22 @@ export const QuickActions: React.FC<Props> = ({ onNavigate }) => {
   ];
 
   return (
-    <Panel className="col-span-4">
+    <Panel className="lg:col-span-4 col-span-12">
       <SectionHeader title="Quick Actions" />
       <div className="space-y-3 mt-6">
         {actions.map(action => (
           <button
             key={action.id}
             onClick={() => onNavigate(action.target)}
-            className="w-full flex items-center justify-between p-4 bg-elevated rounded-xl border border-border-main hover:-translate-y-0.5 hover:border-border-main transition-all duration-150 group text-left"
+            className="w-full flex items-center justify-between p-4 bg-elevated rounded-12 border border-border-main  hover:border-border-main transition-all duration-fast group text-left"
           >
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-white/5 text-text-muted group-hover:text-primary transition-colors">
-                <action.icon size={18} />
+              <div className="p-2 rounded-8 bg-white/5 text-text-muted group-hover:text-primary transition-colors">
+                <action.icon size={20} />
               </div>
               <div>
-                <p className="text-sm font-medium text-text-main">{action.title}</p>
-                <p className="text-xs text-text-dim">{action.desc}</p>
+                <p className="text-small font-medium text-text-main">{action.title}</p>
+                <p className="text-caption text-text-dim">{action.desc}</p>
               </div>
             </div>
             <ChevronRight size={16} className="text-text-dim group-hover:text-text-muted transition-colors" />

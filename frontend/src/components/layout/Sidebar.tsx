@@ -55,12 +55,12 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
         className={`
           fixed top-0 left-0 h-full bg-surface border-r border-border-main z-50 flex flex-col
           /* Smooth width transition — panel curve for large elements */
-          transition-[width] duration-complex transition-timing-panel
+          transition-[width] duration-slow transition-timing-panel
           /* Label fade uses shorter duration */
           ${collapsed ? 'w-20' : 'w-[280px]'}
           /* Mobile: off-canvas by default, on-canvas when open. Desktop: always visible */
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          transition-transform duration-complex transition-timing-panel
+          transition-transform duration-slow transition-timing-panel
         `}
         role="navigation"
         aria-label="Main navigation"
@@ -68,7 +68,7 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
         {/* Brand */}
         <div className="h-16 flex items-center px-4 border-b border-border-main shrink-0">
           <div className={`flex items-center gap-3 transition-all duration-normal ease-out ${collapsed ? 'justify-center w-full' : ''}`}>
-            <div className="w-8 h-8 bg-primary rounded-btn flex items-center justify-center text-white font-bold text-sm shrink-0">
+            <div className="w-8 h-8 bg-primary rounded-btn flex items-center justify-center text-white font-bold text-small shrink-0">
               C
             </div>
             {!collapsed && (

@@ -16,11 +16,11 @@ export const ContractorDetailDrawer: React.FC<Props> = ({ contractor, isOpen, on
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title="Contractor Details">
       <div className="space-y-6">
-        <div className="flex items-center gap-4 p-4 bg-elevated rounded-xl">
-          <div className="p-3 bg-surface rounded-xl text-primary"><User size={24} /></div>
+        <div className="flex items-center gap-4 p-4 bg-elevated rounded-12">
+          <div className="p-3 bg-surface rounded-12 text-primary"><User size={24} /></div>
           <div>
-            <h3 className="text-lg font-bold text-text-main">{contractor.name}</h3>
-            <p className="text-sm text-success font-medium">Active</p>
+            <h3 className="text-body-lg font-bold text-text-main">{contractor.name}</h3>
+            <p className="text-small text-success font-medium">Active</p>
           </div>
         </div>
 
@@ -30,8 +30,8 @@ export const ContractorDetailDrawer: React.FC<Props> = ({ contractor, isOpen, on
         </div>
 
         <div className="border-t border-border-main pt-6">
-          <h4 className="text-sm font-semibold text-text-main mb-4 uppercase tracking-wide">Assigned Projects</h4>
-          <p className="text-sm text-text-dim bg-elevated p-4 rounded-xl text-center">Backend project mapping required.</p>
+          <h4 className="text-small font-semibold text-text-main mb-4 uppercase tracking-wide">Assigned Projects</h4>
+          <p className="text-small text-text-dim bg-elevated p-4 rounded-12 text-center">Backend project mapping required.</p>
         </div>
       </div>
     </Drawer>
@@ -40,11 +40,11 @@ export const ContractorDetailDrawer: React.FC<Props> = ({ contractor, isOpen, on
 
 const DetailRow = ({ icon, label, value, isMono, copyable }: any) => (
   <div className="flex items-start gap-3">
-    <div className="text-text-dim mt-0.5">{icon}</div>
+    <div className="text-text-dim mt-1">{icon}</div>
     <div className="flex-1">
-      <p className="text-xs text-text-dim uppercase tracking-wide">{label}</p>
+      <p className="text-caption text-text-dim uppercase tracking-wide">{label}</p>
       <div className="flex items-center gap-2 mt-1">
-        <p className={`text-sm text-text-main break-all ${isMono ? 'font-mono' : ''}`}>{value}</p>
+        <p className={`text-small text-text-main break-all ${isMono ? 'font-mono' : ''}`}>{value}</p>
         {copyable && <CopyButton text={value} />}
       </div>
     </div>

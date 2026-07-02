@@ -30,16 +30,26 @@ body {
   background: #4B5563;
 }
 
-/* ===== Focus — WCAG AA, Blue 2px ===== */
+/* ===== Focus — WCAG AA ===== */
+*:focus {
+  outline: none;
+}
 *:focus-visible {
   outline: 2px solid #356DFF;
   outline-offset: 2px;
-  border-radius: 4px;
 }
 
-/* Remove default focus outline — focus-visible handles it */
-*:focus {
-  outline: none;
+/* ===== Screen Reader Only ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* ===== Tabular Numerics for Financial Displays ===== */
@@ -57,8 +67,6 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-
-  /* Retain instant feedback for interactive states */
   [data-interactive] {
     transition: none !important;
   }
@@ -78,31 +86,32 @@ body {
     animation: shimmer 2s ease-in-out infinite;
   }
 
-  /* --- Card Interaction --- */
+  /* --- Card Interaction (shadow-based elevation, no translate) --- */
   .card-interactive {
-    @apply transition-all duration-normal ease-out;
+    @apply transition-shadow duration-normal ease-out;
   }
   .card-interactive:hover {
-    @apply -translate-y-0.5 shadow-level-2 border-white/10;
+    @apply shadow-raised;
   }
   .card-interactive:active {
-    @apply scale-[0.99];
+    @apply shadow-surface;
   }
 
-  /* --- Button Base --- */
+  /* --- Button Primary --- */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white
-           rounded-btn font-semibold text-sm
-           hover:bg-primary-hover hover:shadow-level-2
+    @apply inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-white
+           rounded-btn font-semibold text-small
+           hover:bg-primary-hover hover:shadow-raised
            active:scale-[0.98]
            disabled:opacity-40 disabled:pointer-events-none
            transition-all duration-fast ease-out
            focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
   }
 
+  /* --- Button Ghost --- */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-transparent text-text-muted
-           rounded-btn font-semibold text-sm
+    @apply inline-flex items-center justify-center gap-2 px-4 py-3 bg-transparent text-text-muted
+           rounded-btn font-semibold text-small
            hover:bg-white/5 hover:text-text-main
            active:scale-[0.98]
            disabled:opacity-40 disabled:pointer-events-none
@@ -120,17 +129,26 @@ body {
     @apply opacity-0 transition-opacity duration-fast;
   }
 
+  /* --- Form Input --- */
+  .form-input {
+    @apply w-full bg-elevated border border-border-main text-text-main
+           rounded-input px-3 py-3 text-small
+           placeholder:text-text-dim
+           focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(53,109,255,0.25)]
+           transition-all duration-fast ease-out
+           disabled:opacity-40 disabled:pointer-events-none;
+  }
+
   /* --- Dropdown --- */
   .dropdown-panel {
     @apply animate-scale-in origin-top;
   }
 
-  /* --- Dialog Backdrop --- */
+  /* --- Dialog --- */
   .dialog-backdrop {
     @apply bg-black/60 backdrop-blur-sm;
-    animation: fade-in 200ms ease-out;
+    animation: fade-in 250ms ease-out;
   }
-
   .dialog-content {
     @apply animate-scale-in;
     animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -142,7 +160,7 @@ body {
     animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  /* --- Toast Container --- */
+  /* --- Toast --- */
   .toast-enter {
     @apply animate-toast-in;
   }
@@ -150,14 +168,14 @@ body {
     @apply animate-toast-out;
   }
 
-  /* --- Progress Bar (animate once) --- */
+  /* --- Progress Bar --- */
   .progress-bar-fill {
-    animation: progress-fill 400ms ease-out forwards;
+    animation: progress-fill 350ms ease-out forwards;
   }
 
   /* --- Page Transition --- */
   .page-enter {
-    animation: fade-in 200ms ease-out;
+    animation: fade-in 250ms ease-out;
   }
 
   /* --- Accordion Content --- */
@@ -167,7 +185,7 @@ body {
 
   /* --- Table Row Fade --- */
   .table-row {
-    animation: fade-in 200ms ease-out;
+    animation: fade-in 250ms ease-out;
   }
 }
 
@@ -175,9 +193,9 @@ body {
 @media (max-width: 639px) {
   .sidebar-mobile-drawer {
     @apply fixed inset-x-0 bottom-0 top-auto h-auto max-h-[70vh]
-           rounded-t-dialog rounded-b-none border-t border-border-main border-l-0 border-r-0
+           rounded-t-16 rounded-b-none border-t border-border-main border-l-0 border-r-0
            z-50;
-    animation: fade-in 200ms ease-out;
+    animation: fade-in 250ms ease-out;
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }

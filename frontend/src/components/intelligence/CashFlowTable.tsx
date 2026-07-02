@@ -16,28 +16,28 @@ interface Props {
 }
 
 export const CashFlowTable: React.FC<Props> = ({ forecast, isLoading }) => {
-  if (isLoading || !forecast) return <Panel className="col-span-8"><div className="space-y-3">{[1,2,3,4,5].map(i=><div key={i} className="bg-elevated rounded-xl h-12 animate-pulse" />)}</div></Panel>;
+  if (isLoading || !forecast) return <Panel className="lg:col-span-8 col-span-12"><div className="space-y-3">{[1,2,3,4,5].map(i=><div key={i} className="bg-elevated rounded-12 h-12 animate-pulse" />)}</div></Panel>;
 
   return (
-    <Panel className="col-span-8">
+    <Panel className="lg:col-span-8 col-span-12">
       <SectionHeader title="Financial Forecasts" />
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <thead>
-            <tr className="border-b border-border-main text-text-dim text-xs uppercase tracking-wider">
-              <th className="pb-3 font-medium pr-4">Day</th>
-              <th className="pb-3 font-medium px-4 text-right">Available</th>
-              <th className="pb-3 font-medium px-4 text-right">Locked</th>
-              <th className="pb-3 font-medium pl-4 text-right">Settled</th>
+            <tr className="border-b border-border-main text-text-dim text-caption uppercase tracking-wider">
+              <th scope="col" className="pb-3 font-medium pr-4">Day</th>
+              <th scope="col" className="pb-3 font-medium px-4 text-right">Available</th>
+              <th scope="col" className="pb-3 font-medium px-4 text-right">Locked</th>
+              <th scope="col" className="pb-3 font-medium pl-4 text-right">Settled</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border-main/50">
             {forecast.days.map((day, i) => (
               <tr key={day} className="hover:bg-elevated/50 transition-colors">
-                <td className="py-3 pr-4 text-sm font-medium text-text-main">{day}</td>
-                <td className="py-3 px-4 text-sm font-semibold text-success text-right">{money(forecast.available[i])}</td>
-                <td className="py-3 px-4 text-sm font-semibold text-warning text-right">{money(forecast.locked[i])}</td>
-                <td className="py-3 pl-4 text-sm font-semibold text-primary text-right">{money(forecast.settled[i])}</td>
+                <td className="py-3 pr-4 text-small font-medium text-text-main">{day}</td>
+                <td className="py-3 px-4 text-small font-semibold text-success text-right">{money(forecast.available[i])}</td>
+                <td className="py-3 px-4 text-small font-semibold text-warning text-right">{money(forecast.locked[i])}</td>
+                <td className="py-3 pl-4 text-small font-semibold text-primary text-right">{money(forecast.settled[i])}</td>
               </tr>
             ))}
           </tbody>

@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const Skeleton: React.FC<Props> = ({ className = '' }) => (
-  <div className={`skeleton-shimmer rounded-lg ${className}`} />
+  <div className={`skeleton-shimmer rounded-8 ${className}`} />
 );
 
 export const CardSkeleton = () => (

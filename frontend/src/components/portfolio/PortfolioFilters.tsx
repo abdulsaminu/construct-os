@@ -17,13 +17,13 @@ export const PortfolioFilters: React.FC<Props> = ({ search, onSearchChange, stat
         value={search}
         onChange={e => onSearchChange(e.target.value)}
         placeholder="Search projects..."
-        className="w-full bg-elevated border border-border-main rounded-xl pl-10 pr-4 py-2.5 text-sm text-text-main outline-none focus:border-primary transition-colors"
+        className="w-full bg-elevated border border-border-main rounded-12 pl-10 pr-4 py-3 text-small text-text-main outline-none focus:border-primary transition-colors"
       />
     </div>
     <select
       value={statusFilter}
       onChange={e => onStatusChange(e.target.value)}
-      className="bg-elevated border border-border-main rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-primary appearance-none cursor-pointer"
+      className="bg-elevated border border-border-main rounded-12 px-4 py-3 text-small text-text-main outline-none focus:border-primary appearance-none cursor-pointer"
       aria-label="Filter by status"
     >
       <option value="all">All Status</option>

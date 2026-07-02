@@ -20,10 +20,10 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="bg-surface rounded-2xl border border-border-main p-6 h-64 animate-pulse" />
+        <div className="bg-surface rounded-card border border-border-main p-6 h-64 animate-pulse" />
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-surface rounded-2xl border border-border-main p-6 h-56 animate-pulse" />
+            <div key={i} className="bg-surface rounded-card border border-border-main p-6 h-56 animate-pulse" />
           ))}
         </div>
       </div>
@@ -34,15 +34,15 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
     return (
       <Panel>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <AlertTriangle size={48} className="text-warning mb-4" />
-          <h4 className="text-lg font-semibold text-text-main mb-2">Allocation Unavailable</h4>
-          <p className="text-sm text-text-muted mb-6">{error}</p>
+          <AlertTriangle size={32} className="text-warning mb-4" />
+          <h4 className="text-body-lg font-semibold text-text-main mb-2">Allocation Unavailable</h4>
+          <p className="text-small text-text-muted mb-6">{error}</p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-12 font-semibold hover:bg-primary-hover transition-colors text-small"
             >
-              <RefreshCw size={14} />
+              <RefreshCw size={16} />
               Retry
             </button>
           )}
@@ -63,7 +63,7 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
           title="Capital Allocation Priority"
           action={
             economy && (
-              <span className="text-sm text-text-dim">
+              <span className="text-small text-text-dim">
                 Available: <span className="text-success font-semibold">{money(economy.availableCapital)}</span>
               </span>
             )
@@ -75,7 +75,7 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
           <div className="overflow-x-auto">
             <table className="w-full text-left" role="table" aria-label="Capital allocation priority table">
               <thead>
-                <tr className="border-b border-border-main text-text-dim text-xs uppercase tracking-wider">
+                <tr className="border-b border-border-main text-text-dim text-caption uppercase tracking-wider">
                   <th className="pb-3 font-medium pr-4" scope="col">Rank</th>
                   <th className="pb-3 font-medium px-4" scope="col">Project</th>
                   <th className="pb-3 font-medium px-4" scope="col">Recommended</th>
@@ -93,14 +93,14 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
 
                   return (
                     <tr key={a.projectId} className="hover:bg-elevated/50 transition-colors" role="row">
-                      <td className="py-4 pr-4 text-sm font-bold text-text-dim">{i + 1}</td>
+                      <td className="py-4 pr-4 text-small font-bold text-text-dim">{i + 1}</td>
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-3">
-                          <span className="text-sm font-medium text-text-main">{a.projectName}</span>
+                          <span className="text-small font-medium text-text-main">{a.projectName}</span>
                           <RecommendationBadge type={a.recommendation} />
                         </div>
                       </td>
-                      <td className="py-4 px-4 text-sm font-semibold text-success">{money(a.requestableCap)}</td>
+                      <td className="py-4 px-4 text-small font-semibold text-success">{money(a.requestableCap)}</td>
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-2">
                           <div className="w-16 h-2 bg-elevated rounded-full overflow-hidden">
@@ -109,11 +109,11 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
                               style={{ width: `${Math.min(Number(pctOfAvailable), 100)}%` }}
                             />
                           </div>
-                          <span className="text-xs text-text-muted font-mono">{pctOfAvailable}%</span>
+                          <span className="text-caption text-text-muted font-mono">{pctOfAvailable}%</span>
                         </div>
                       </td>
                       <td className="py-4 px-4"><ConfidenceBadge value={a.score} /></td>
-                      <td className="py-4 pl-4 text-sm text-text-dim max-w-xs truncate">{a.reason}</td>
+                      <td className="py-4 pl-4 text-small text-text-dim max-w-xs truncate">{a.reason}</td>
                     </tr>
                   );
                 })}
@@ -134,21 +134,21 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
           return (
             <Panel key={a.projectId}>
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-base font-semibold text-text-main pr-4">{a.projectName}</h3>
+                <h3 className="text-body font-semibold text-text-main pr-4">{a.projectName}</h3>
                 <RecommendationBadge type={a.recommendation} />
               </div>
               <div className="space-y-4">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-small">
                   <span className="text-text-dim">Recommended</span>
                   <span className="font-bold text-primary">{money(a.requestableCap)}</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-small">
                   <span className="text-text-dim">Score</span>
                   <span className="font-bold text-text-main">{a.score}/100</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-small">
                   <span className="text-text-dim">Priority</span>
-                  <span className={`font-bold text-xs uppercase ${
+                  <span className={`font-bold text-caption uppercase ${
                     a.recommendation === 'fund' ? 'text-success' :
                     a.recommendation === 'watch' ? 'text-primary' :
                     a.recommendation === 'hold' ? 'text-warning' : 'text-text-dim'
@@ -158,14 +158,14 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
                      a.recommendation === 'hold' ? 'Low' : 'None'}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-small">
                   <span className="text-text-dim">Confidence</span>
                   <ConfidenceBadge value={a.score} />
                 </div>
 
                 {/* Proportional Capital Distribution Bar — relative to total requested */}
                 <div className="pt-4 border-t border-border-main space-y-2">
-                  <p className="text-xs text-text-dim">Capital Distribution ({barPct.toFixed(1)}% of total requested)</p>
+                  <p className="text-caption text-text-dim">Capital Distribution ({barPct.toFixed(1)}% of total requested)</p>
                   <div className="flex h-4 rounded-full overflow-hidden bg-elevated" aria-label={`${a.projectName} allocation bar`}>
                     <div
                       className="bg-primary rounded-full transition-all"
@@ -190,13 +190,13 @@ function DecisionAccordion({ reason }: { reason: string }) {
     <div className="mt-4">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left text-xs text-primary hover:underline"
+        className="w-full text-left text-caption text-primary hover:underline"
         aria-expanded={open}
       >
         {open ? 'Hide' : 'Why?'}
       </button>
       {open && (
-        <p className="mt-2 text-sm text-text-muted bg-elevated p-3 rounded-lg">
+        <p className="mt-2 text-small text-text-muted bg-elevated p-3 rounded-8">
           {reason}
         </p>
       )}

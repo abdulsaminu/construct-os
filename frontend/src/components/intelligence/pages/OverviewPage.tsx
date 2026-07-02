@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Economy, Project, AllocationRecommendation, RiskScore, LedgerEntry, Contractor } from '../../../types';
 import { money } from '../../../lib/api';
 import { MetricCard } from '../../ui/MetricCard';
@@ -32,14 +32,14 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   if (isLoading) {
     return (
       <div className="space-y-8">
-        <div className="bg-surface rounded-2xl border border-border-main p-8 h-28 animate-pulse" />
+        <div className="bg-surface rounded-card border border-border-main p-8 h-28 animate-pulse" />
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6">
           {[1, 2, 3, 4, 5, 6].map(i => (
-            <div key={i} className="bg-surface rounded-2xl border border-border-main h-36 animate-pulse" />
+            <div key={i} className="bg-surface rounded-card border border-border-main h-36 animate-pulse" />
           ))}
         </div>
-        <div className="bg-surface rounded-2xl border border-border-main p-8 h-64 animate-pulse" />
-        <div className="bg-surface rounded-2xl border border-border-main p-8 h-64 animate-pulse" />
+        <div className="bg-surface rounded-card border border-border-main p-8 h-64 animate-pulse" />
+        <div className="bg-surface rounded-card border border-border-main p-8 h-64 animate-pulse" />
       </div>
     );
   }
@@ -48,15 +48,15 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
     return (
       <Panel>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <AlertTriangle size={48} className="text-warning mb-4" />
-          <h4 className="text-lg font-semibold text-text-main mb-2">Intelligence Unavailable</h4>
-          <p className="text-sm text-text-muted mb-6">{error}</p>
+          <AlertTriangle size={32} className="text-warning mb-4" />
+          <h4 className="text-body-lg font-semibold text-text-main mb-2">Intelligence Unavailable</h4>
+          <p className="text-small text-text-muted mb-6">{error}</p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-12 font-semibold hover:bg-primary-hover transition-colors text-small"
             >
-              <Zap size={14} />
+              <Zap size={16} />
               Retry
             </button>
           )}
@@ -89,24 +89,30 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
     .slice(0, 12);
 
   // Project name lookup
-  const projectMap: Record<string, string> = {};
-  projects.forEach(p => { projectMap[p.id] = p.name; });
+  const projectMap = useMemo(() => {
+    const m: Record<string, string> = {};
+    projects.forEach(p => { m[p.id] = p.name; });
+    return m;
+  }, [projects]);
 
   // Contractor name lookup
-  const contractorMap: Record<string, string> = {};
-  contractors.forEach(c => { contractorMap[c.id] = c.name; });
+  const contractorMap = useMemo(() => {
+    const m: Record<string, string> = {};
+    contractors.forEach(c => { m[c.id] = c.name; });
+    return m;
+  }, [contractors]);
 
   return (
     <div className="space-y-8">
       {/* Hero with System Health Indicator */}
-      <div className="bg-surface rounded-2xl border border-border-main p-8 flex items-center justify-between flex-wrap gap-4">
+      <div className="bg-surface rounded-card border border-border-main p-8 flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-[48px] font-bold text-text-main leading-none">CFEL Intelligence</h1>
-          <p className="text-lg text-text-muted mt-2">Construction Finance Economic Layer</p>
+          <h1 className="text-display font-bold text-text-main leading-none">CFEL Intelligence</h1>
+          <p className="text-body-lg text-text-muted mt-2">Construction Finance Economic Layer</p>
         </div>
         <div className="text-right flex flex-col items-end gap-1">
           <HealthBadge status={systemHealth.status} />
-          <p className="text-xs text-text-dim">{systemHealth.detail}</p>
+          <p className="text-caption text-text-dim">{systemHealth.detail}</p>
         </div>
       </div>
 
@@ -130,14 +136,14 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             {recommendations.map((rec, i) => (
               <div
                 key={i}
-                className="flex items-center justify-between p-4 bg-elevated rounded-xl border border-border-main hover:bg-white/5 transition-colors"
+                className="flex items-center justify-between p-4 bg-elevated rounded-12 border border-border-main hover:bg-white/5 transition-colors"
               >
                 <div className="flex items-center gap-4">
-                  <span className="text-2xl font-bold text-text-dim w-8">{i + 1}.</span>
+                  <span className="text-h3 font-bold text-text-dim w-8">{i + 1}.</span>
                   <div>
                     <p className="font-semibold text-text-main">{rec.title}</p>
                     <div className="flex items-center gap-3 mt-1">
-                      {rec.subtitle && <span className="text-sm text-text-muted">{rec.subtitle}</span>}
+                      {rec.subtitle && <span className="text-small text-text-muted">{rec.subtitle}</span>}
                       {rec.riskBadge !== undefined && <RiskBadge score={rec.riskBadge} />}
                     </div>
                   </div>
@@ -153,7 +159,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
       <Panel>
         <SectionHeader
           title="Ledger Events"
-          action={<span className="text-xs text-text-dim">{ledgerEntries.length} total entries</span>}
+          action={<span className="text-caption text-text-dim">{ledgerEntries.length} total entries</span>}
         />
         {recentLedger.length === 0 ? (
           <EmptyState icon={Activity} title="No Ledger Events" description="No financial events recorded yet." />
@@ -164,16 +170,16 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
               return (
                 <div key={entry.id} className="relative py-4 pl-8 -ml-[41px]">
                   <div className={`absolute -left-[41px] top-4 w-8 h-8 rounded-full flex items-center justify-center ${evt.dotBg}`}>
-                    <evt.icon size={14} className={evt.dotColor} />
+                    <evt.icon size={16} className={evt.dotColor} />
                   </div>
-                  <p className="text-sm font-medium text-text-main">{evt.text}</p>
+                  <p className="text-small font-medium text-text-main">{evt.text}</p>
                   <div className="flex items-center gap-3 mt-1">
-                    <p className="text-xs text-text-dim">{evt.time}</p>
+                    <p className="text-caption text-text-dim">{evt.time}</p>
                     {entry.amount && (
-                      <span className={`text-xs font-semibold ${evt.amountColor}`}>{money(entry.amount)}</span>
+                      <span className={`text-caption font-semibold ${evt.amountColor}`}>{money(entry.amount)}</span>
                     )}
                     {entry.metadata?.txHash && (
-                      <span className="text-[10px] text-text-dim font-mono">tx: {entry.metadata.txHash.substring(0, 10)}...</span>
+                      <span className="text-micro text-text-dim font-mono">tx: {entry.metadata.txHash.substring(0, 10)}...</span>
                     )}
                   </div>
                 </div>

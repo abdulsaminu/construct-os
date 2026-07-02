@@ -94,13 +94,13 @@ export const Select: React.FC<Props> = ({ options, value, onChange, placeholder 
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between bg-elevated border border-border-main rounded-btn p-3 text-left text-sm text-text-main focus:outline-none focus:border-primary transition-colors"
+        className="w-full flex items-center justify-between bg-elevated border border-border-main rounded-btn p-3 text-left text-small text-text-main focus:outline-none focus:border-primary transition-colors"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
         <div>
           <p className={selected ? 'font-medium' : 'text-text-dim'}>{selected ? selected.label : placeholder}</p>
-          {selected?.subLabel && <p className="text-xs text-text-dim mt-0.5">{selected.subLabel}</p>}
+          {selected?.subLabel && <p className="text-caption text-text-dim mt-1">{selected.subLabel}</p>}
         </div>
         <ChevronDown
           size={24}
@@ -112,7 +112,7 @@ export const Select: React.FC<Props> = ({ options, value, onChange, placeholder 
       {isOpen && (
         <div
           role="listbox"
-          className="dropdown-panel absolute z-20 mt-1 w-full bg-surface border border-border-main rounded-btn shadow-level-3 py-1 max-h-60 overflow-y-auto"
+          className="dropdown-panel absolute z-20 mt-1 w-full bg-surface border border-border-main rounded-btn shadow-floating py-1 max-h-60 overflow-y-auto"
         >
           {options.map((option, index) => (
             <button
@@ -120,13 +120,13 @@ export const Select: React.FC<Props> = ({ options, value, onChange, placeholder 
               ref={el => { optionRefs.current[index] = el; }}
               type="button"
               onClick={() => { onChange(option.value); close(); }}
-              className={`w-full text-left px-4 py-2.5 text-sm hover:bg-elevated transition-colors flex flex-col ${value === option.value ? 'bg-primary/10 text-primary' : 'text-text-main'}`}
+              className={`w-full text-left px-4 py-3 text-small hover:bg-elevated transition-colors flex flex-col ${value === option.value ? 'bg-primary/10 text-primary' : 'text-text-main'}`}
               role="option"
               aria-selected={value === option.value}
               tabIndex={focusedIndex === index ? 0 : -1}
             >
               <span className="font-medium">{option.label}</span>
-              {option.subLabel && <span className="text-xs text-text-dim mt-0.5">{option.subLabel}</span>}
+              {option.subLabel && <span className="text-caption text-text-dim mt-1">{option.subLabel}</span>}
             </button>
           ))}
         </div>

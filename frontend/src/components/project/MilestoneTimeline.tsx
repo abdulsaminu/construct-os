@@ -25,21 +25,21 @@ export const MilestoneTimeline: React.FC<Props> = ({ milestones, contractors, on
   };
 
   const getAction = (m: Milestone) => {
-    if (m.settled) return <span className="text-xs font-semibold text-success flex items-center gap-1"><CheckCircle size={12} /> On-Chain</span>;
+    if (m.settled) return <span className="text-caption font-semibold text-success flex items-center gap-1"><CheckCircle size={16} /> On-Chain</span>;
     
     // If claimed, show the Settle button right here!
     if (m.claimed) {
-      if (isSettling) return <span className="text-xs font-semibold text-warning animate-pulse">Mining on Arc...</span>;
+      if (isSettling) return <span className="text-caption font-semibold text-warning animate-pulse">Mining on Arc...</span>;
       return <button 
         onClick={(e) => { e.stopPropagation(); onSettle(); }} 
-        className="bg-success/20 text-success hover:bg-success/30 px-4 py-1.5 rounded-lg text-xs font-bold transition-colors"
+        className="bg-success/20 text-success hover:bg-success/30 px-4 py-2 rounded-8 text-caption font-bold transition-colors"
       >
         Settle on Arc
       </button>;
     }
     
-    if (m.funded) return <button onClick={(e) => { e.stopPropagation(); onClaim(m.id, m.payeeId || ''); }} className="bg-warning/20 text-warning hover:bg-warning/30 px-4 py-1.5 rounded-lg text-xs font-bold transition-colors">Claim</button>;
-    if (projectStatus !== 'completed') return <button onClick={(e) => { e.stopPropagation(); onFund(m.id); }} className="bg-primary hover:bg-primary-hover text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-colors">Fund</button>;
+    if (m.funded) return <button onClick={(e) => { e.stopPropagation(); onClaim(m.id, m.payeeId || ''); }} className="bg-warning/20 text-warning hover:bg-warning/30 px-4 py-2 rounded-8 text-caption font-bold transition-colors">Claim</button>;
+    if (projectStatus !== 'completed') return <button onClick={(e) => { e.stopPropagation(); onFund(m.id); }} className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-8 text-caption font-bold transition-colors">Fund</button>;
     return null;
   };
 
@@ -57,27 +57,27 @@ export const MilestoneTimeline: React.FC<Props> = ({ milestones, contractors, on
                 <div className="flex items-center gap-3">
                   {getStateIcon(m)}
                   <div className="text-left">
-                    <p className="text-sm font-medium text-text-main">{m.name}</p>
-                    <p className="text-xs text-text-dim">{money(m.budget)}</p>
+                    <p className="text-small font-medium text-text-main">{m.name}</p>
+                    <p className="text-caption text-text-dim">{money(m.budget)}</p>
                   </div>
                 </div>
                 {getAction(m)}
               </div>
             }
           >
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-4 text-small">
               <div>
-                <p className="text-text-dim text-xs mb-1">Assigned Contractor</p>
+                <p className="text-text-dim text-caption mb-1">Assigned Contractor</p>
                 <div className="flex items-center gap-2">
-                  <User size={14} className="text-text-muted" />
+                  <User size={16} className="text-text-muted" />
                   <span className="font-medium text-text-main">{contractor?.name || 'Unassigned'}</span>
                 </div>
               </div>
               <div>
-                <p className="text-text-dim text-xs mb-1">Wallet</p>
+                <p className="text-text-dim text-caption mb-1">Wallet</p>
                 <div className="flex items-center gap-2">
-                  <Wallet size={14} className="text-text-muted" />
-                  <span className="font-mono text-xs text-text-muted">{contractor?.payoutAddress ? `${contractor.payoutAddress.slice(0, 6)}...${contractor.payoutAddress.slice(-4)}` : 'N/A'}</span>
+                  <Wallet size={16} className="text-text-muted" />
+                  <span className="font-mono text-caption text-text-muted">{contractor?.payoutAddress ? `${contractor.payoutAddress.slice(0, 6)}...${contractor.payoutAddress.slice(-4)}` : 'N/A'}</span>
                 </div>
               </div>
               <div className="col-span-2 grid grid-cols-3 gap-4 pt-2 border-t border-border-main">
@@ -94,5 +94,5 @@ export const MilestoneTimeline: React.FC<Props> = ({ milestones, contractors, on
 };
 
 const StateFlag = ({ label, active }: { label: string; active: boolean }) => (
-  <p className={`text-xs font-medium ${active ? 'text-success' : 'text-text-dim'}`}>{active ? '✓' : '○'} {label}</p>
+  <p className={`text-caption font-medium ${active ? 'text-success' : 'text-text-dim'}`}>{active ? '✓' : '○'} {label}</p>
 );

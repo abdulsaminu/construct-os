@@ -26,7 +26,7 @@ export const TreasuryTimeline: React.FC<Props> = ({ entries, isLoading }) => {
   }));
 
   return (
-    <Panel className="col-span-8">
+    <Panel className="lg:col-span-8 col-span-12">
       <SectionHeader title="Treasury Timeline" />
       <div className="mt-6 min-h-[200px]">
         {isLoading ? (

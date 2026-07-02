@@ -17,15 +17,15 @@ export const RiskEnginePage = () => {
     <div>
       <PageHeader title="Risk Engine" />
       {entries.length === 0 ? (
-        <div className="bg-surface rounded-2xl border border-border-main p-12 text-center shadow-soft">
-          <ShieldAlert size={48} className="mx-auto text-text-dim mb-4" />
+        <div className="bg-surface rounded-card border border-border-main p-12 text-center shadow-soft">
+          <ShieldAlert size={32} className="mx-auto text-text-dim mb-4" />
           <h3 className="text-h3 font-semibold text-text-main">All Clear</h3>
           <p className="text-text-muted mt-2">No active projects require risk monitoring.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {entries.map(([id, r]) => (
-            <div key={id} className="bg-surface rounded-2xl border border-border-main p-6 shadow-soft">
+            <div key={id} className="bg-surface rounded-card border border-border-main p-6 shadow-soft">
               <p className="text-caption text-text-dim mb-2 font-mono">PROJECT ID: {id.substring(0, 8)}...</p>
               <div className="space-y-4">
                 <RiskRow label="Schedule" value={r.scheduleRisk} />
@@ -48,7 +48,7 @@ const RiskRow = ({ label, value, large }: { label: string; value: number; large?
   const color = value > 70 ? 'bg-danger' : value > 40 ? 'bg-warning' : 'bg-success';
   return (
     <div>
-      <div className="flex justify-between text-sm mb-2">
+      <div className="flex justify-between text-small mb-2">
         <span className="text-text-muted">{label}</span>
         <span className={`font-bold ${large ? 'text-h2 text-text-main' : 'text-text-main'}`}>{value}/100</span>
       </div>

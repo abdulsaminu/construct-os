@@ -4,7 +4,7 @@ interface Column {
   key: string;
   header: string;
   align?: 'left' | 'right';
-  render: (row: Record<string, any>) => React.ReactNode;
+  render: (row: any) => React.ReactNode;
 }
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 export const Table = memo<Props>(({ columns, data, emptyMessage = "No data available." }) => {
   if (data.length === 0) {
-    return <p className="text-sm text-text-dim text-center py-8">{emptyMessage}</p>;
+    return <p className="text-small text-text-dim text-center py-8">{emptyMessage}</p>;
   }
 
   return (

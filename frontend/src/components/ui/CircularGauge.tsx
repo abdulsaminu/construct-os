@@ -29,7 +29,7 @@ export const CircularGauge = memo<Props>(({ value, size = 120, stroke = 8 }) => 
           strokeWidth={stroke}
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className={`${color} transition-all duration-complex ease-out`}
+          className={`${color} transition-all duration-slow ease-out`}
           strokeLinecap="round"
         />
       </svg>

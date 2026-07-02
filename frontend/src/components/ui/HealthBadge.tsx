@@ -15,7 +15,7 @@ export const HealthBadge: React.FC<Props> = ({ status }) => {
   return (
     <div className="flex items-center gap-2">
       <div className={`w-2 h-2 rounded-full ${c.dot}`} />
-      <span className={`text-sm font-medium ${c.text}`}>{status}</span>
+      <span className={`text-small font-medium ${c.text}`}>{status}</span>
     </div>
   );
 };

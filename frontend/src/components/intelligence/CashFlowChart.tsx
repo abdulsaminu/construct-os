@@ -18,7 +18,7 @@ export const CashFlowChart: React.FC<Props> = ({ data, totalCapital }) => {
 
   return (
     <div
-      className="flex items-end gap-[2px] h-56 bg-elevated rounded-xl p-4 border-b border-border-main overflow-x-auto"
+      className="flex items-end gap-[2px] h-56 bg-elevated rounded-12 p-4 border-b border-border-main overflow-x-auto"
       role="img"
       aria-label="Cash flow projection chart showing available, locked, and settled capital over 90 days"
     >
@@ -57,14 +57,14 @@ export const CashFlowChart: React.FC<Props> = ({ data, totalCapital }) => {
 
             {/* Day label on every ~15th point */}
             {data.length <= 14 || i % 4 === 0 ? (
-              <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] text-text-dim whitespace-nowrap">
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-micro text-text-dim whitespace-nowrap">
                 {row.day}d
               </div>
             ) : null}
 
             {/* Tooltip on hover — actual values from backend */}
             <div className="absolute -top-20 left-1/2 -translate-x-1/2 hidden group-hover:block z-10 pointer-events-none">
-              <div className="bg-surface border border-border-main rounded-lg px-3 py-2 text-xs shadow-lg whitespace-nowrap">
+              <div className="bg-surface border border-border-main rounded-8 px-3 py-2 text-caption shadow-floating whitespace-nowrap">
                 <p className="font-semibold text-text-main mb-1">Day {row.day}</p>
                 <p className="text-primary">Available: {money(row.available)}</p>
                 <p className="text-warning">Locked: {money(row.locked)}</p>

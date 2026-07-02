@@ -39,7 +39,7 @@ export const AppShell: React.FC<Props> = ({ activePage, onNavigate, children }) 
           onCloseMobile={() => setMobileOpen(false)}
         />
 
-        <div className={`flex-1 flex flex-col transition-[margin] duration-complex transition-timing-panel ${collapsed ? 'lg:ml-20' : 'lg:ml-[280px]'}`}>
+        <div className={`flex-1 flex flex-col transition-[margin] duration-slow transition-timing-panel ${collapsed ? 'lg:ml-20' : 'lg:ml-[280px]'}`}>
           <TopBar
             title={meta.title}
             description={meta.description}

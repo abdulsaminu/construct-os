@@ -85,10 +85,10 @@ export const ServiceStatusGrid: React.FC<Props> = ({ projects, contractors, ledg
         <SectionHeader
           title="Engine Services"
           action={
-            <div className="flex items-center gap-4 text-xs">
-              <span className="flex items-center gap-1.5 text-success"><div className="w-2 h-2 rounded-full bg-success" />{healthyCount} Healthy</span>
+            <div className="flex items-center gap-4 text-caption">
+              <span className="flex items-center gap-2 text-success"><div className="w-2 h-2 rounded-full bg-success" />{healthyCount} Healthy</span>
               {warningCount > 0 && (
-                <span className="flex items-center gap-1.5 text-warning"><div className="w-2 h-2 rounded-full bg-warning" />{warningCount} Attention</span>
+                <span className="flex items-center gap-2 text-warning"><div className="w-2 h-2 rounded-full bg-warning" />{warningCount} Attention</span>
               )}
             </div>
           }
@@ -99,16 +99,16 @@ export const ServiceStatusGrid: React.FC<Props> = ({ projects, contractors, ledg
             return (
               <div
                 key={s.name}
-                className="flex items-center justify-between p-4 bg-elevated rounded-xl border border-border-main"
+                className="flex items-center justify-between p-4 bg-elevated rounded-12 border border-border-main"
               >
                 <div className="flex items-center gap-3">
                   <Icon size={16} className="text-text-dim" />
                   <div>
-                    <span className="text-sm font-medium text-text-main block">{s.name}</span>
+                    <span className="text-small font-medium text-text-main block">{s.name}</span>
                     <HealthBadge status={s.status} />
                   </div>
                 </div>
-                <span className="text-xs text-text-dim font-mono">{s.latency}</span>
+                <span className="text-caption text-text-dim font-mono">{s.latency}</span>
               </div>
             );
           })}
@@ -146,17 +146,17 @@ export const ServiceStatusGrid: React.FC<Props> = ({ projects, contractors, ledg
         {timelineEvents.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <Activity size={32} className="text-text-dim mb-3" />
-            <p className="text-sm text-text-muted">No recent engine activity.</p>
+            <p className="text-small text-text-muted">No recent engine activity.</p>
           </div>
         ) : (
           <div className="space-y-0 pl-8 border-l-2 border-border-main ml-4 max-h-[400px] overflow-y-auto">
             {timelineEvents.map((evt, i) => (
               <div key={i} className="relative py-4 pl-8 -ml-[41px]">
                 <div className={`absolute -left-[41px] top-4 w-8 h-8 rounded-full flex items-center justify-center ${evt.dotBg}`}>
-                  <evt.icon size={14} className={evt.dotColor} />
+                  <evt.icon size={16} className={evt.dotColor} />
                 </div>
-                <p className="text-sm font-medium text-text-main">{evt.text}</p>
-                <p className="text-xs text-text-dim mt-1">{evt.time}</p>
+                <p className="text-small font-medium text-text-main">{evt.text}</p>
+                <p className="text-caption text-text-dim mt-1">{evt.time}</p>
               </div>
             ))}
           </div>

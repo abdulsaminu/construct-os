@@ -32,10 +32,10 @@ export const SystemHealthPage: React.FC<SystemHealthPageProps> = ({
       <div className="space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-surface rounded-2xl border border-border-main p-6 h-36 animate-pulse" />
+            <div key={i} className="bg-surface rounded-card border border-border-main p-6 h-36 animate-pulse" />
           ))}
         </div>
-        <div className="bg-surface rounded-2xl border border-border-main p-6 h-64 animate-pulse" />
+        <div className="bg-surface rounded-card border border-border-main p-6 h-64 animate-pulse" />
       </div>
     );
   }
@@ -44,15 +44,15 @@ export const SystemHealthPage: React.FC<SystemHealthPageProps> = ({
     return (
       <Panel>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <AlertTriangle size={48} className="text-warning mb-4" />
-          <h4 className="text-lg font-semibold text-text-main mb-2">System Health Unavailable</h4>
-          <p className="text-sm text-text-muted mb-6">{error}</p>
+          <AlertTriangle size={32} className="text-warning mb-4" />
+          <h4 className="text-body-lg font-semibold text-text-main mb-2">System Health Unavailable</h4>
+          <p className="text-small text-text-muted mb-6">{error}</p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-12 font-semibold hover:bg-primary-hover transition-colors text-small"
             >
-              <RefreshCw size={14} />
+              <RefreshCw size={16} />
               Retry
             </button>
           )}

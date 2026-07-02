@@ -29,11 +29,11 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
       <div className="space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="bg-surface rounded-2xl border border-border-main p-6 h-36 animate-pulse" />
+            <div key={i} className="bg-surface rounded-card border border-border-main p-6 h-36 animate-pulse" />
           ))}
         </div>
-        <div className="bg-surface rounded-2xl border border-border-main p-6 h-64 animate-pulse" />
-        <div className="bg-surface rounded-2xl border border-border-main p-6 h-48 animate-pulse" />
+        <div className="bg-surface rounded-card border border-border-main p-6 h-64 animate-pulse" />
+        <div className="bg-surface rounded-card border border-border-main p-6 h-48 animate-pulse" />
       </div>
     );
   }
@@ -42,15 +42,15 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
     return (
       <Panel>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <AlertTriangle size={48} className="text-warning mb-4" />
-          <h4 className="text-lg font-semibold text-text-main mb-2">Risk Engine Unavailable</h4>
-          <p className="text-sm text-text-muted mb-6">{error}</p>
+          <AlertTriangle size={32} className="text-warning mb-4" />
+          <h4 className="text-body-lg font-semibold text-text-main mb-2">Risk Engine Unavailable</h4>
+          <p className="text-small text-text-muted mb-6">{error}</p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-12 font-semibold hover:bg-primary-hover transition-colors text-small"
             >
-              <RefreshCw size={14} />
+              <RefreshCw size={16} />
               Retry
             </button>
           )}
@@ -102,12 +102,12 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
       {/* Top Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <Panel>
-          <p className="text-text-dim text-xs uppercase tracking-wide mb-4">Portfolio Risk</p>
+          <p className="text-text-dim text-caption uppercase tracking-wide mb-4">Portfolio Risk</p>
           {highestRisk ? (
             <div className="flex items-center gap-4">
               <CircularGauge value={highestRisk[1].composite} size={72} stroke={6} />
               <div>
-                <p className="text-sm font-semibold text-text-main">{projectMap[highestRisk[0]] || 'Unknown'}</p>
+                <p className="text-small font-semibold text-text-main">{projectMap[highestRisk[0]] || 'Unknown'}</p>
                 <RiskBadge score={highestRisk[1].composite} />
               </div>
             </div>
@@ -117,12 +117,12 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
         </Panel>
 
         <Panel>
-          <p className="text-text-dim text-xs uppercase tracking-wide mb-4">Lowest Risk</p>
+          <p className="text-text-dim text-caption uppercase tracking-wide mb-4">Lowest Risk</p>
           {lowestRisk ? (
             <div className="flex items-center gap-4">
               <CircularGauge value={lowestRisk[1].composite} size={72} stroke={6} />
               <div>
-                <p className="text-sm font-semibold text-text-main">{projectMap[lowestRisk[0]] || 'Unknown'}</p>
+                <p className="text-small font-semibold text-text-main">{projectMap[lowestRisk[0]] || 'Unknown'}</p>
                 <RiskBadge score={lowestRisk[1].composite} />
               </div>
             </div>
@@ -132,15 +132,15 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
         </Panel>
 
         <Panel>
-          <p className="text-text-dim text-xs uppercase tracking-wide mb-4">Milestones Tracked</p>
-          <p className="text-[44px] font-bold text-text-main leading-none">{fundedMilestones}<span className="text-xl text-text-dim font-normal">/{totalMilestones}</span></p>
-          <p className="text-[13px] text-text-muted mt-2">Funded of total monitored</p>
+          <p className="text-text-dim text-caption uppercase tracking-wide mb-4">Milestones Tracked</p>
+          <p className="text-display font-bold text-text-main leading-none">{fundedMilestones}<span className="text-title text-text-dim font-normal">/{totalMilestones}</span></p>
+          <p className="text-caption text-text-muted mt-2">Funded of total monitored</p>
         </Panel>
 
         <Panel>
-          <p className="text-text-dim text-xs uppercase tracking-wide mb-4">Highest Score</p>
-          <p className="text-[44px] font-bold text-text-main leading-none">{highestRisk ? highestRisk[1].composite : '—'}</p>
-          <p className="text-[13px] text-text-muted mt-2">Out of 100</p>
+          <p className="text-text-dim text-caption uppercase tracking-wide mb-4">Highest Score</p>
+          <p className="text-display font-bold text-text-main leading-none">{highestRisk ? highestRisk[1].composite : '—'}</p>
+          <p className="text-caption text-text-muted mt-2">Out of 100</p>
         </Panel>
       </div>
 
@@ -153,7 +153,7 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
           <div className="overflow-x-auto">
             <table className="w-full text-left" role="table" aria-label="Project risk matrix">
               <thead>
-                <tr className="border-b border-border-main text-text-dim text-xs uppercase tracking-wider">
+                <tr className="border-b border-border-main text-text-dim text-caption uppercase tracking-wider">
                   <th className="pb-3 font-medium pr-4" scope="col">Project</th>
                   <th className="pb-3 font-medium px-4" scope="col">Risk Score</th>
                   <th className="pb-3 font-medium px-4" scope="col">Funding</th>
@@ -176,18 +176,18 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
                     >
                       <td className="py-4 pr-4">
                         <div className="flex items-center gap-4">
-                          <CircularGauge value={r.composite} size={48} stroke={4} />
-                          <span className="text-sm font-medium text-text-main">{pName}</span>
+                          <CircularGauge value={r.composite} size={32} stroke={4} />
+                          <span className="text-small font-medium text-text-main">{pName}</span>
                         </div>
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-2">
                           <CategoryBadge score={r.composite} />
-                          <span className="text-sm font-bold text-text-main font-mono">{r.composite}</span>
+                          <span className="text-small font-bold text-text-main font-mono">{r.composite}</span>
                         </div>
                       </td>
-                      <td className="py-4 px-4 text-sm text-text-muted">{getFundingStatus(r.fundingRisk)}</td>
-                      <td className="py-4 px-4 text-sm text-text-muted font-mono">{getMilestoneStatus(id)}</td>
+                      <td className="py-4 px-4 text-small text-text-muted">{getFundingStatus(r.fundingRisk)}</td>
+                      <td className="py-4 px-4 text-small text-text-muted font-mono">{getMilestoneStatus(id)}</td>
                       <td className="py-4 px-4">{getTrendIcon(r.composite)}</td>
                       <td className="py-4 px-4">
                         <RecommendationBadge type={r.composite > 70 ? 'skip' : r.composite > 40 ? 'hold' : 'fund'} />
@@ -209,7 +209,7 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
             action={
               <button
                 onClick={() => setExpandedAll(!expandedAll)}
-                className="text-xs text-primary hover:underline"
+                className="text-caption text-primary hover:underline"
               >
                 {expandedAll ? 'Collapse All' : 'Expand All'}
               </button>
@@ -231,10 +231,10 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
       {/* Historical Trend — future ready placeholder */}
       <Panel>
         <SectionHeader title="Historical Trend" />
-        <div className="bg-elevated rounded-xl p-8 text-center">
+        <div className="bg-elevated rounded-12 p-8 text-center">
           <BarChart3 size={32} className="mx-auto mb-3 text-text-dim opacity-50" />
           <p className="text-text-muted">Historical data unavailable.</p>
-          <p className="text-xs text-text-dim mt-1">Future endpoint will provide time-series risk data.</p>
+          <p className="text-caption text-text-dim mt-1">Future endpoint will provide time-series risk data.</p>
         </div>
       </Panel>
     </div>

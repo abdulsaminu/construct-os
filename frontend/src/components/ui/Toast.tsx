@@ -79,18 +79,18 @@ const ToastItemComponent: React.FC<{
     <div
       role="alert"
       aria-live="polite"
-      className={`toast-enter ${exiting ? 'toast-exit' : ''} bg-surface rounded-card border shadow-level-2 flex items-start gap-3 w-80 p-4 ${typeStyles[item.type]}`}
+      className={`toast-enter ${exiting ? 'toast-exit' : ''} bg-surface rounded-card border shadow-raised flex items-start gap-3 w-80 p-4 ${typeStyles[item.type]}`}
     >
-      <Icon size={20} className="shrink-0 mt-0.5" />
+      <Icon size={20} className="shrink-0 mt-1" />
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-text-main">{item.title}</p>
+        <p className="text-small font-semibold text-text-main">{item.title}</p>
         {item.description && (
-          <p className="text-xs text-text-muted mt-1 leading-relaxed">{item.description}</p>
+          <p className="text-caption text-text-muted mt-1 leading-relaxed">{item.description}</p>
         )}
       </div>
       <button
         onClick={handleDismiss}
-        className="shrink-0 p-1 rounded-lg hover:bg-white/10 text-text-dim hover:text-text-main transition-colors duration-fast"
+        className="shrink-0 p-1 rounded-8 hover:bg-white/10 text-text-dim hover:text-text-main transition-colors duration-fast"
         aria-label="Dismiss notification"
       >
         <X size={16} />

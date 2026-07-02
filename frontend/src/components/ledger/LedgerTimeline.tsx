@@ -29,13 +29,13 @@ export const LedgerTimeline: React.FC<Props> = ({ entries, onSelect }) => {
           </div>
           <button 
             onClick={() => onSelect(e)}
-            className="w-full text-left p-4 bg-elevated rounded-xl border border-border-main hover:bg-white/5 transition-colors"
+            className="w-full text-left p-4 bg-elevated rounded-12 border border-border-main hover:bg-white/5 transition-colors"
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-sm font-bold text-text-main uppercase">{e.type.replace(/_/g, ' ')}</span>
-              <span className="text-xs text-text-dim">{new Date(e.timestamp).toLocaleString()}</span>
+              <span className="text-small font-bold text-text-main uppercase">{e.type.replace(/_/g, ' ')}</span>
+              <span className="text-caption text-text-dim">{new Date(e.timestamp).toLocaleString()}</span>
             </div>
-            <div className="flex items-center gap-4 text-xs text-text-muted">
+            <div className="flex items-center gap-4 text-caption text-text-muted">
               <span>Amount: <span className="text-text-main font-medium">{e.amount !== '0' ? money(e.amount) : '—'}</span></span>
               {e.metadata?.txHash && (
                 <span className="flex items-center gap-1 font-mono text-primary">

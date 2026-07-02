@@ -33,20 +33,20 @@ export const ContractorsPage = () => {
       <PageHeader 
         title="Contractors" 
         action={
-          <button onClick={() => setIsRegisterOpen(true)} className="bg-primary hover:bg-primary-hover text-white px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 transition-colors">
+          <button onClick={() => setIsRegisterOpen(true)} className="bg-primary hover:bg-primary-hover text-white px-4 py-3 rounded-12 text-small font-medium flex items-center gap-2 transition-colors">
             <UserPlus size={16} /> Register Contractor
           </button>
         }
       />
 
       {isLoading ? (
-        <div className="bg-surface rounded-2xl border border-border-main p-6">
+        <div className="bg-surface rounded-card border border-border-main p-6">
           <TableSkeleton rows={5} />
         </div>
       ) : contractors.length === 0 ? (
         <EmptyState icon={UserPlus} title="No Contractors" description="Register your first contractor to assign payouts." />
       ) : (
-        <div className="bg-surface rounded-2xl border border-border-main p-6">
+        <div className="bg-surface rounded-card border border-border-main p-6">
           <ContractorTable contractors={contractors} onSelect={setSelectedContractor} />
         </div>
       )}

@@ -11,10 +11,10 @@ interface Props {
 }
 
 export const MetricCard = memo<Props>(({ title, value, footer, icon: Icon, color, change }) => (
-  <div className="bg-surface rounded-card border border-border-main p-6 shadow-level-1 card-interactive flex flex-col justify-between h-full">
+  <div className="bg-surface rounded-card border border-border-main p-6 shadow-surface card-interactive flex flex-col justify-between h-full">
     <div className="flex items-start justify-between mb-4">
       <p className="text-caption font-normal text-text-dim uppercase tracking-wide">{title}</p>
-      <div className={`p-2.5 rounded-btn bg-elevated ${color}`}>
+      <div className={`p-3 rounded-btn bg-elevated ${color}`}>
         <Icon size={24} strokeWidth={2} />
       </div>
     </div>

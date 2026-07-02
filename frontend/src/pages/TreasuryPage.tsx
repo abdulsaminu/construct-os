@@ -54,7 +54,7 @@ export const TreasuryPage: React.FC<Props> = ({ onNavigate }) => {
   }, [loadData]);
 
   return (
-    <div className="p-8">
+    <div className="p-4 lg:p-8">
       <TreasuryHeader onRefresh={loadData} isLoading={isLoading} />
 
       <div className="space-y-6">

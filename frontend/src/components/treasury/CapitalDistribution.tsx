@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const CapitalDistribution: React.FC<Props> = ({ economy, isLoading }) => (
-  <Panel className="col-span-8">
+  <Panel className="lg:col-span-8 col-span-12">
     <SectionHeader title="Capital Distribution" />
     {isLoading ? (
       <div className="space-y-6 mt-8">
@@ -36,11 +36,11 @@ export const CapitalDistribution: React.FC<Props> = ({ economy, isLoading }) => 
 );
 
 const LegendItem = ({ label, value, color }: { label: string; value: string; color: string }) => (
-  <div className="flex items-center justify-between p-3 bg-elevated rounded-xl">
+  <div className="flex items-center justify-between p-3 bg-elevated rounded-12">
     <div className="flex items-center gap-2">
-      <div className={`w-3 h-3 rounded-sm ${color}`} />
-      <span className="text-sm text-text-muted">{label}</span>
+      <div className={`w-3 h-3 rounded-6 ${color}`} />
+      <span className="text-small text-text-muted">{label}</span>
     </div>
-    <span className="text-sm font-semibold text-text-main">{value}</span>
+    <span className="text-small font-semibold text-text-main">{value}</span>
   </div>
 );

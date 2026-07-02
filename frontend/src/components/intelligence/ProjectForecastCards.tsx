@@ -47,7 +47,7 @@ export const ProjectForecastCards: React.FC<Props> = ({ projects }) => {
         <SectionHeader title="Milestone Completion Forecast" />
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-elevated rounded-xl h-32 animate-pulse" />
+            <div key={i} className="bg-elevated rounded-12 h-32 animate-pulse" />
           ))}
         </div>
       </Panel>
@@ -65,18 +65,18 @@ export const ProjectForecastCards: React.FC<Props> = ({ projects }) => {
             const f = forecasts[p.id];
             if (!f) return null;
             return (
-              <div key={p.id} className="bg-elevated rounded-xl border border-border-main p-5">
-                <p className="text-sm font-semibold text-text-main mb-4">{p.name}</p>
+              <div key={p.id} className="bg-elevated rounded-12 border border-border-main p-6">
+                <p className="text-small font-semibold text-text-main mb-4">{p.name}</p>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-text-dim text-xs uppercase tracking-wide mb-1">Est. Completion</p>
-                    <p className="text-2xl font-bold text-text-main">
+                    <p className="text-text-dim text-caption uppercase tracking-wide mb-1">Est. Completion</p>
+                    <p className="text-h3 font-bold text-text-main">
                       {f.completionDays !== null ? `${f.completionDays}d` : 'N/A'}
                     </p>
                   </div>
-                  <CircularGauge value={f.confidence} size={64} stroke={4} />
+                  <CircularGauge value={f.confidence} size={32} stroke={4} />
                 </div>
-                <p className="text-xs text-text-dim mt-3">{f.reason}</p>
+                <p className="text-caption text-text-dim mt-3">{f.reason}</p>
               </div>
             );
           })}

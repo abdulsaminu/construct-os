@@ -44,7 +44,7 @@ export const PortfolioPage: React.FC<Props> = ({ onSelectProject, onNavigate }) 
       <PageHeader 
         title="Portfolio" 
         action={
-          <button onClick={() => onNavigate('new-project')} className="bg-primary hover:bg-primary-hover text-white px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 transition-colors">
+          <button onClick={() => onNavigate('new-project')} className="bg-primary hover:bg-primary-hover text-white px-4 py-3 rounded-12 text-small font-medium flex items-center gap-2 transition-colors">
             <Plus size={16} /> New Project
           </button>
         }
@@ -54,7 +54,7 @@ export const PortfolioPage: React.FC<Props> = ({ onSelectProject, onNavigate }) 
 
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {[1,2,3].map(i => <div key={i} className="bg-surface rounded-2xl border border-border-main h-48 animate-pulse" />)}
+          {[1,2,3].map(i => <div key={i} className="bg-surface rounded-card border border-border-main h-48 animate-pulse" />)}
         </div>
       ) : filteredProjects.length === 0 ? (
         <EmptyState icon={FolderKanban} title="No Projects Yet" description="Create your first construction project." />

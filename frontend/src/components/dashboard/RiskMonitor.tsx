@@ -25,7 +25,7 @@ export const RiskMonitor: React.FC<Props> = ({ risks, allocations, projects }) =
   const getAllocation = (id: string) => allocations.find(a => a.projectId === id);
 
   return (
-    <Panel className="col-span-4">
+    <Panel className="lg:col-span-4 col-span-12">
       <SectionHeader title="Risk Monitor" />
       {entries.length === 0 ? (
         <EmptyState icon={ShieldCheck} title="No Active Risks" description="System is operating within normal parameters." />
@@ -35,20 +35,20 @@ export const RiskMonitor: React.FC<Props> = ({ risks, allocations, projects }) =
             const category = getCategory(r.composite);
             const alloc = getAllocation(id);
             return (
-              <div key={id} className="p-4 bg-elevated rounded-xl border border-border-main">
+              <div key={id} className="p-4 bg-elevated rounded-12 border border-border-main">
                 <div className="flex justify-between items-start mb-3">
-                  <p className="text-[15px] font-medium text-text-main leading-tight pr-2">{getProjectName(id)}</p>
-                  <span className={`px-2.5 py-1 rounded-lg text-xs font-bold whitespace-nowrap ${category.styles}`}>
+                  <p className="text-small font-medium text-text-main leading-tight pr-2">{getProjectName(id)}</p>
+                  <span className={`px-3 py-1 rounded-badge text-caption font-bold whitespace-nowrap ${category.styles}`}>
                     {category.text}
                   </span>
                 </div>
                 <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-[44px] font-bold text-text-main leading-none">{r.composite}</p>
-                    <p className="text-[13px] text-text-dim -mt-1">/ 100</p>
+                    <p className="text-display font-bold text-text-main leading-none">{r.composite}</p>
+                    <p className="text-caption text-text-dim -mt-1">/ 100</p>
                   </div>
                   {alloc && (
-                    <p className="text-xs text-text-muted text-right max-w-[100px]">{alloc.reason}</p>
+                    <p className="text-caption text-text-muted text-right max-w-[100px]">{alloc.reason}</p>
                   )}
                 </div>
               </div>

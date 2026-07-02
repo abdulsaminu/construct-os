@@ -9,7 +9,7 @@ interface Props {
 
 export const TreasuryFlow: React.FC<Props> = ({ economy }) => {
   return (
-    <Panel className="col-span-4">
+    <Panel className="lg:col-span-4 col-span-12">
       <SectionHeader title="Treasury Flow" />
       <div className="space-y-6 mt-8">
         {/* Visual Stacked Bar (Equal placeholder widths per spec) */}
@@ -32,7 +32,7 @@ export const TreasuryFlow: React.FC<Props> = ({ economy }) => {
 
 const LegendItem = ({ label, color }: { label: string; color: string }) => (
   <div className="flex items-center gap-2">
-    <div className={`w-3 h-3 rounded-sm ${color}`} />
-    <span className="text-sm text-text-muted">{label}</span>
+    <div className={`w-3 h-3 rounded-6 ${color}`} />
+    <span className="text-small text-text-muted">{label}</span>
   </div>
 );

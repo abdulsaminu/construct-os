@@ -31,7 +31,7 @@ export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => 
             type="search"
             placeholder="Search..."
             aria-label="Search"
-            className="bg-transparent w-full text-sm text-text-main outline-none placeholder:text-text-dim"
+            className="bg-transparent w-full text-small text-text-main outline-none placeholder:text-text-dim"
           />
         </div>
 
@@ -40,7 +40,7 @@ export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => 
           aria-label="Notifications"
         >
           <Bell size={24} strokeWidth={2} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+          <span className="absolute top-2 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
         </button>
 
         <button

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetcher, poster } from '../api';
+import { fetcher, poster } from '../lib/api';
 
 export default function ProjectsPage({ onSelect }: { onSelect: (id: string) => void }) {
   const [projects, setProjects] = useState<any[]>([]);
@@ -52,7 +52,7 @@ export default function ProjectsPage({ onSelect }: { onSelect: (id: string) => v
     if (!contractors[0]) { setError("Please register a contractor first."); return; }
 
     // Send dynamically generated array to backend
-    const res = await poster('/projects', { 
+    const res = await poster<{ error?: string }>('/projects', { 
       name: projectName, 
       totalBudget: totalBudget.toString(), 
       milestones: milestones.map(m => ({ name: m.name, budget: m.budget, payeeId: contractors[0].id })) 
@@ -72,14 +72,14 @@ export default function ProjectsPage({ onSelect }: { onSelect: (id: string) => v
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Projects</h2>
+        <h2 className="text-h3 font-bold">Projects</h2>
         <button onClick={() => { setShowForm(!showForm); setError(''); }} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium">
           {showForm ? 'Cancel' : 'New Project'}
         </button>
       </div>
       
       {error && (
-        <div className="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded mb-4 text-sm">
+        <div className="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded mb-4 text-small">
           <strong>Error:</strong> {error}
         </div>
       )}
@@ -87,26 +87,26 @@ export default function ProjectsPage({ onSelect }: { onSelect: (id: string) => v
       {showForm && (
         <form onSubmit={handleCreate} className="bg-slate-800 p-6 rounded mb-6 border border-slate-700">
           <div className="mb-4">
-            <label className="block text-sm text-slate-400 mb-1">Project Name</label>
+            <label className="block text-small text-slate-400 mb-1">Project Name</label>
             <input required placeholder="e.g. Skyline Tower" value={projectName} onChange={e => setProjectName(e.target.value)} className="w-full bg-slate-900 border border-slate-600 rounded p-2 text-white" />
           </div>
 
           <div className="border-t border-slate-700 pt-4 mb-4">
             <div className="flex justify-between items-center mb-3">
-              <h3 className="text-md font-semibold text-slate-300">Milestones</h3>
-              <button type="button" onClick={addMilestone} className="text-sm text-blue-400 hover:text-blue-300">+ Add Phase</button>
+              <h3 className="text-body-lg font-semibold text-slate-300">Milestones</h3>
+              <button type="button" onClick={addMilestone} className="text-small text-blue-400 hover:text-blue-300">+ Add Phase</button>
             </div>
             
             <div className="space-y-2">
               {milestones.map((m, index) => (
                 <div key={index} className="flex gap-2 items-center">
-                  <span className="text-xs text-slate-500 w-6">{index + 1}.</span>
+                  <span className="text-caption text-slate-500 w-6">{index + 1}.</span>
                   <input 
                     required 
                     placeholder="Phase name" 
                     value={m.name} 
                     onChange={e => updateMilestone(index, 'name', e.target.value)} 
-                    className="flex-1 bg-slate-900 border border-slate-600 rounded p-2 text-white text-sm" 
+                    className="flex-1 bg-slate-900 border border-slate-600 rounded p-2 text-white text-small" 
                   />
                   <input 
                     required 
@@ -114,9 +114,9 @@ export default function ProjectsPage({ onSelect }: { onSelect: (id: string) => v
                     type="number"
                     value={m.budget} 
                     onChange={e => updateMilestone(index, 'budget', e.target.value.replace(/[^0-9]/g, ''))} 
-                    className="w-40 bg-slate-900 border border-slate-600 rounded p-2 text-white text-sm" 
+                    className="w-40 bg-slate-900 border border-slate-600 rounded p-2 text-white text-small" 
                   />
-                  <button type="button" onClick={() => removeMilestone(index)} className="text-slate-500 hover:text-red-400 text-lg font-bold px-2">×</button>
+                  <button type="button" onClick={() => removeMilestone(index)} className="text-slate-500 hover:text-red-400 text-body-lg font-bold px-2">×</button>
                 </div>
               ))}
             </div>
@@ -124,10 +124,10 @@ export default function ProjectsPage({ onSelect }: { onSelect: (id: string) => v
 
           <div className="bg-slate-900 p-3 rounded flex justify-between items-center">
             <span className="text-slate-400 font-medium">Auto-Calculated Total Budget:</span>
-            <span className="text-2xl font-bold text-green-400">{money(totalBudget)}</span>
+            <span className="text-h3 font-bold text-green-400">{money(totalBudget)}</span>
           </div>
 
-          <button type="submit" className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white p-3 rounded font-bold text-lg transition">
+          <button type="submit" className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white p-3 rounded font-bold text-body-lg transition">
             Create Project
           </button>
         </form>
@@ -137,10 +137,10 @@ export default function ProjectsPage({ onSelect }: { onSelect: (id: string) => v
         {projects.map(p => (
           <div key={p.id} onClick={() => onSelect(p.id)} className="bg-slate-800 p-4 rounded border border-slate-700 flex justify-between items-center cursor-pointer hover:border-blue-500 transition">
             <div>
-              <h3 className="text-lg font-semibold">{p.name}</h3>
-              <p className="text-sm text-slate-400">{p.milestones.length} Phases • Budget: {new Intl.NumberFormat('en-US', {style:'currency',currency:'USD'}).format(parseInt(p.totalBudget))}</p>
+              <h3 className="text-body-lg font-semibold">{p.name}</h3>
+              <p className="text-small text-slate-400">{p.milestones.length} Phases • Budget: {new Intl.NumberFormat('en-US', {style:'currency',currency:'USD'}).format(parseInt(p.totalBudget))}</p>
             </div>
-            <span className={`px-3 py-1 rounded text-sm font-bold ${p.status === 'completed' ? 'bg-green-900 text-green-300' : p.status === 'active' ? 'bg-blue-900 text-blue-300' : 'bg-slate-700 text-slate-300'}`}>{p.status.toUpperCase()}</span>
+            <span className={`px-3 py-1 rounded text-small font-bold ${p.status === 'completed' ? 'bg-green-900 text-green-300' : p.status === 'active' ? 'bg-blue-900 text-blue-300' : 'bg-slate-700 text-slate-300'}`}>{p.status.toUpperCase()}</span>
           </div>
         ))}
       </div>

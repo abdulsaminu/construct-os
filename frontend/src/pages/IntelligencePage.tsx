@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { fetcher } from '../lib/api';
 import {
   Economy, Project, Contractor, RiskScore,
@@ -117,8 +117,11 @@ export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
   useEffect(() => { loadData(); }, [loadData]);
 
   // Project ID → Name mapping (no calculations)
-  const projectMap: Record<string, string> = {};
-  projects.forEach(p => { projectMap[p.id] = p.name; });
+  const projectMap = useMemo(() => {
+    const m: Record<string, string> = {};
+    projects.forEach(p => { m[p.id] = p.name; });
+    return m;
+  }, [projects]);
 
   const renderTab = () => {
     switch (activeTab) {
@@ -189,13 +192,13 @@ export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
   // Error state with retry
   if (error && !isLoading) {
     return (
-      <div className="p-8">
+      <div className="p-4 lg:p-8">
         <div className="flex items-center gap-2 border-b border-border-main mb-8 pb-4 overflow-x-auto">
           {TABS.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-5 py-3 rounded-t-xl text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`px-6 py-3 rounded-t-xl text-small font-medium whitespace-nowrap transition-colors ${
                 activeTab === tab.id
                   ? 'bg-elevated text-primary border border-b-2 border-primary mb-[-2px]'
                   : 'text-text-muted hover:text-text-main hover:bg-elevated'
@@ -206,13 +209,13 @@ export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
           ))}
         </div>
 
-        <div className="bg-surface rounded-2xl border border-border-main p-12 text-center">
-          <AlertTriangle size={48} className="mx-auto text-warning mb-4" />
+        <div className="bg-surface rounded-card border border-border-main p-12 text-center">
+          <AlertTriangle size={32} className="mx-auto text-warning mb-4" />
           <h3 className="text-h3 font-semibold text-text-main mb-2">{error}</h3>
           <p className="text-text-muted mb-6">Check that the backend is running on port 3001.</p>
           <button
             onClick={loadData}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-12 font-semibold hover:bg-primary-hover transition-colors"
           >
             <RefreshCw size={16} />
             Retry
@@ -223,14 +226,14 @@ export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 lg:p-8">
       {/* Sub-Navigation */}
       <div className="flex items-center gap-2 border-b border-border-main mb-8 pb-4 overflow-x-auto">
         {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-5 py-3 rounded-t-xl text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-6 py-3 rounded-t-xl text-small font-medium whitespace-nowrap transition-colors ${
               activeTab === tab.id
                 ? 'bg-elevated text-primary border border-b-2 border-primary mb-[-2px]'
                 : 'text-text-muted hover:text-text-main hover:bg-elevated'

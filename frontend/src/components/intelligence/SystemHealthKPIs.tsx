@@ -13,7 +13,7 @@ export const SystemHealthKPIs: React.FC<Props> = ({ economy, isLoading }) => {
   if (isLoading || !economy) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        {[1,2,3,4].map(i => <div key={i} className="bg-surface rounded-2xl border border-border-main p-6 animate-pulse h-32" />)}
+        {[1,2,3,4].map(i => <div key={i} className="bg-surface rounded-card border border-border-main p-6 animate-pulse h-32" />)}
       </div>
     );
   }

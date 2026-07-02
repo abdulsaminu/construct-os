@@ -38,7 +38,7 @@ export const RiskBreakdownPanel: React.FC<Props> = ({ projectName, scores, defau
   }, [defaultExpanded]);
 
   return (
-    <div className="bg-elevated rounded-2xl border border-border-main p-6">
+    <div className="bg-elevated rounded-card border border-border-main p-6">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full flex justify-between items-center text-left"
@@ -46,8 +46,8 @@ export const RiskBreakdownPanel: React.FC<Props> = ({ projectName, scores, defau
         aria-controls={`risk-breakdown-${projectName}`}
       >
         <div className="flex items-center gap-3">
-          <span className="text-base font-semibold text-text-main">{projectName}</span>
-          <span className={`text-xs font-bold px-2 py-0.5 rounded ${
+          <span className="text-body font-semibold text-text-main">{projectName}</span>
+          <span className={`text-caption font-bold px-2 py-1 rounded ${
             scores.composite > 80 ? 'bg-danger/20 text-danger' :
             scores.composite > 60 ? 'bg-warning/20 text-warning' :
             scores.composite > 30 ? 'bg-primary/20 text-primary' :
@@ -56,7 +56,7 @@ export const RiskBreakdownPanel: React.FC<Props> = ({ projectName, scores, defau
             {getRiskLevel(scores.composite)}
           </span>
         </div>
-        <span className="text-text-dim text-sm">{isExpanded ? 'Collapse' : 'Expand'}</span>
+        <span className="text-text-dim text-small">{isExpanded ? 'Collapse' : 'Expand'}</span>
       </button>
 
       {isExpanded && (
@@ -65,16 +65,16 @@ export const RiskBreakdownPanel: React.FC<Props> = ({ projectName, scores, defau
             const value = scores[key];
             return (
               <div key={key}>
-                <div className="flex justify-between text-sm mb-1">
+                <div className="flex justify-between text-small mb-1">
                   <div>
                     <span className="text-text-muted">{label}</span>
-                    <span className="text-text-dim text-xs ml-2">{description}</span>
+                    <span className="text-text-dim text-caption ml-2">{description}</span>
                   </div>
                   <span className="font-bold text-text-main">{value}/100</span>
                 </div>
                 <div className="w-full bg-surface rounded-full h-2" role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100} aria-label={`${label} risk: ${value} out of 100`}>
                   <div
-                    className={`h-2 rounded-full transition-all duration-500 ${getBarColor(value)}`}
+                    className={`h-2 rounded-full transition-all duration-slow ${getBarColor(value)}`}
                     style={{ width: `${value}%` }}
                   />
                 </div>
