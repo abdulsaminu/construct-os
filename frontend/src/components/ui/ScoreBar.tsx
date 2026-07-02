@@ -20,4 +20,3 @@ export const ScoreBar: React.FC<Props> = ({ value, color = 'bg-primary' }) => (
     <span className="text-sm font-bold text-text-main w-10 text-right">{value}</span>
   </div>
 );
-};
