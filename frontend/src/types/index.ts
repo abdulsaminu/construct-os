@@ -65,3 +65,28 @@ export interface AllocationRecommendation {
   requestableCap: string;
   reason: string;
 }
+
+export interface ForecastData {
+  cash: {
+    days: number[];
+    available: string[];
+    locked: string[];
+    settled: string[];
+  };
+  settlement: {
+    totalSettled: string;
+    byProject: Record<string, string>;
+  };
+}
+
+export interface ProjectForecast {
+  completionDays: number | null;
+  confidence: number;
+  reason: string;
+}
+
+export interface ServiceStatus {
+  name: string;
+  status: 'Healthy' | 'Warning' | 'Offline' | 'Syncing';
+  latency: string;
+}

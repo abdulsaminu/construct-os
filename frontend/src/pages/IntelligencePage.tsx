@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { fetcher } from '../lib/api';
-import { Economy, Project, RiskScore, AllocationRecommendation } from '../types';
+import {
+  Economy, Project, Contractor, RiskScore,
+  AllocationRecommendation, ForecastData, LedgerEntry
+} from '../types';
 import { OverviewPage } from '../components/intelligence/pages/OverviewPage';
 import { RiskEnginePage } from '../components/intelligence/pages/RiskEnginePage';
 import { AllocationPage } from '../components/intelligence/pages/AllocationPage';
 import { ForecastsPage } from '../components/intelligence/pages/ForecastsPage';
 import { SystemHealthPage } from '../components/intelligence/pages/SystemHealthPage';
-
-interface ForecastData {
-  cash: { days: number[]; available: string[]; locked: string[]; settled: string[] };
-  settlement: { totalSettled: string; byProject: Record<string, string> };
-}
+import { AlertTriangle, RefreshCw } from 'lucide-react';
 
 const TABS = [
   { id: 'overview', label: 'Overview' },
@@ -20,47 +19,208 @@ const TABS = [
   { id: 'health', label: 'System Health' },
 ];
 
-export const IntelligencePage = () => {
-  const [activeTab, setActiveTab] = useState('overview');
+interface ApiLatency {
+  economy: number;
+  projects: number;
+  risk: number;
+  allocations: number;
+  forecast: number;
+  contractors: number;
+}
+
+const DEFAULT_LATENCY: ApiLatency = { economy: 0, projects: 0, risk: 0, allocations: 0, forecast: 0, contractors: 0 };
+
+interface Props {
+  defaultTab?: string;
+}
+
+export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
+  const [activeTab, setActiveTab] = useState(defaultTab || 'overview');
   const [economy, setEconomy] = useState<Economy | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [contractors, setContractors] = useState<Contractor[]>([]);
   const [risks, setRisks] = useState<Record<string, RiskScore>>({});
   const [allocations, setAllocations] = useState<AllocationRecommendation[]>([]);
   const [forecast, setForecast] = useState<ForecastData | null>(null);
+  const [ledgerEntries, setLedgerEntries] = useState<LedgerEntry[]>([]);
+  const [ledgerEntryCount, setLedgerEntryCount] = useState(0);
+  const [apiLatencyMs, setApiLatencyMs] = useState<ApiLatency>(DEFAULT_LATENCY);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  // Sync tab when defaultTab changes from parent
   useEffect(() => {
-    const loadData = async () => {
-      setIsLoading(true);
-      try {
-        const [e, p, r, a, f] = await Promise.all([
-          fetcher<Economy>('/economy'),
-          fetcher<Project[]>('/projects'),
-          fetcher<Record<string, RiskScore>>('/system/risk'),
-          fetcher<AllocationRecommendation[]>('/system/allocations'),
-          fetcher<ForecastData>('/system/forecast?horizonDays=90')
-        ]);
-        setEconomy(e); setProjects(p); setRisks(r); setAllocations(a); setForecast(f);
-      } catch (err) { console.error(err); } 
-      finally { setIsLoading(false); }
-    };
-    loadData();
+    if (defaultTab) setActiveTab(defaultTab);
+  }, [defaultTab]);
+
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Measure latency for each API call
+      const timed = async <T,>(url: string): Promise<{ data: T; ms: number }> => {
+        const start = performance.now();
+        const data = await fetcher<T>(url);
+        const ms = Math.round(performance.now() - start);
+        return { data, ms };
+      };
+
+      // Parallel fetch of all 6 primary data sources
+      const [e, p, c, r, a, f] = await Promise.all([
+        timed<Economy>('/economy'),
+        timed<Project[]>('/projects'),
+        timed<Contractor[]>('/contractors'),
+        timed<Record<string, RiskScore>>('/system/risk'),
+        timed<AllocationRecommendation[]>('/system/allocations'),
+        timed<ForecastData>('/system/forecast?horizonDays=90'),
+      ]);
+
+      setEconomy(e.data);
+      setProjects(p.data);
+      setContractors(c.data);
+      setRisks(r.data);
+      setAllocations(a.data);
+      setForecast(f.data);
+
+      // Store latency measurements
+      setApiLatencyMs({
+        economy: e.ms,
+        projects: p.ms,
+        risk: r.ms,
+        allocations: a.ms,
+        forecast: f.ms,
+        contractors: c.ms,
+      });
+
+      // Fetch per-project ledger entries in parallel
+      const ledgerPromises = p.data.map(async (proj) => {
+        try {
+          const entries = await fetcher<LedgerEntry[]>(`/projects/${proj.id}/ledger`);
+          return entries;
+        } catch {
+          return [];
+        }
+      });
+      const allLedgerResults = await Promise.all(ledgerPromises);
+      const allEntries = allLedgerResults.flat();
+      setLedgerEntries(allEntries);
+      setLedgerEntryCount(allEntries.length);
+    } catch (err) {
+      console.error(err);
+      setError('Unable to load intelligence data.');
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  // Map Project IDs to Names (No math)
+  useEffect(() => { loadData(); }, [loadData]);
+
+  // Project ID → Name mapping (no calculations)
   const projectMap: Record<string, string> = {};
   projects.forEach(p => { projectMap[p.id] = p.name; });
 
   const renderTab = () => {
     switch (activeTab) {
-      case 'overview': return <OverviewPage economy={economy} projects={projects} allocations={allocations} isLoading={isLoading} />;
-      case 'risk': return <RiskEnginePage risks={risks} projectMap={projectMap} isLoading={isLoading} />;
-      case 'allocation': return <AllocationPage allocations={allocations} isLoading={isLoading} />;
-      case 'forecasts': return <ForecastsPage forecast={forecast} isLoading={isLoading} />;
-      case 'health': return <SystemHealthPage projects={projects} />;
-      default: return null;
+      case 'overview':
+        return (
+          <OverviewPage
+            economy={economy}
+            projects={projects}
+            allocations={allocations}
+            risks={risks}
+            contractors={contractors}
+            ledgerEntries={ledgerEntries}
+            isLoading={isLoading}
+            error={error}
+            onRetry={loadData}
+          />
+        );
+      case 'risk':
+        return (
+          <RiskEnginePage
+            risks={risks}
+            projectMap={projectMap}
+            projects={projects}
+            isLoading={isLoading}
+            error={error}
+            onRetry={loadData}
+          />
+        );
+      case 'allocation':
+        return (
+          <AllocationPage
+            allocations={allocations}
+            economy={economy}
+            isLoading={isLoading}
+            error={error}
+            onRetry={loadData}
+          />
+        );
+      case 'forecasts':
+        return (
+          <ForecastsPage
+            forecast={forecast}
+            projects={projects}
+            economy={economy}
+            isLoading={isLoading}
+            error={error}
+            onRetry={loadData}
+          />
+        );
+      case 'health':
+        return (
+          <SystemHealthPage
+            projects={projects}
+            contractors={contractors}
+            economy={economy}
+            ledgerEntryCount={ledgerEntryCount}
+            apiLatencyMs={apiLatencyMs}
+            isLoading={isLoading}
+            error={error}
+            onRetry={loadData}
+          />
+        );
+      default:
+        return null;
     }
   };
+
+  // Error state with retry
+  if (error && !isLoading) {
+    return (
+      <div className="p-8">
+        <div className="flex items-center gap-2 border-b border-border-main mb-8 pb-4 overflow-x-auto">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-5 py-3 rounded-t-xl text-sm font-medium whitespace-nowrap transition-colors ${
+                activeTab === tab.id
+                  ? 'bg-elevated text-primary border border-b-2 border-primary mb-[-2px]'
+                  : 'text-text-muted hover:text-text-main hover:bg-elevated'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="bg-surface rounded-2xl border border-border-main p-12 text-center">
+          <AlertTriangle size={48} className="mx-auto text-warning mb-4" />
+          <h3 className="text-h3 font-semibold text-text-main mb-2">{error}</h3>
+          <p className="text-text-muted mb-6">Check that the backend is running on port 3001.</p>
+          <button
+            onClick={loadData}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors"
+          >
+            <RefreshCw size={16} />
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">
@@ -70,7 +230,12 @@ export const IntelligencePage = () => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-5 py-3 rounded-t-xl text-sm font-medium whitespace-nowrap transition-colors ${activeTab === tab.id ? 'bg-elevated text-primary border border-b-2 border-primary mb-[-2px]' : 'text-text-muted hover:text-text-main hover:bg-elevated'}`}
+            className={`px-5 py-3 rounded-t-xl text-sm font-medium whitespace-nowrap transition-colors ${
+              activeTab === tab.id
+                ? 'bg-elevated text-primary border border-b-2 border-primary mb-[-2px]'
+                : 'text-text-muted hover:text-text-main hover:bg-elevated'
+            }`}
+            aria-current={activeTab === tab.id ? 'page' : undefined}
           >
             {tab.label}
           </button>

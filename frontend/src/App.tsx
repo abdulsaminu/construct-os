@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AppShell } from './components/layout/AppShell';
 import { DashboardPage } from './pages/DashboardPage';
 import { TreasuryPage } from './pages/TreasuryPage';
@@ -8,23 +8,44 @@ import { ProjectDetailPage } from './pages/ProjectDetailPage';
 import { ContractorsPage } from './pages/ContractorsPage';
 import { IntelligencePage } from './pages/IntelligencePage';
 import { LedgerPage } from './pages/LedgerPage';
-import { ForecastsPage } from './pages/ForecastsPage';
-import { RiskEnginePage } from './pages/RiskEnginePage';
 import { SettlementsPage } from './pages/SettlementsPage';
 import { SettingsPage } from './pages/SettingsPage';
 
 export default function App() {
   const [page, setPage] = useState('dashboard');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [intelligenceTab, setIntelligenceTab] = useState<string | undefined>(undefined);
 
   const handleSelectProject = (id: string) => {
     setSelectedProject(id);
-    // Update internal page state to trigger TopBar meta update
     window.history.pushState({}, '', `/portfolio/${id}`);
   };
 
   const handleProjectCreated = (id: string) => {
     setSelectedProject(id);
+  };
+
+  const navigateToIntelligenceTab = (tab: string) => {
+    setIntelligenceTab(tab);
+    setPage('intelligence');
+  };
+
+  const handleNavigate = (id: string) => {
+    // Redirect standalone intelligence routes to the hub
+    if (id === 'forecasts') {
+      navigateToIntelligenceTab('forecasts');
+      return;
+    }
+    if (id === 'risk-engine') {
+      navigateToIntelligenceTab('risk');
+      return;
+    }
+    if (id === 'system') {
+      navigateToIntelligenceTab('health');
+      return;
+    }
+    setIntelligenceTab(undefined);
+    setPage(id);
   };
 
   const renderPage = () => {
@@ -39,10 +60,8 @@ export default function App() {
       case 'portfolio': return <PortfolioPage onSelectProject={handleSelectProject} onNavigate={setPage} />;
       case 'new-project': return <NewProjectPage onBack={() => setPage('portfolio')} onCreated={handleProjectCreated} />;
       case 'contractors': return <ContractorsPage />;
-      case 'intelligence': return <IntelligencePage />;
+      case 'intelligence': return <IntelligencePage defaultTab={intelligenceTab} />;
       case 'ledger': return <LedgerPage />;
-      case 'forecasts': return <ForecastsPage />;
-      case 'risk-engine': return <RiskEnginePage />;
       case 'settlements': return <SettlementsPage />;
       case 'settings': return <SettingsPage />;
       default: return <DashboardPage onSelectProject={handleSelectProject} />;
@@ -53,7 +72,7 @@ export default function App() {
   const activePageId = selectedProject ? 'portfolio' : page;
 
   return (
-    <AppShell activePage={activePageId} onNavigate={setPage}>
+    <AppShell activePage={activePageId} onNavigate={handleNavigate}>
       {renderPage()}
     </AppShell>
   );

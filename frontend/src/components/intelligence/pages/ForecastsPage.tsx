@@ -1,89 +1,228 @@
-
-import React from "react";
-import { Panel } from "../../ui/Panel";
-import { SectionHeader } from "../../ui/SectionHeader";
-import { EmptyState } from "../../ui/EmptyState";
-import { money } from "../../../lib/api";
-import { CircularGauge } from "../../ui/CircularGauge";
-import { TrendingUp } from "lucide-react";
-
-interface ForecastData {
-  cash: { days: number[]; available: string[]; locked: string[]; settled: string[] };
-  settlement: { totalSettled: string; byProject: Record<string, string>; 
-}
+import React from 'react';
+import { ForecastData, Project, Economy } from '../../../types';
+import { money } from '../../../lib/api';
+import { Panel } from '../../ui/Panel';
+import { SectionHeader } from '../../ui/SectionHeader';
+import { CircularGauge } from '../../ui/CircularGauge';
+import { CashFlowChart } from '../CashFlowChart';
+import { ProjectForecastCards } from '../ProjectForecastCards';
+import { EmptyState } from '../../ui/EmptyState';
+import { Skeleton, CardSkeleton } from '../../ui/Skeleton';
+import { TrendingUp, Calendar, Landmark, Clock, AlertTriangle, RefreshCw } from 'lucide-react';
 
 interface ForecastsPageProps {
   forecast: ForecastData | null;
+  projects: Project[];
+  economy: Economy | null;
   isLoading: boolean;
+  error?: string | null;
+  onRetry?: () => void;
 }
 
-export const ForecastsPage: React.FC<ForecastsPageProps> = ({ forecast, isLoading }) => {
-  if (isLoading) return <div className="grid grid-cols-2 gap-6">{[1,2,3,4].map(i => <div key={i} className="bg-surface rounded-2xl border border-border-main p-6 h-48 animate-pulse" />}</div>;
-  if (!forecast) return <div className="bg-surface rounded-2xl border border-border-main p-12 text-center text-text-dim">Forecast unavailable.</div>;
+const FORECAST_POINTS = [
+  { targetDay: 0, label: 'Today' },
+  { targetDay: 7, label: '7 Days' },
+  { targetDay: 30, label: '30 Days' },
+  { targetDay: 90, label: 'Quarter' },
+];
 
-  const getDayLabel = (index: number) => {
-    if (index === 0) return "Today";
-    return "Day " + forecast.cash.days[index];
-  };
+export const ForecastsPage: React.FC<ForecastsPageProps> = ({ forecast, projects, economy, isLoading, error, onRetry }) => {
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="bg-surface rounded-2xl border border-border-main p-6 h-28 animate-pulse" />
+          ))}
+        </div>
+        <div className="bg-surface rounded-2xl border border-border-main p-6 h-64 animate-pulse" />
+        <div className="bg-surface rounded-2xl border border-border-main p-6 h-48 animate-pulse" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <Panel>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <AlertTriangle size={48} className="text-warning mb-4" />
+          <h4 className="text-lg font-semibold text-text-main mb-2">Forecast Unavailable</h4>
+          <p className="text-sm text-text-muted mb-6">{error}</p>
+          {onRetry && (
+            <button
+              onClick={onRetry}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors text-sm"
+            >
+              <RefreshCw size={14} />
+              Retry
+            </button>
+          )}
+        </div>
+      </Panel>
+    );
+  }
+
+  if (!forecast) {
+    return (
+      <Panel>
+        <EmptyState
+          icon={TrendingUp}
+          title="Forecast Unavailable"
+          description="No predictive data yet. Ensure the CFEL engine has active projects."
+        />
+      </Panel>
+    );
+  }
+
+  // Build chart data from backend arrays
+  const chartData = forecast.cash.days.map((day, i) => ({
+    day,
+    available: forecast.cash.available[i],
+    locked: forecast.cash.locked[i],
+    settled: forecast.cash.settled[i],
+  }));
+
+  // Derive settlement confidence from data — ratio of settled milestones to total milestones
+  // No financial calculation: counting milestones, not money
+  const totalMilestones = projects.reduce((sum, p) => sum + p.milestones.length, 0);
+  const settledMilestones = projects.reduce((sum, p) => sum + p.milestones.filter(m => m.settled).length, 0);
+  const settlementConfidence = totalMilestones > 0 ? Math.round((settledMilestones / totalMilestones) * 100) : 0;
+
+  // Find settlement entries for the events list
+  const futureEvents = buildFutureEvents(projects);
+
+  // Project name lookup for settlement byProject display
+  const projectMap: Record<string, string> = {};
+  projects.forEach(p => { projectMap[p.id] = p.name; });
 
   return (
     <div className="space-y-6">
+      {/* Forecast KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {[0, 6, 29, 89].map((targetDay: number) => {
-          const i = forecast.cash.days.indexOf(targetDay);
-          if (i === -1) return <div key={targetDay} className="bg-surface rounded-2xl border border-border-main p-6 h-24 animate-pulse" />;
+        {FORECAST_POINTS.map(({ targetDay, label }) => {
+          const idx = forecast.cash.days.indexOf(targetDay);
+          if (idx === -1) return null;
           return (
-            <div key={targetDay} className="bg-surface rounded-2xl border border-border-main p-6 text-center">
-              <p className="text-text-dim text-xs uppercase tracking-wide mb-2">{getDayLabel(targetDay)}</p>
-              <p className="text-xl font-bold text-success">{money(forecast.cash.available[i])}</p>
+            <div key={targetDay} className="bg-surface rounded-2xl border border-border-main p-6 shadow-soft hover:-translate-y-0.5 transition-transform duration-150">
+              <p className="text-text-dim text-xs uppercase tracking-wide mb-2">{label}</p>
+              <p className="text-xl font-bold text-success">{money(forecast.cash.available[idx])}</p>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-xs text-text-dim">Locked:</span>
+                <span className="text-xs font-semibold text-warning">{money(forecast.cash.locked[idx])}</span>
+              </div>
             </div>
           );
         })}
       </div>
 
-      <Panel className="col-span-12">
+      {/* Cash Flow Projection */}
+      <Panel>
         <SectionHeader title="Cash Flow Projection" />
-        <div className="flex items-end gap-1 h-48 bg-elevated rounded-xl p-4 border-b border-border-main">
-          {forecast.cash.available.map((val: string, i: number) => (
-            <div key={i} className="flex-1 bg-primary/30 rounded-t-md border border-primary/20 transition-all hover:bg-primary/40 relative group" title={"Day " + forecast.cash.days[i] + ": " + val}>
-              <div className="absolute inset-x-0 bottom-0 bg-primary/50 rounded-b-md" style={{ height: "100%" }}></div>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-center gap-8 mt-4 text-xs text-text-dim">
-          <div className="flex items-center gap-2"><div className="w-3 h-3 bg-primary/50 rounded-sm" /> Available</div>
-          <div className="flex items-center gap-2"><div className="w-3 h-3 bg-warning/50 rounded-sm" /> Locked (Not Shown)</div>
+        <CashFlowChart data={chartData} totalCapital={economy?.totalCapital || '0'} />
+        <div className="flex justify-center gap-8 mt-8 text-xs text-text-dim">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-primary/50 rounded-sm" />
+            Available
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-warning/50 rounded-sm" />
+            Locked
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-success/50 rounded-sm" />
+            Settled
+          </div>
         </div>
       </Panel>
 
-      <div className="grid grid-cols-12 gap-6">
-        <Panel className="col-span-8">
-          <SectionHeader title="Milestone Completion Forecast" />
-          <div className="bg-elevated rounded-xl p-6 text-center text-text-dim">
-            <TrendingUp size={32} className="mx-auto mb-2 opacity-50" />
-            <p>Future predictive scheduling requires AI engine integration.</p>
+      {/* Milestone Completion Forecast */}
+      <ProjectForecastCards projects={projects} />
+
+      {/* Settlement Forecast + Future Events */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Settlement Forecast */}
+        <Panel className="lg:col-span-8">
+          <SectionHeader title="Settlement Forecast" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-elevated rounded-2xl p-6 text-center">
+              <p className="text-text-dim text-xs uppercase tracking-wide mb-2">Expected Total Settled</p>
+              <p className="text-[36px] font-bold text-success leading-none">{money(forecast.settlement.totalSettled)}</p>
+              <p className="text-xs text-text-dim mt-2">{settledMilestones} of {totalMilestones} milestones settled</p>
+            </div>
+            <div className="bg-elevated rounded-2xl p-6 text-center">
+              <p className="text-text-dim text-xs uppercase tracking-wide mb-2">Settlement Confidence</p>
+              <div className="flex justify-center mt-2">
+                <CircularGauge value={settlementConfidence} size={80} stroke={6} />
+              </div>
+            </div>
           </div>
+
+          {/* Per-project settlement breakdown — use project names */}
+          {Object.entries(forecast.settlement.byProject).length > 0 && (
+            <div className="mt-6 space-y-2">
+              <h4 className="text-sm font-semibold text-text-main">Settled by Project</h4>
+              {Object.entries(forecast.settlement.byProject).map(([id, amount]) => (
+                <div key={id} className="flex justify-between items-center p-3 bg-elevated rounded-lg">
+                  <span className="text-sm text-text-muted">{projectMap[id] || id.substring(0, 8) + '...'}</span>
+                  <span className="text-sm font-semibold text-success">{money(amount)}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </Panel>
 
-        <Panel className="col-span-4">
-          <SectionHeader title="Settlement Forecast" />
-          <div className="space-y-6">
-            <div className="bg-elevated rounded-2xl p-6 text-center">
-              <p className="text-text-dim text-xs uppercase tracking-wide mb-2">Expected Total</p>
-              <p className="text-[28px] font-bold text-success leading-none">{money(forecast.settlement.totalSettled)}</p>
+        {/* Future Events */}
+        <Panel className="lg:col-span-4">
+          <SectionHeader title="Upcoming Events" />
+          {futureEvents.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <Calendar size={32} className="text-text-dim mb-3" />
+              <p className="text-sm text-text-muted">No upcoming events.</p>
             </div>
-            <div className="bg-elevated rounded-2xl p-6 text-center">
-              <p className="text-text-dim text-xs uppercase tracking-wide mb-2">Forecast Confidence</p>
-              <div className="flex justify-center"><CircularGauge value={82} size={80} /></div>
+          ) : (
+            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-1">
+              {futureEvents.map((evt, i) => (
+                <div key={i} className="p-3 bg-elevated rounded-lg border-l-2 border-border-main hover:border-primary transition-colors">
+                  <div className="flex items-center gap-2 mb-1">
+                    <evt.icon size={14} className={evt.color} />
+                    <span className="text-xs font-bold uppercase text-text-dim">{evt.type}</span>
+                  </div>
+                  <p className="text-sm font-medium text-text-main">{evt.text}</p>
+                </div>
+              ))}
             </div>
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-text-main">Upcoming Events</h4>
-              <div className="p-3 bg-surface rounded-lg border-l-2 border-border-main text-sm text-text-muted">Settlement pipeline active.</div>
-            </div>
-          </div>
+          )}
         </Panel>
       </div>
     </div>
   );
 };
 
+/* ---- Pure event extraction from project state. No calculations. ---- */
+
+interface FutureEvent {
+  type: string;
+  text: string;
+  icon: React.ElementType;
+  color: string;
+}
+
+function buildFutureEvents(projects: Project[]): FutureEvent[] {
+  const events: FutureEvent[] = [];
+
+  for (const p of projects) {
+    if (p.status === 'completed') continue;
+
+    for (const m of p.milestones) {
+      if (m.claimed && !m.settled) {
+        events.push({ type: 'Settlement', text: `${m.name} — ${p.name}`, icon: Landmark, color: 'text-success' });
+      } else if (m.funded && !m.claimed) {
+        events.push({ type: 'Claim', text: `${m.name} — ${p.name}`, icon: Clock, color: 'text-warning' });
+      } else if (!m.funded) {
+        events.push({ type: 'Funding', text: `${m.name} — ${p.name}`, icon: TrendingUp, color: 'text-primary' });
+      }
+    }
+  }
+
+  return events.slice(0, 12);
+}

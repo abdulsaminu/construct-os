@@ -1,14 +1,15 @@
 import React from 'react';
-import { 
-  LayoutDashboard, Landmark, FolderKanban, Users, BrainCircuit, 
-  ScrollText, TrendingUp, ShieldAlert, Receipt, Settings, ChevronLeft, ChevronRight
+import {
+  LayoutDashboard, Landmark, FolderKanban, Users, BrainCircuit,
+  ScrollText, Receipt, Settings, ChevronLeft, ChevronRight,
+  LucideIcon
 } from 'lucide-react';
 import { NavigationItem } from './NavigationItem';
 
 interface PageConfig {
   id: string;
   label: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
 }
 
 const mainNav: PageConfig[] = [
@@ -21,8 +22,6 @@ const mainNav: PageConfig[] = [
 
 const secondaryNav: PageConfig[] = [
   { id: 'ledger', label: 'Ledger', icon: ScrollText },
-  { id: 'forecasts', label: 'Forecasts', icon: TrendingUp },
-  { id: 'risk-engine', label: 'Risk Engine', icon: ShieldAlert },
   { id: 'settlements', label: 'Settlements', icon: Receipt },
 ];
 
@@ -74,13 +73,13 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
           <div className="mb-4">
             {!collapsed && <p className="text-caption font-semibold text-text-dim uppercase tracking-wider px-3 mb-2">Main</p>}
             {mainNav.map(item => (
-              <NavigationItem 
-                key={item.id} 
-                icon={item.icon} 
-                label={item.label} 
-                active={activePage === item.id} 
+              <NavigationItem
+                key={item.id}
+                icon={item.icon}
+                label={item.label}
+                active={activePage === item.id}
                 collapsed={collapsed}
-                onClick={() => handleNav(item.id)} 
+                onClick={() => handleNav(item.id)}
               />
             ))}
           </div>
@@ -88,13 +87,13 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
           <div className="border-t border-border-main pt-4">
             {!collapsed && <p className="text-caption font-semibold text-text-dim uppercase tracking-wider px-3 mb-2">System</p>}
             {secondaryNav.map(item => (
-              <NavigationItem 
-                key={item.id} 
-                icon={item.icon} 
-                label={item.label} 
-                active={activePage === item.id} 
+              <NavigationItem
+                key={item.id}
+                icon={item.icon}
+                label={item.label}
+                active={activePage === item.id}
                 collapsed={collapsed}
-                onClick={() => handleNav(item.id)} 
+                onClick={() => handleNav(item.id)}
               />
             ))}
           </div>
@@ -103,11 +102,12 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
         {/* Bottom Settings & Collapse */}
         <div className="border-t border-border-main p-3 space-y-1">
           <NavigationItem icon={Settings} label="Settings" collapsed={collapsed} onClick={() => {}} />
-          
+
           {/* Collapse Button - Desktop Only */}
-          <button 
-            onClick={onToggleCollapse} 
+          <button
+            onClick={onToggleCollapse}
             className="hidden lg:flex w-full items-center justify-center h-10 rounded-lg text-text-dim hover:bg-white/5 hover:text-text-main transition-colors"
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </button>

@@ -1,73 +1,107 @@
-
-import React from "react";
-import { Project } from "../../../types";
-import { Panel } from "../../ui/Panel";
-import { SectionHeader } from "../../ui/SectionHeader";
-import { HealthBadge } from "../../ui/HealthBadge";
-import { Activity } from "lucide-react";
+import React from 'react';
+import { Project, Contractor, Economy } from '../../../types';
+import { Panel } from '../../ui/Panel';
+import { SectionHeader } from '../../ui/SectionHeader';
+import { MetricCard } from '../../ui/MetricCard';
+import { ServiceStatusGrid } from '../ServiceStatusGrid';
+import { AlertTriangle, RefreshCw, Activity, Database, Users } from 'lucide-react';
 
 interface SystemHealthPageProps {
   projects: Project[];
+  contractors: Contractor[];
+  economy: Economy | null;
+  ledgerEntryCount: number;
+  apiLatencyMs: {
+    economy: number;
+    projects: number;
+    risk: number;
+    allocations: number;
+    forecast: number;
+    contractors: number;
+  };
+  isLoading: boolean;
+  error?: string | null;
+  onRetry?: () => void;
 }
 
-export const SystemHealthPage: React.FC<SystemHealthPageProps> = ({ projects }) => {
-  const ledgerCount: number = 0;
-  const contractorCount: number = 0;
+export const SystemHealthPage: React.FC<SystemHealthPageProps> = ({
+  projects, contractors, economy, ledgerEntryCount, apiLatencyMs, isLoading, error, onRetry
+}) => {
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="bg-surface rounded-2xl border border-border-main p-6 h-36 animate-pulse" />
+          ))}
+        </div>
+        <div className="bg-surface rounded-2xl border border-border-main p-6 h-64 animate-pulse" />
+      </div>
+    );
+  }
 
-  const services = [
-    { name: "API Gateway", status: "Healthy", latency: "12ms" },
-    { name: "Ledger", status: "Healthy", latency: "31ms" },
-    { "Settlement", status: "Healthy", latency: "N/A" },
-    { name: "Risk Engine", status: "Healthy", latency: "120ms" },
-    { "Forecast", status: "Healthy", latency: "82ms" },
-    { "Storage", status: "Healthy", latency: "5ms" },
-  ];
+  if (error) {
+    return (
+      <Panel>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <AlertTriangle size={48} className="text-warning mb-4" />
+          <h4 className="text-lg font-semibold text-text-main mb-2">System Health Unavailable</h4>
+          <p className="text-sm text-text-muted mb-6">{error}</p>
+          {onRetry && (
+            <button
+              onClick={onRetry}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors text-sm"
+            >
+              <RefreshCw size={14} />
+              Retry
+            </button>
+          )}
+        </div>
+      </Panel>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-        <Panel>
-          <p className="text-text-dim text-xs uppercase tracking-wide mb-4">Ledger Entries</p>
-          <p className="text-[36px] font-bold text-text-main">{ledgerCount}</p>
-        </Panel>
-        <Panel>
-          <p className="text-text-dim text-xs uppercase tracking-wide mb-4">Projects</p>
-          <p className="text-[36px] font-bold text-text-main">{projects.length}</p>
-        </Panel>
-        <Panel>
-          <p className="text-text-dim text-xs uppercase tracking-wide mb-4">Contractors</p>
-          <p className="text-[36px] font-bold text-text-main">{contractorCount}</p>
-        </Panel>
+      {/* Core Metrics */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <MetricCard
+          title="Ledger Entries"
+          value={String(ledgerEntryCount)}
+          footer="Immutable records"
+          icon={Activity}
+          color="text-primary"
+        />
+        <MetricCard
+          title="Projects"
+          value={String(projects.length)}
+          footer={`${projects.filter(p => p.status !== 'completed').length} active`}
+          icon={Database}
+          color="text-primary"
+        />
+        <MetricCard
+          title="Contractors"
+          value={String(contractors.length)}
+          footer="Registered payees"
+          icon={Users}
+          color="text-primary"
+        />
+        <MetricCard
+          title="API Latency"
+          value={`${apiLatencyMs.economy}ms`}
+          footer="Root endpoint response"
+          icon={Activity}
+          color="text-success"
+        />
       </div>
 
-      <Panel className="col-span-12">
-        <SectionHeader title="Engine Activity and Status" />
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {services.map((s: any) => (
-            <div key={s.name} className="flex items-center justify-between p-4 bg-elevated rounded-xl border border-border-main">
-              <div className="flex items-center gap-3">
-                <HealthBadge status={s.status} />
-                <span className="text-sm font-medium text-text-main">{s.name}</span>
-              </div>
-              <span className="text-xs text-text-dim font-mono">{s.latency}</span>
-            </div>
-          ))}
-        </div>
-      </Panel>
-
-      <Panel className="col-span-12">
-        <SectionHeader title="Engine Timeline" />
-        <div className="space-y-0 pl-8 border-l-2 border-border-main ml-4">
-          <div className="relative py-4 pl-8 -ml-[41px]">
-            <div className="absolute -left-[41px] top-4 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-              <Activity size={14} />
-            </div>
-            <p className="text-sm font-medium text-text-main">System Initialized</p>
-            <p className="text-xs text-text-dim mt-1">10 seconds ago</p>
-          </div>
-        </div>
-      </Panel>
+      {/* Service Grid + Activity Timeline */}
+      <ServiceStatusGrid
+        projects={projects}
+        contractors={contractors}
+        ledgerEntryCount={ledgerEntryCount}
+        apiLatencyMs={apiLatencyMs}
+      />
     </div>
   );
 };
-
