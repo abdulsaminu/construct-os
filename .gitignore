@@ -1,9 +1,31 @@
+# Dependencies
 node_modules/
+
+# Build output
 dist/
 build/
 .next/
 coverage/
+
+# Environment
 .env
 .env.local
+.env.*.local
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
 *.log
+
+# Python tooling artifacts
+*.py
+__pycache__/
+*.pyc
+
+# Generated artifacts
+download/
+upload/
+tool-results/
+worklog.md

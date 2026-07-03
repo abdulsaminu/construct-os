@@ -1,14 +1,21 @@
 {
   "name": "constructos",
-  "version": "0.3.0",
+  "version": "0.9.0",
   "description": "Construction Finance Economic Layer (CFEL)",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx src/server.ts",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:all": "npm run dev & cd frontend && npm run dev",
     "build": "tsc -p .",
+    "build:frontend": "cd frontend && npm run build",
+    "build:all": "npm run build && cd frontend && npm run build",
     "test": "tsx --test test/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "typecheck:frontend": "cd frontend && npx tsc --noEmit",
+    "typecheck:all": "tsc --noEmit && cd frontend && npx tsc --noEmit",
+    "clean": "rm -rf dist node_modules/.cache && cd frontend && rm -rf dist"
   },
   "dependencies": {
     "viem": "^2.21.0",
