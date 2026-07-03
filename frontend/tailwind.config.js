@@ -3,33 +3,52 @@ export default {
   content: [ "./index.html", "./src/**/*.{js,ts,jsx,tsx}" ],
   theme: {
     extend: {
-      /* ===== Color Tokens ===== */
+      /* ===== Color Tokens — Dark Sidebar + Light Content Split ===== */
       colors: {
-        bg: '#0B1220',
-        surface: '#111827',
-        elevated: '#1A2438',
+        /* Backgrounds */
+        bg: '#F8FAFC',
+        surface: '#FFFFFF',
+        elevated: '#F1F5F9',
+        'sidebar-bg': '#172554',
+        'sidebar-hover': 'rgba(255, 255, 255, 0.06)',
+        'sidebar-active': 'rgba(255, 255, 255, 0.10)',
+        'sidebar-border': 'rgba(255, 255, 255, 0.08)',
+
+        /* Brand */
         primary: '#356DFF',
         'primary-hover': '#2554CC',
         'primary-glow': 'rgba(53, 109, 255, 0.25)',
-        success: '#22C55E',
-        warning: '#FACC15',
-        danger: '#EF4444',
-        info: '#3B82F6',
-        'text-main': '#F9FAFB',
-        'text-muted': '#9CA3AF',
-        'text-dim': '#8B95A5',
-        'border-main': '#1F2937',
+        cyan: '#22D3EE',
+        gold: '#FACC15',
+
+        /* Semantic */
+        success: '#16A34A',
+        warning: '#D97706',
+        danger: '#DC2626',
+        info: '#2563EB',
+
+        /* Text — light content area */
+        'text-main': '#0F172A',
+        'text-muted': '#64748B',
+        'text-dim': '#94A3B8',
+
+        /* Text — dark sidebar */
+        'sidebar-text': '#E2E8F0',
+        'sidebar-text-muted': '#94A3B8',
+        'sidebar-text-dim': '#64748B',
+        'sidebar-text-active': '#FFFFFF',
+
+        /* Borders — light content */
+        'border-main': '#E2E8F0',
       },
 
       /* ===== Border Radius Tokens ===== */
       borderRadius: {
-        /* Semantic aliases */
         btn: '6px',
         card: '12px',
         dialog: '16px',
         input: '8px',
         badge: '999px',
-        /* Raw px tokens */
         '6': '6px',
         '8': '8px',
         '12': '12px',
@@ -45,14 +64,18 @@ export default {
         'display-lg': ['3.5rem', { lineHeight: '1.05', letterSpacing: '-0.025em', fontWeight: '700' }],
         'display-md': ['3rem', { lineHeight: '1.08', letterSpacing: '-0.02em', fontWeight: '700' }],
         'display': ['2.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
-        'page-title': ['2.5rem', { lineHeight: '1.15', fontWeight: '600' }],
-        'h1': ['2.25rem', { lineHeight: '1.2', fontWeight: '600' }],
-        'h2': ['1.875rem', { lineHeight: '1.3', fontWeight: '700' }],
-        'h3': ['1.5rem', { lineHeight: '1.4', fontWeight: '600' }],
-        'title': ['1.25rem', { lineHeight: '1.5', fontWeight: '500' }],
-        'body-lg': ['1rem', { lineHeight: '1.5', fontWeight: '500' }],
-        'body': ['1rem', { lineHeight: '1.5', fontWeight: '400' }],
+        /* Page title — 36px semibold for visual hierarchy */
+        'page-title': ['2.25rem', { lineHeight: '1.2', fontWeight: '600' }],
+        /* Section heading — 22px semibold */
+        'h1': ['1.375rem', { lineHeight: '1.4', fontWeight: '600' }],
+        'h2': ['1.25rem', { lineHeight: '1.4', fontWeight: '600' }],
+        'h3': ['1.125rem', { lineHeight: '1.5', fontWeight: '500' }],
+        'title': ['1.125rem', { lineHeight: '1.5', fontWeight: '500' }],
+        'body-lg': ['1rem', { lineHeight: '1.6', fontWeight: '500' }],
+        'body': ['0.9375rem', { lineHeight: '1.6', fontWeight: '400' }],
+        /* Description text — 14px regular */
         'small': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
+        /* Card labels — 12px medium */
         'label': ['0.75rem', { lineHeight: '1.5', fontWeight: '500' }],
         'caption': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }],
         'micro': ['0.625rem', { lineHeight: '1.5', fontWeight: '500' }],
@@ -73,17 +96,16 @@ export default {
         '112': '28rem',
       },
 
-      /* ===== Shadow Tokens ===== */
+      /* ===== Shadow Tokens — Light theme ===== */
       boxShadow: {
-        surface: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06)',
-        raised: '0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08)',
-        floating: '0 12px 40px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.12)',
-        overlay: '0 24px 60px rgba(0, 0, 0, 0.35), 0 8px 20px rgba(0, 0, 0, 0.2)',
-        /* Legacy aliases (mapped) */
-        'level-1': '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06)',
-        'level-2': '0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08)',
-        'level-3': '0 12px 40px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.12)',
-        soft: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+        surface: '0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04)',
+        raised: '0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04)',
+        floating: '0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06)',
+        overlay: '0 24px 60px rgba(0, 0, 0, 0.18), 0 8px 20px rgba(0, 0, 0, 0.1)',
+        'level-1': '0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04)',
+        'level-2': '0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04)',
+        'level-3': '0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06)',
+        soft: '0 1px 2px rgba(0, 0, 0, 0.05)',
       },
 
       /* ===== Animation Duration Tokens ===== */
@@ -159,4 +181,4 @@ export default {
     },
   },
   plugins: [],
-}
+};

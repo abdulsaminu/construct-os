@@ -33,7 +33,7 @@ export const UpcomingActions: React.FC<Props> = ({ projects, onSelectProject }) 
             <li key={a.id}>
               <button 
                 onClick={() => onSelectProject(a.projectId)}
- className="w-full text-left p-3 rounded-8 bg-elevated text-small text-text-main hover:bg-white/5 transition-colors duration-fast"
+ className="w-full text-left p-3 rounded-8 bg-elevated text-small text-text-main hover:bg-elevated transition-colors duration-fast"
               >
                 {a.text}
               </button>

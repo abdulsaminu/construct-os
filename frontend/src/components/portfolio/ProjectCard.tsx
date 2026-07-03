@@ -18,7 +18,7 @@ export const ProjectCard = React.memo<Props>(({ project, risk, onSelect }) => {
   const progressPercent = Math.round((fundedCount / totalCount) * 100);
   
   const getRiskStyles = () => {
-    if (!risk) return 'bg-white/10 text-text-dim';
+    if (!risk) return 'bg-elevated text-text-dim';
     if (risk.composite > 80) return 'bg-danger/20 text-danger';
     if (risk.composite > 60) return 'bg-warning/20 text-warning';
     return 'bg-success/20 text-success';

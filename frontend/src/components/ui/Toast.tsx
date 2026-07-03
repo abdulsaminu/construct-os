@@ -90,7 +90,7 @@ const ToastItemComponent: React.FC<{
       </div>
       <button
         onClick={handleDismiss}
- className="shrink-0 p-1 rounded-8 hover:bg-white/10 text-text-dim hover:text-text-main transition-colors duration-fast"
+ className="shrink-0 p-1 rounded-8 hover:bg-elevated text-text-dim hover:text-text-main transition-colors duration-fast"
         aria-label="Dismiss notification"
       >
         <X size={16} />

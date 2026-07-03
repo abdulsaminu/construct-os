@@ -5,7 +5,7 @@ interface Props {
   color?: string;
 }
 
-export const Badge: React.FC<Props> = React.memo(({ text, color = 'bg-white/10 text-text-dim' }) => (
+export const Badge: React.FC<Props> = React.memo(({ text, color = 'bg-elevated text-text-dim' }) => (
  <span className={`px-3 py-1 rounded-badge text-caption font-bold whitespace-nowrap ${color}`}>
     {text}
   </span>

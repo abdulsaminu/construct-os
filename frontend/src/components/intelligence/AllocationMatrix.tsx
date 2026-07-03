@@ -19,7 +19,7 @@ export const AllocationMatrix: React.FC<Props> = ({ allocations, isLoading }) =>
       case 'fund': return 'bg-success/20 text-success border-success/30';
       case 'watch': return 'bg-primary/20 text-primary border-primary/30';
       case 'hold': return 'bg-warning/20 text-warning border-warning/30';
-      default: return 'bg-white/10 text-text-dim border-border-main';
+      default: return 'bg-elevated text-text-dim border-border-main';
     }
   };
 

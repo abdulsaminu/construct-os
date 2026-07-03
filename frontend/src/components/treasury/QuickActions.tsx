@@ -26,7 +26,7 @@ export const QuickActions: React.FC<Props> = ({ onNavigate }) => {
  className="w-full flex items-center justify-between p-4 bg-elevated rounded-card border border-border-main hover:border-border-main transition-all duration-fast group text-left"
           >
  <div className="flex items-center gap-3">
- <div className="p-2 rounded-8 bg-white/5 text-text-muted group-hover:text-primary transition-colors">
+ <div className="p-2 rounded-8 bg-elevated text-text-muted group-hover:text-primary transition-colors">
                 <action.icon size={20} />
               </div>
               <div>

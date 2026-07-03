@@ -35,7 +35,7 @@ export const TreasuryHeader: React.FC<Props> = ({ onRefresh, isLoading }) => {
         <button 
           onClick={handleRefresh} 
           disabled={isLoading}
- className="p-2 rounded-btn bg-elevated border border-border-main hover:bg-white/5 transition-colors duration-fast disabled:opacity-50"
+ className="p-2 rounded-btn bg-elevated border border-border-main hover:bg-elevated transition-colors duration-fast disabled:opacity-50"
           aria-label="Refresh data"
         >
  <RefreshCw size={20} className={`text-text-muted ${isLoading ? 'animate-spin' : ''}`} />

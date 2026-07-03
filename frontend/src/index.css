@@ -8,13 +8,15 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #F8FAFC;
+  color: #0F172A;
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* ===== Scrollbar ===== */
+/* ===== Scrollbar — Light theme ===== */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -23,11 +25,11 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #374151;
+  background: #CBD5E1;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4B5563;
+  background: #94A3B8;
 }
 
 /* ===== Focus — WCAG AA ===== */
@@ -74,13 +76,13 @@ body {
 
 /* ===== Component Layer ===== */
 @layer components {
-  /* --- Skeleton Shimmer --- */
+  /* --- Skeleton Shimmer — Light theme --- */
   .skeleton-shimmer {
     background: linear-gradient(
       90deg,
-      #1A2438 25%,
-      #243049 50%,
-      #1A2438 75%
+      #F1F5F9 25%,
+      #E2E8F0 50%,
+      #F1F5F9 75%
     );
     background-size: 200% 100%;
     animation: shimmer 2s ease-in-out infinite;
@@ -112,7 +114,7 @@ body {
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 px-4 py-3 bg-transparent text-text-muted
            rounded-btn font-semibold text-small
-           hover:bg-white/5 hover:text-text-main
+           hover:bg-elevated hover:text-text-main
            active:scale-[0.98]
            disabled:opacity-40 disabled:pointer-events-none
            transition-all duration-fast ease-out;
@@ -123,7 +125,7 @@ body {
     @apply transition-all duration-normal ease-out;
   }
   .search-input:focus-within {
-    @apply border-primary shadow-[0_0_0_3px_rgba(53,109,255,0.25)];
+    @apply border-primary shadow-[0_0_0_3px_rgba(53,109,255,0.15)];
   }
   .search-input:focus-within input::placeholder {
     @apply opacity-0 transition-opacity duration-fast;
@@ -131,10 +133,10 @@ body {
 
   /* --- Form Input --- */
   .form-input {
-    @apply w-full bg-elevated border border-border-main text-text-main
+    @apply w-full bg-surface border border-border-main text-text-main
            rounded-input px-3 py-3 text-small
            placeholder:text-text-dim
-           focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(53,109,255,0.25)]
+           focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(53,109,255,0.15)]
            transition-all duration-fast ease-out
            disabled:opacity-40 disabled:pointer-events-none;
   }
@@ -146,7 +148,7 @@ body {
 
   /* --- Dialog --- */
   .dialog-backdrop {
-    @apply bg-black/60 backdrop-blur-sm;
+    @apply bg-black/40 backdrop-blur-sm;
     animation: fade-in 250ms ease-out;
   }
   .dialog-content {
@@ -193,7 +195,7 @@ body {
 @media (max-width: 639px) {
   .sidebar-mobile-drawer {
     @apply fixed inset-x-0 bottom-0 top-auto h-auto max-h-[70vh]
-           rounded-t-16 rounded-b-none border-t border-border-main border-l-0 border-r-0
+           rounded-t-16 rounded-b-none border-t border-sidebar-border border-l-0 border-r-0
            z-50;
     animation: fade-in 250ms ease-out;
     padding-bottom: env(safe-area-inset-bottom, 0px);

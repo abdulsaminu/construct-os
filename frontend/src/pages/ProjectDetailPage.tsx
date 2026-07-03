@@ -84,13 +84,13 @@ export const ProjectDetailPage: React.FC<Props> = ({ id, onBack }) => {
  <div className="flex items-center gap-4">
           <button 
             onClick={onBack} 
- className="p-3 rounded-btn bg-elevated border border-border-main hover:bg-white/5 text-text-muted hover:text-text-main transition-colors"
+ className="p-3 rounded-btn bg-elevated border border-border-main hover:bg-border-main text-text-muted hover:text-text-main transition-colors"
             aria-label="Go back to portfolio"
           >
             <ArrowLeft size={20} />
           </button>
           <div>
- <h1 className="text-h1 font-bold text-text-main leading-tight">{project.name}</h1>
+ <h1 className="text-page-title font-semibold text-text-main leading-tight">{project.name}</h1>
  <p className="text-small text-text-dim mt-1">Project Execution & Settlement</p>
           </div>
         </div>

@@ -16,7 +16,7 @@ export const Accordion: React.FC<Props> = ({ id, trigger, children, defaultOpen 
       <button
         id={id}
         onClick={() => setIsOpen(!isOpen)}
- className="w-full flex items-center justify-between p-4 text-left bg-elevated hover:bg-white/5 rounded-btn transition-colors"
+ className="w-full flex items-center justify-between p-4 text-left bg-elevated hover:bg-border-main rounded-btn transition-colors"
         aria-expanded={isOpen}
         aria-controls={`accordion-content-${id}`}
       >

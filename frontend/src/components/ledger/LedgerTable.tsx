@@ -17,7 +17,7 @@ export const LedgerTable: React.FC<Props> = ({ entries, onSelect }) => {
       case 'MILESTONE_FUNDED': return 'text-warning bg-warning/10';
       case 'MILESTONE_CLAIMED': return 'text-info bg-info/10';
       case 'SETTLEMENT': return 'text-success bg-success/10';
-      default: return 'text-text-dim bg-white/5';
+      default: return 'text-text-dim bg-elevated';
     }
   };
 

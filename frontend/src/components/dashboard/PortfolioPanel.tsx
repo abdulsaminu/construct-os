@@ -19,7 +19,7 @@ export const PortfolioPanel: React.FC<Props> = ({ projects, risks, onSelectProje
 
   const getRiskColor = (pId: string) => {
     const risk = risks[pId];
-    if (!risk) return 'bg-white/10 text-text-dim';
+    if (!risk) return 'bg-elevated text-text-dim';
     if (risk.composite > 80) return 'bg-danger/20 text-danger';
     if (risk.composite > 60) return 'bg-warning/20 text-warning';
     if (risk.composite > 30) return 'bg-primary/20 text-primary';

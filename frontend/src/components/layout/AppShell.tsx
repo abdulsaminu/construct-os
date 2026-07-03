@@ -29,7 +29,7 @@ export const AppShell: React.FC<Props> = ({ activePage, onNavigate, children }) 
 
   return (
     <ToastProvider>
- <div className="min-h-screen bg-bg flex">
+      <div className="min-h-screen bg-bg flex">
         <Sidebar
           activePage={activePage}
           onNavigate={onNavigate}
@@ -39,15 +39,14 @@ export const AppShell: React.FC<Props> = ({ activePage, onNavigate, children }) 
           onCloseMobile={() => setMobileOpen(false)}
         />
 
- <div className={`flex-1 flex flex-col transition-[margin] duration-slow transition-timing-panel ${collapsed ? 'lg:ml-20' : 'lg:ml-[280px]'}`}>
+        <div className={`flex-1 flex flex-col transition-[margin] duration-slow transition-timing-panel ${collapsed ? 'lg:ml-20' : 'lg:ml-[280px]'}`}>
           <TopBar
             title={meta.title}
             description={meta.description}
             onMenuClick={() => setMobileOpen(true)}
           />
- <main id="main-content" className="flex-1 p-6 overflow-y-auto">
-            {/* Page transition: fade + 8px upward */}
- <div key={activePage} className="page-enter">
+          <main id="main-content" className="flex-1 p-8 overflow-y-auto">
+            <div key={activePage} className="page-enter">
               {children}
             </div>
           </main>

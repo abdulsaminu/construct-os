@@ -29,7 +29,7 @@ export const LedgerTimeline: React.FC<Props> = ({ entries, onSelect }) => {
           </div>
           <button 
             onClick={() => onSelect(e)}
- className="w-full text-left p-4 bg-elevated rounded-card border border-border-main hover:bg-white/5 transition-colors"
+ className="w-full text-left p-4 bg-elevated rounded-card border border-border-main hover:bg-elevated transition-colors"
           >
  <div className="flex items-center justify-between mb-1">
  <span className="text-small font-bold text-text-main uppercase">{e.type.replace(/_/g, ' ')}</span>

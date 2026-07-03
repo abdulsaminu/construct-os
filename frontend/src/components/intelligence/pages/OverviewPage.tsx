@@ -139,7 +139,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             {recommendations.map((rec, i) => (
               <div
                 key={i}
- className="flex items-center justify-between p-4 bg-elevated rounded-card border border-border-main hover:bg-white/5 transition-colors"
+ className="flex items-center justify-between p-4 bg-elevated rounded-card border border-border-main hover:bg-elevated transition-colors"
               >
  <div className="flex items-center gap-4">
  <span className="text-h3 font-bold text-text-dim w-8">{i + 1}.</span>

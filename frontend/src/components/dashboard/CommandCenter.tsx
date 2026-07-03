@@ -39,7 +39,7 @@ export const CommandCenter: React.FC<Props> = ({ projects, onSelectProject }) =>
       case 'Fund': return 'bg-primary/10 text-primary hover:bg-primary/20';
       case 'Claim': return 'bg-warning/10 text-warning hover:bg-warning/20';
       case 'Settle': return 'bg-success/10 text-success hover:bg-success/20';
-      default: return 'bg-white/5 text-text-muted hover:bg-white/10';
+      default: return 'bg-elevated text-text-muted hover:bg-border-main';
     }
   };
 
