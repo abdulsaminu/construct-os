@@ -35,7 +35,7 @@ export const PortfolioPanel: React.FC<Props> = ({ projects, risks, onSelectProje
   };
 
   return (
-    <Panel className="lg:col-span-8 col-span-12">
+ <Panel className="lg:col-span-8 col-span-12">
       <SectionHeader title="Active Portfolio" />
       {activeProjects.length === 0 ? (
         <EmptyState 
@@ -44,7 +44,7 @@ export const PortfolioPanel: React.FC<Props> = ({ projects, risks, onSelectProje
           description="Create your first project to begin capital allocation." 
         />
       ) : (
-        <div className="space-y-4">
+ <div className="space-y-4">
           {activeProjects.map(p => {
             const fundedCount = p.milestones.filter(m => m.funded).length;
             const totalCount = p.milestones.length || 1;
@@ -53,27 +53,27 @@ export const PortfolioPanel: React.FC<Props> = ({ projects, risks, onSelectProje
             return (
               <div 
                 key={p.id} 
-                className="p-6 bg-elevated rounded-12 border border-border-main  transition-transform duration-fast cursor-pointer group"
+ className="p-6 bg-elevated rounded-card border border-border-main transition-transform duration-fast cursor-pointer group"
                 onClick={() => onSelectProject(p.id)}
               >
-                <div className="flex items-start justify-between mb-3">
+ <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h4 className="text-small font-medium text-text-main group-hover:text-primary transition-colors">{p.name}</h4>
-                    <p className="text-caption text-text-dim mt-1">Budget: {money(p.totalBudget)}</p>
+ <h4 className="text-small font-medium text-text-main group-hover:text-primary transition-colors">{p.name}</h4>
+ <p className="text-caption text-text-dim mt-1">Budget: {money(p.totalBudget)}</p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className={`px-3 py-1 rounded-badge text-caption font-bold ${getRiskColor(p.id)}`}>
+ <div className="flex items-center gap-2">
+ <span className={`px-3 py-1 rounded-badge text-caption font-bold ${getRiskColor(p.id)}`}>
                       {risks[p.id]?.composite ? `Risk ${risks[p.id].composite}` : 'Healthy'}
                     </span>
-                    <ArrowRight size={16} className="text-text-dim group-hover:text-primary transition-colors mt-1" />
+ <ArrowRight size={16} className="text-text-dim group-hover:text-primary transition-colors mt-1" />
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-4">
-                  <div className="flex-1">
-                    <div className="flex justify-between text-caption mb-1.5">
-                      <span className="text-text-dim">Milestones ({fundedCount}/{totalCount})</span>
-                      <span className="text-text-muted font-medium">{progressPercent}%</span>
+ <div className="flex items-center gap-4">
+ <div className="flex-1">
+ <div className="flex justify-between text-caption mb-1.5">
+ <span className="text-text-dim">Milestones ({fundedCount}/{totalCount})</span>
+ <span className="text-text-muted font-medium">{progressPercent}%</span>
                     </div>
                     <ProgressBar percentage={progressPercent} color={getProgressColor(p.id)} />
                   </div>

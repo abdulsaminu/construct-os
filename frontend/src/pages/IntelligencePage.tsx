@@ -192,13 +192,13 @@ export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
   // Error state with retry
   if (error && !isLoading) {
     return (
-      <div className="p-4 lg:p-8">
-        <div className="flex items-center gap-2 border-b border-border-main mb-8 pb-4 overflow-x-auto">
+ <div>
+ <div role="tablist" className="flex items-center gap-2 border-b border-border-main mb-8 pb-4 overflow-x-auto">
           {TABS.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 rounded-t-xl text-small font-medium whitespace-nowrap transition-colors ${
+ className={`px-6 py-3 rounded-t-card text-small font-medium whitespace-nowrap transition-colors ${
                 activeTab === tab.id
                   ? 'bg-elevated text-primary border border-b-2 border-primary mb-[-2px]'
                   : 'text-text-muted hover:text-text-main hover:bg-elevated'
@@ -209,13 +209,13 @@ export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
           ))}
         </div>
 
-        <div className="bg-surface rounded-card border border-border-main p-12 text-center">
-          <AlertTriangle size={32} className="mx-auto text-warning mb-4" />
-          <h3 className="text-h3 font-semibold text-text-main mb-2">{error}</h3>
-          <p className="text-text-muted mb-6">Check that the backend is running on port 3001.</p>
+ <div className="bg-surface rounded-card border border-border-main p-12 text-center">
+ <AlertTriangle size={32} className="mx-auto text-warning mb-4" />
+ <h3 className="text-h3 font-semibold text-text-main mb-2">{error}</h3>
+ <p className="text-text-muted mb-6">Check that the backend is running on port 3001.</p>
           <button
             onClick={loadData}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-12 font-semibold hover:bg-primary-hover transition-colors"
+ className="inline-flex items-center gap-2 px-4 py-3 bg-primary text-white rounded-btn font-semibold hover:bg-primary-hover transition-colors"
           >
             <RefreshCw size={16} />
             Retry
@@ -226,19 +226,19 @@ export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
   }
 
   return (
-    <div className="p-4 lg:p-8">
+ <div>
       {/* Sub-Navigation */}
-      <div className="flex items-center gap-2 border-b border-border-main mb-8 pb-4 overflow-x-auto">
+ <div role="tablist" className="flex items-center gap-2 border-b border-border-main mb-8 pb-4 overflow-x-auto">
         {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-6 py-3 rounded-t-xl text-small font-medium whitespace-nowrap transition-colors ${
+ className={`px-6 py-3 rounded-t-card text-small font-medium whitespace-nowrap transition-colors ${
               activeTab === tab.id
                 ? 'bg-elevated text-primary border border-b-2 border-primary mb-[-2px]'
                 : 'text-text-muted hover:text-text-main hover:bg-elevated'
             }`}
-            aria-current={activeTab === tab.id ? 'page' : undefined}
+            role="tab" aria-selected={activeTab === tab.id}
           >
             {tab.label}
           </button>

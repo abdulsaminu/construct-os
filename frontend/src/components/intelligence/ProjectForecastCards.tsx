@@ -45,9 +45,9 @@ export const ProjectForecastCards: React.FC<Props> = ({ projects }) => {
     return (
       <Panel>
         <SectionHeader title="Milestone Completion Forecast" />
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+ <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-elevated rounded-12 h-32 animate-pulse" />
+ <div key={i} className="bg-elevated rounded-card h-32 animate-pulse" />
           ))}
         </div>
       </Panel>
@@ -60,23 +60,23 @@ export const ProjectForecastCards: React.FC<Props> = ({ projects }) => {
       {activeProjects.length === 0 ? (
         <EmptyState icon={TrendingUp} title="No Active Projects" description="No projects with pending milestones to forecast." />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+ <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {activeProjects.map(p => {
             const f = forecasts[p.id];
             if (!f) return null;
             return (
-              <div key={p.id} className="bg-elevated rounded-12 border border-border-main p-6">
-                <p className="text-small font-semibold text-text-main mb-4">{p.name}</p>
-                <div className="flex items-center justify-between">
+ <div key={p.id} className="bg-elevated rounded-card border border-border-main p-6">
+ <p className="text-small font-semibold text-text-main mb-4">{p.name}</p>
+ <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-text-dim text-caption uppercase tracking-wide mb-1">Est. Completion</p>
-                    <p className="text-h3 font-bold text-text-main">
+ <p className="text-text-dim text-caption uppercase tracking-wide mb-1">Est. Completion</p>
+ <p className="text-h3 font-bold text-text-main">
                       {f.completionDays !== null ? `${f.completionDays}d` : 'N/A'}
                     </p>
                   </div>
                   <CircularGauge value={f.confidence} size={32} stroke={4} />
                 </div>
-                <p className="text-caption text-text-dim mt-3">{f.reason}</p>
+ <p className="text-caption text-text-dim mt-3">{f.reason}</p>
               </div>
             );
           })}

@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const AllocationMatrix: React.FC<Props> = ({ allocations, isLoading }) => {
-  if (isLoading) return <Panel className="col-span-12"><div className="space-y-4">{[1,2,3].map(i=><div key={i} className="bg-elevated rounded-12 h-24 animate-pulse" />)}</div></Panel>;
+ if (isLoading) return <Panel className="col-span-12"><div className="space-y-4">{[1,2,3].map(i=><div key={i} className="bg-elevated rounded-card h-24 animate-pulse" />)}</div></Panel>;
   
   const getRecStyles = (rec: string) => {
     switch(rec) {
@@ -24,31 +24,31 @@ export const AllocationMatrix: React.FC<Props> = ({ allocations, isLoading }) =>
   };
 
   return (
-    <Panel className="col-span-12">
+ <Panel className="col-span-12">
       <SectionHeader title="Capital Allocation Matrix" />
       {allocations.length === 0 ? (
         <EmptyState icon={Target} title="No Active Allocations" description="No active projects require capital allocation." />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+ <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {allocations.map(a => (
-            <div key={a.projectId} className="bg-elevated rounded-card border border-border-main p-6  transition-all duration-fast flex flex-col justify-between">
+ <div key={a.projectId} className="bg-elevated rounded-card border border-border-main p-6 transition-all duration-fast flex flex-col justify-between">
               <div>
-                <div className="flex justify-between items-start mb-4">
-                  <h4 className="text-body font-semibold text-text-main pr-4">{a.projectName}</h4>
-                  <span className={`px-3 py-2 rounded-badge text-caption font-bold border ${getRecStyles(a.recommendation)}`}>
+ <div className="flex justify-between items-start mb-4">
+ <h4 className="text-body font-semibold text-text-main pr-4">{a.projectName}</h4>
+ <span className={`px-3 py-2 rounded-badge text-caption font-bold border ${getRecStyles(a.recommendation)}`}>
                     {a.recommendation.toUpperCase()}
                   </span>
                 </div>
-                <p className="text-small text-text-dim mb-6">{a.reason}</p>
+ <p className="text-small text-text-dim mb-6">{a.reason}</p>
               </div>
-              <div className="border-t border-border-main pt-4 space-y-3">
-                <div className="flex justify-between text-small">
-                  <span className="text-text-muted">Allocation Score</span>
-                  <span className="font-bold text-text-main">{a.score}/100</span>
+ <div className="border-t border-border-main pt-4 space-y-3">
+ <div className="flex justify-between text-small">
+ <span className="text-text-muted">Allocation Score</span>
+ <span className="font-bold text-text-main">{a.score}/100</span>
                 </div>
-                <div className="flex justify-between text-small">
-                  <span className="text-text-muted">Requestable Cap</span>
-                  <span className="font-bold text-primary">{money(a.requestableCap)}</span>
+ <div className="flex justify-between text-small">
+ <span className="text-text-muted">Requestable Cap</span>
+ <span className="font-bold text-primary">{money(a.requestableCap)}</span>
                 </div>
               </div>
             </div>

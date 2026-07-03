@@ -9,18 +9,18 @@ interface Props {
 
 export const TreasuryFlow: React.FC<Props> = ({ economy }) => {
   return (
-    <Panel className="lg:col-span-4 col-span-12">
+ <Panel className="lg:col-span-4 col-span-12">
       <SectionHeader title="Treasury Flow" />
-      <div className="space-y-6 mt-8">
+ <div className="space-y-6 mt-8">
         {/* Visual Stacked Bar (Equal placeholder widths per spec) */}
-        <div className="flex h-4 rounded-full overflow-hidden bg-elevated">
-          <div className="flex-1 bg-success" title="Available" />
-          <div className="flex-1 bg-warning" title="Locked" />
-          <div className="flex-1 bg-primary" title="Settled" />
+ <div className="flex h-4 rounded-full overflow-hidden bg-elevated">
+ <div className="flex-1 bg-success" title="Available" />
+ <div className="flex-1 bg-warning" title="Locked" />
+ <div className="flex-1 bg-primary" title="Settled" />
         </div>
 
         {/* Legend */}
-        <div className="grid grid-cols-3 gap-4">
+ <div className="grid grid-cols-3 gap-4">
           <LegendItem label="Available" color="bg-success" />
           <LegendItem label="Locked" color="bg-warning" />
           <LegendItem label="Settled" color="bg-primary" />
@@ -31,8 +31,8 @@ export const TreasuryFlow: React.FC<Props> = ({ economy }) => {
 };
 
 const LegendItem = ({ label, color }: { label: string; color: string }) => (
-  <div className="flex items-center gap-2">
-    <div className={`w-3 h-3 rounded-6 ${color}`} />
-    <span className="text-small text-text-muted">{label}</span>
+ <div className="flex items-center gap-2">
+ <div className={`w-3 h-3 rounded-6 ${color}`} />
+ <span className="text-small text-text-muted">{label}</span>
   </div>
 );

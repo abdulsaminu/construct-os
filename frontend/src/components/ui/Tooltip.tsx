@@ -60,7 +60,7 @@ export const Tooltip: React.FC<Props> = ({
 
   return (
     <div
-      className="relative inline-flex"
+ className="relative inline-flex"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -69,7 +69,7 @@ export const Tooltip: React.FC<Props> = ({
       {visible && (
         <div
           role="tooltip"
-          className={`absolute ${sideClasses[side]} z-50 max-w-[200px] text-small text-text-main px-3 py-2 bg-elevated border border-border-main rounded-btn shadow-raised whitespace-normal`}
+ className={`absolute ${sideClasses[side]} z-50 max-w-[200px] text-small text-text-main px-3 py-2 bg-elevated border border-border-main rounded-btn shadow-raised whitespace-normal`}
         >
           {content}
         </div>

@@ -12,5 +12,5 @@ export const CategoryBadge: React.FC<Props> = ({ score }) => {
   else if (score > 60) { text = 'Warning'; styles = 'bg-warning/20 text-warning'; }
   else if (score > 30) { text = 'Watch'; styles = 'bg-primary/20 text-primary'; }
 
-  return <span className={`px-3 py-1 rounded-badge text-caption font-bold ${styles}`}>{text}</span>;
+ return <span className={`px-3 py-1 rounded-badge text-caption font-bold ${styles}`}>{text}</span>;
 };

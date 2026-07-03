@@ -44,21 +44,21 @@ export const CommandCenter: React.FC<Props> = ({ projects, onSelectProject }) =>
   };
 
   return (
-    <Panel className="lg:col-span-8 col-span-12">
+ <Panel className="lg:col-span-8 col-span-12">
       <SectionHeader title="Command Center" />
       {actions.length === 0 ? (
         <EmptyState icon={Terminal} title="All Clear" description="No actions required. System is idle." />
       ) : (
-        <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+ <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
           {actions.slice(0, 10).map(item => (
-            <div key={item.id} className="flex items-center justify-between p-4 bg-elevated rounded-12 border border-border-main">
-              <div className="min-w-0 flex-1 mr-4">
-                <p className="text-small font-medium text-text-main truncate">{item.project}</p>
-                <p className="text-caption text-text-dim truncate">{item.milestone}</p>
+ <div key={item.id} className="flex items-center justify-between p-4 bg-elevated rounded-card border border-border-main">
+ <div className="min-w-0 flex-1 mr-4">
+ <p className="text-small font-medium text-text-main truncate">{item.project}</p>
+ <p className="text-caption text-text-dim truncate">{item.milestone}</p>
               </div>
               <button 
                 onClick={(e) => { e.stopPropagation(); onSelectProject(item.projectId); }}
-                className={`flex items-center gap-2 px-3 py-2 rounded-8 text-caption font-bold whitespace-nowrap transition-colors duration-fast ${getActionStyles(item.action)}`}
+ className={`flex items-center gap-2 px-4 py-3 rounded-8 text-caption font-bold whitespace-nowrap transition-colors duration-fast ${getActionStyles(item.action)}`}
               >
                 {item.action} <ArrowRight size={16} />
               </button>

@@ -37,11 +37,11 @@ export const DepositCard: React.FC<Props> = ({ onDepositSuccess }) => {
   };
 
   return (
-    <Panel className="lg:col-span-4 col-span-12">
+ <Panel className="lg:col-span-4 col-span-12">
       <SectionHeader title="Deposit Capital" />
-      <div className="mt-8 space-y-4">
+ <div className="mt-8 space-y-4">
         <div>
-          <label htmlFor="deposit-amount" className="block text-small text-text-muted mb-2">Deposit Amount</label>
+ <label htmlFor="deposit-amount" className="block text-small text-text-muted mb-2">Deposit Amount</label>
           <input
             id="deposit-amount"
             type="text"
@@ -50,14 +50,14 @@ export const DepositCard: React.FC<Props> = ({ onDepositSuccess }) => {
             value={amount}
             onChange={e => { setAmount(e.target.value.replace(/[^0-9]/g, '')); setError(''); }}
             placeholder="e.g. 1000000"
-            className="w-full bg-elevated border border-border-main rounded-12 p-3 text-text-main outline-none focus:border-primary transition-colors font-mono"
+ className="w-full bg-elevated border border-border-main rounded-card p-3 text-text-main outline-none focus:border-primary transition-colors font-mono"
             aria-label="Deposit amount"
           />
         </div>
         
         {error && (
-          <div className="flex items-center gap-2 text-danger text-caption bg-danger/10 p-3 rounded-8">
-            <AlertCircle size={16} className="shrink-0" />
+ <div className="flex items-center gap-2 text-danger text-caption bg-danger/10 p-3 rounded-8">
+ <AlertCircle aria-hidden='true' size={16} className="shrink-0" />
             <span>{error}</span>
           </div>
         )}
@@ -65,10 +65,10 @@ export const DepositCard: React.FC<Props> = ({ onDepositSuccess }) => {
         <button 
           onClick={handleDeposit}
           disabled={isDepositing}
-          className="w-full bg-primary hover:bg-primary-hover text-white p-4 rounded-12 font-semibold flex items-center justify-center gap-2 transition-colors duration-fast disabled:opacity-50"
+ className="w-full bg-primary hover:bg-primary-hover text-white p-4 rounded-btn font-semibold flex items-center justify-center gap-2 transition-colors duration-fast disabled:opacity-50"
           aria-label="Submit deposit"
         >
-          <Plus size={20} />
+          <Plus aria-hidden='true' size={20} />
           {isDepositing ? 'Processing...' : 'Deposit Capital'}
         </button>
       </div>

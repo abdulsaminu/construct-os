@@ -87,7 +87,7 @@ export const LedgerPage = () => {
         onExport={handleExport}
       />
 
-      <div className="bg-surface rounded-card border border-border-main p-6 min-h-[400px]">
+ <div className="bg-surface rounded-card border border-border-main p-6 min-h-[400px]">
         {isLoading ? (
           <TableSkeleton rows={12} />
         ) : filteredEntries.length === 0 ? (

@@ -18,7 +18,7 @@ export const ProjectOverviewCards: React.FC<Props> = ({ project, risk }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+ <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <OverviewCard title="Total Budget" value={money(project.totalBudget)} icon={DollarSign} color="text-primary" />
       <OverviewCard title="Status" value={project.status.replace('_', ' ').toUpperCase()} icon={ListChecks} color="text-text-main" />
       <OverviewCard title="Milestones" value={`${fundedCount} / ${project.milestones.length}`} icon={Activity} color="text-primary" />
@@ -33,11 +33,11 @@ export const ProjectOverviewCards: React.FC<Props> = ({ project, risk }) => {
 };
 
 const OverviewCard = ({ title, value, icon: Icon, color }: { title: string; value: string; icon: React.ElementType; color: string }) => (
-  <div className="bg-elevated rounded-12 p-4 flex items-center gap-4">
-    <div className={`p-3 rounded-8 bg-surface ${color}`}><Icon size={20} /></div>
+ <div className="bg-elevated rounded-card p-4 flex items-center gap-4">
+ <div className={`p-3 rounded-8 bg-surface ${color}`}><Icon size={20} /></div>
     <div>
-      <p className="text-caption text-text-dim uppercase tracking-wide">{title}</p>
-      <p className={`text-body-lg font-bold ${color}`}>{value}</p>
+ <p className="text-caption text-text-dim uppercase tracking-wide">{title}</p>
+ <p className={`text-body-lg font-bold ${color}`}>{value}</p>
     </div>
   </div>
 );

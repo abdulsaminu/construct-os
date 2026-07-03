@@ -54,27 +54,27 @@ export const TreasuryPage: React.FC<Props> = ({ onNavigate }) => {
   }, [loadData]);
 
   return (
-    <div className="p-4 lg:p-8">
+ <div>
       <TreasuryHeader onRefresh={loadData} isLoading={isLoading} />
 
-      <div className="space-y-6">
+ <div className="space-y-6">
         {/* Row 1: KPIs */}
         <TreasuryKPIs economy={economy} isLoading={isLoading} />
 
         {/* Row 2: Distribution & Deposit */}
-        <div className="grid grid-cols-12 gap-6">
+ <div className="grid grid-cols-12 gap-6">
           <CapitalDistribution economy={economy} isLoading={isLoading} />
           <DepositCard onDepositSuccess={loadData} />
         </div>
 
         {/* Row 3: Timeline & Quick Actions */}
-        <div className="grid grid-cols-12 gap-6">
+ <div className="grid grid-cols-12 gap-6">
           <TreasuryTimeline entries={ledger} isLoading={isLoading} />
           <QuickActions onNavigate={onNavigate} />
         </div>
 
         {/* Row 4: Health & Recent Events */}
-        <div className="grid grid-cols-12 gap-6">
+ <div className="grid grid-cols-12 gap-6">
           <TreasuryHealth />
           <CapitalEventsTable entries={ledger} isLoading={isLoading} />
         </div>

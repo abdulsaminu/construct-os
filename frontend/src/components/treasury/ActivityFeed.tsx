@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const ActivityFeed: React.FC<Props> = ({ entries, isLoading }) => {
-  if (isLoading) return <Panel className="lg:col-span-4 col-span-12"><SectionHeader title="Activity Feed" /><div className="space-y-3 mt-6">{[1,2,3,4].map(i=><Skeleton key={i} className="h-12 w-full" />)}</div></Panel>;
+ if (isLoading) return <Panel className="lg:col-span-4 col-span-12"><SectionHeader title="Activity Feed" /><div className="space-y-3 mt-6">{[1,2,3,4].map(i=><Skeleton key={i} className="h-12 w-full" />)}</div></Panel>;
   
   const feedItems = entries.slice(0, 6).map(e => {
     let text = '';
@@ -26,18 +26,18 @@ export const ActivityFeed: React.FC<Props> = ({ entries, isLoading }) => {
   });
 
   return (
-    <Panel className="lg:col-span-4 col-span-12">
+ <Panel className="lg:col-span-4 col-span-12">
       <SectionHeader title="Activity Feed" />
-      <div className="mt-6 space-y-2">
+ <div className="mt-6 space-y-2">
         {feedItems.length === 0 ? (
           <EmptyState icon={Activity} title="No events" description="Activity will appear here." />
         ) : (
           feedItems.map(item => (
-            <div key={item.id} className="p-3 bg-elevated rounded-8">
-              <p className="text-small font-medium text-text-main">{item.text}</p>
-              <div className="flex justify-between mt-1">
-                <p className="text-caption text-text-dim">{item.project}</p>
-                <p className="text-caption text-text-dim">{item.time}</p>
+ <div key={item.id} className="p-3 bg-elevated rounded-8">
+ <p className="text-small font-medium text-text-main">{item.text}</p>
+ <div className="flex justify-between mt-1">
+ <p className="text-caption text-text-dim">{item.project}</p>
+ <p className="text-caption text-text-dim">{item.time}</p>
               </div>
             </div>
           ))

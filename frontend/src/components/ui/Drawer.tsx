@@ -8,8 +8,11 @@ interface Props {
   children: React.ReactNode;
 }
 
+const FOCUSABLE_SELECTOR = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export const Drawer: React.FC<Props> = ({ isOpen, onClose, title, children }) => {
   const panelRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   // Lock body scroll when open
   useEffect(() => {
@@ -19,6 +22,50 @@ export const Drawer: React.FC<Props> = ({ isOpen, onClose, title, children }) =>
       document.body.style.overflow = 'unset';
     }
     return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
+  // Focus trap + focus management
+  useEffect(() => {
+    if (isOpen) {
+      // Save the currently focused element to restore later
+      previousFocusRef.current = document.activeElement as HTMLElement;
+
+      // Focus first focusable element
+      requestAnimationFrame(() => {
+        if (panelRef.current) {
+          const focusable = panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+          if (focusable.length > 0) focusable[0].focus();
+        }
+      });
+
+      const handleTabTrap = (e: KeyboardEvent) => {
+        if (e.key !== 'Tab' || !panelRef.current) return;
+        const focusable = panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      };
+
+      document.addEventListener('keydown', handleTabTrap);
+      return () => document.removeEventListener('keydown', handleTabTrap);
+    } else {
+      // Restore focus to trigger element on close
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus();
+        previousFocusRef.current = null;
+      }
+    }
   }, [isOpen]);
 
   // ESC to close
@@ -33,23 +80,11 @@ export const Drawer: React.FC<Props> = ({ isOpen, onClose, title, children }) =>
     }
   }, [isOpen, handleKeyDown]);
 
-  // Focus trap: focus first focusable element on open
-  useEffect(() => {
-    if (isOpen && panelRef.current) {
-      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusable.length > 0) {
-        focusable[0].focus();
-      }
-    }
-  }, [isOpen]);
-
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="dialog-backdrop" onClick={onClose} />
+      <div className="dialog-backdrop" onClick={onClose} aria-hidden="true" />
       <div
         ref={panelRef}
         role="dialog"
@@ -61,10 +96,10 @@ export const Drawer: React.FC<Props> = ({ isOpen, onClose, title, children }) =>
           <h2 className="text-title font-semibold text-text-main">{title}</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-btn hover:bg-elevated text-text-muted transition-colors"
+            className="p-3 rounded-btn hover:bg-elevated text-text-muted transition-colors"
             aria-label="Close drawer"
           >
-            <X size={24} strokeWidth={2} />
+            <X size={20} strokeWidth={2} aria-hidden="true" />
           </button>
         </div>
         <div className="p-6">

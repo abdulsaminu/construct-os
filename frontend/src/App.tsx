@@ -15,14 +15,14 @@ const SettingsPage = lazy(() => import('./pages/SettingsPage').then(m => ({ defa
 
 // Page-level skeleton
 const PageSkeleton = () => (
-  <div className="space-y-6 animate-pulse">
-    <div className="bg-elevated rounded-card h-16 w-64" />
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+ <div className="space-y-6 animate-pulse">
+ <div className="bg-elevated rounded-card h-16 w-64" />
+ <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
       {[1, 2, 3, 4].map(i => (
-        <div key={i} className="bg-surface rounded-card border border-border-main h-36 skeleton-shimmer" />
+ <div key={i} className="bg-surface rounded-card border border-border-main h-36 skeleton-shimmer" />
       ))}
     </div>
-    <div className="bg-surface rounded-card border border-border-main h-64 skeleton-shimmer" />
+ <div className="bg-surface rounded-card border border-border-main h-64 skeleton-shimmer" />
   </div>
 );
 

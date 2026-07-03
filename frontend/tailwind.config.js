@@ -17,7 +17,7 @@ export default {
         info: '#3B82F6',
         'text-main': '#F9FAFB',
         'text-muted': '#9CA3AF',
-        'text-dim': '#6B7280',
+        'text-dim': '#8B95A5',
         'border-main': '#1F2937',
       },
 

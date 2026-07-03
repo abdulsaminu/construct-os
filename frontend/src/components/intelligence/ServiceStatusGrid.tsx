@@ -4,7 +4,7 @@ import { Panel } from '../ui/Panel';
 import { SectionHeader } from '../ui/SectionHeader';
 import { HealthBadge } from '../ui/HealthBadge';
 import { MetricCard } from '../ui/MetricCard';
-import { Activity, Database, Landmark, TrendingUp, Users, ScrollText, Server, ShieldAlert, BarChart3, HardDrive } from 'lucide-react';
+import { Activity, Database, Landmark, TrendingUp, Users, ScrollText, Server, HardDrive, ShieldAlert } from 'lucide-react';
 
 interface Props {
   projects: Project[];
@@ -79,36 +79,36 @@ export const ServiceStatusGrid: React.FC<Props> = ({ projects, contractors, ledg
   const warningCount = services.filter(s => s.status === 'Warning' || s.status === 'Syncing').length;
 
   return (
-    <div className="space-y-6">
+ <div className="space-y-6">
       {/* Service Status Grid */}
       <Panel>
         <SectionHeader
           title="Engine Services"
           action={
-            <div className="flex items-center gap-4 text-caption">
-              <span className="flex items-center gap-2 text-success"><div className="w-2 h-2 rounded-full bg-success" />{healthyCount} Healthy</span>
+ <div className="flex items-center gap-4 text-caption">
+ <span className="flex items-center gap-2 text-success"><div className="w-2 h-2 rounded-full bg-success" />{healthyCount} Healthy</span>
               {warningCount > 0 && (
-                <span className="flex items-center gap-2 text-warning"><div className="w-2 h-2 rounded-full bg-warning" />{warningCount} Attention</span>
+ <span className="flex items-center gap-2 text-warning"><div className="w-2 h-2 rounded-full bg-warning" />{warningCount} Attention</span>
               )}
             </div>
           }
         />
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+ <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {services.map(s => {
             const Icon = SERVICE_ICONS[s.name] || Server;
             return (
               <div
                 key={s.name}
-                className="flex items-center justify-between p-4 bg-elevated rounded-12 border border-border-main"
+ className="flex items-center justify-between p-4 bg-elevated rounded-card border border-border-main"
               >
-                <div className="flex items-center gap-3">
-                  <Icon size={16} className="text-text-dim" />
+ <div className="flex items-center gap-3">
+ <Icon aria-hidden='true' size={16} className="text-text-dim" />
                   <div>
-                    <span className="text-small font-medium text-text-main block">{s.name}</span>
+ <span className="text-small font-medium text-text-main block">{s.name}</span>
                     <HealthBadge status={s.status} />
                   </div>
                 </div>
-                <span className="text-caption text-text-dim font-mono">{s.latency}</span>
+ <span className="text-caption text-text-dim font-mono">{s.latency}</span>
               </div>
             );
           })}
@@ -116,7 +116,7 @@ export const ServiceStatusGrid: React.FC<Props> = ({ projects, contractors, ledg
       </Panel>
 
       {/* Storage Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+ <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
         <MetricCard
           title="Ledger Entries"
           value={String(ledgerEntryCount)}
@@ -144,19 +144,19 @@ export const ServiceStatusGrid: React.FC<Props> = ({ projects, contractors, ledg
       <Panel>
         <SectionHeader title="Engine Activity" />
         {timelineEvents.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <Activity size={32} className="text-text-dim mb-3" />
-            <p className="text-small text-text-muted">No recent engine activity.</p>
+ <div className="flex flex-col items-center justify-center py-8 text-center">
+ <Activity aria-hidden='true' size={32} className="text-text-dim mb-3" />
+ <p className="text-small text-text-muted">No recent engine activity.</p>
           </div>
         ) : (
-          <div className="space-y-0 pl-8 border-l-2 border-border-main ml-4 max-h-[400px] overflow-y-auto">
+ <div className="space-y-0 pl-8 border-l-2 border-border-main ml-4 max-h-[400px] overflow-y-auto">
             {timelineEvents.map((evt, i) => (
-              <div key={i} className="relative py-4 pl-8 -ml-[41px]">
-                <div className={`absolute -left-[41px] top-4 w-8 h-8 rounded-full flex items-center justify-center ${evt.dotBg}`}>
-                  <evt.icon size={16} className={evt.dotColor} />
+ <div key={i} className="relative py-4 pl-8 -ml-[41px]">
+ <div className={`absolute -left-[41px] top-4 w-8 h-8 rounded-full flex items-center justify-center ${evt.dotBg}`}>
+ <evt.icon size={16} className={evt.dotColor} />
                 </div>
-                <p className="text-small font-medium text-text-main">{evt.text}</p>
-                <p className="text-caption text-text-dim mt-1">{evt.time}</p>
+ <p className="text-small font-medium text-text-main">{evt.text}</p>
+ <p className="text-caption text-text-dim mt-1">{evt.time}</p>
               </div>
             ))}
           </div>

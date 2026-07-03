@@ -47,20 +47,20 @@ export const DashboardPage: React.FC<Props> = ({ onSelectProject }) => {
   }, []);
 
   return (
-    <div className="space-y-6">
+ <div className="space-y-6">
       <DashboardKPIs economy={economy} />
 
-      <div className="grid grid-cols-12 gap-6">
+ <div className="grid grid-cols-12 gap-6">
         <PortfolioPanel projects={projects} risks={risks} onSelectProject={onSelectProject} />
         <TreasuryFlow economy={economy} />
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
+ <div className="grid grid-cols-12 gap-6">
         <CommandCenter projects={projects} onSelectProject={onSelectProject} />
         <RiskMonitor risks={risks} allocations={allocations} projects={projects} />
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
+ <div className="grid grid-cols-12 gap-6">
         <RecentLedger entries={ledger} />
         <UpcomingActions projects={projects} onSelectProject={onSelectProject} />
       </div>

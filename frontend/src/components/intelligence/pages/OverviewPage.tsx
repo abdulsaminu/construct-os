@@ -10,7 +10,7 @@ import { SectionHeader } from '../../ui/SectionHeader';
 import { HealthBadge } from '../../ui/HealthBadge';
 import {
   Wallet, ShieldAlert, AlertTriangle, DollarSign,
-  BarChart3, Database, TrendingUp, Zap, Activity, CheckCircle, Landmark,
+  BarChart3, TrendingUp, Zap, Activity, Landmark,
   Coins, ArrowDownCircle, ArrowUpCircle
 } from 'lucide-react';
 
@@ -31,15 +31,15 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="space-y-8">
-        <div className="bg-surface rounded-card border border-border-main p-8 h-28 animate-pulse" />
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6">
+ <div className="space-y-8">
+ <div className="bg-surface rounded-card border border-border-main p-8 h-28 animate-pulse" />
+ <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6">
           {[1, 2, 3, 4, 5, 6].map(i => (
-            <div key={i} className="bg-surface rounded-card border border-border-main h-36 animate-pulse" />
+ <div key={i} className="bg-surface rounded-card border border-border-main h-36 animate-pulse" />
           ))}
         </div>
-        <div className="bg-surface rounded-card border border-border-main p-8 h-64 animate-pulse" />
-        <div className="bg-surface rounded-card border border-border-main p-8 h-64 animate-pulse" />
+ <div className="bg-surface rounded-card border border-border-main p-8 h-64 animate-pulse" />
+ <div className="bg-surface rounded-card border border-border-main p-8 h-64 animate-pulse" />
       </div>
     );
   }
@@ -47,16 +47,16 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   if (error) {
     return (
       <Panel>
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <AlertTriangle size={32} className="text-warning mb-4" />
-          <h4 className="text-body-lg font-semibold text-text-main mb-2">Intelligence Unavailable</h4>
-          <p className="text-small text-text-muted mb-6">{error}</p>
+ <div className="flex flex-col items-center justify-center py-12 text-center">
+ <AlertTriangle aria-hidden='true' size={32} className="text-warning mb-4" />
+ <h4 className="text-body-lg font-semibold text-text-main mb-2">Intelligence Unavailable</h4>
+ <p className="text-small text-text-muted mb-6">{error}</p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-12 font-semibold hover:bg-primary-hover transition-colors text-small"
+ className="inline-flex items-center gap-2 px-4 py-3 bg-primary text-white rounded-btn font-semibold hover:bg-primary-hover transition-colors text-small"
             >
-              <Zap size={16} />
+              <Zap aria-hidden='true' size={16} />
               Retry
             </button>
           )}
@@ -103,21 +103,21 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   }, [contractors]);
 
   return (
-    <div className="space-y-8">
+ <div className="space-y-8">
       {/* Hero with System Health Indicator */}
-      <div className="bg-surface rounded-card border border-border-main p-8 flex items-center justify-between flex-wrap gap-4">
+ <div className="bg-surface rounded-card border border-border-main p-8 flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-display font-bold text-text-main leading-none">CFEL Intelligence</h1>
-          <p className="text-body-lg text-text-muted mt-2">Construction Finance Economic Layer</p>
+ <h1 className="text-h2 font-bold text-text-main leading-none">CFEL Intelligence</h1>
+ <p className="text-body-lg text-text-muted mt-2">Construction Finance Economic Layer</p>
         </div>
-        <div className="text-right flex flex-col items-end gap-1">
+ <div className="text-right flex flex-col items-end gap-1">
           <HealthBadge status={systemHealth.status} />
-          <p className="text-caption text-text-dim">{systemHealth.detail}</p>
+ <p className="text-caption text-text-dim">{systemHealth.detail}</p>
         </div>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6">
+ <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6">
         <MetricCard title="Total Capital" value={economy ? money(economy.totalCapital) : '---'} footer="Capital deposited" icon={Wallet} color="text-primary" />
         <MetricCard title="Available Liquidity" value={economy ? money(economy.availableCapital) : '---'} footer="Available for funding" icon={TrendingUp} color="text-success" />
         <MetricCard title="Active Exposure" value={economy ? money(economy.lockedCapital) : '---'} footer="Awaiting completion" icon={AlertTriangle} color="text-warning" />
@@ -132,18 +132,18 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
         {recommendations.length === 0 ? (
           <EmptyState icon={Zap} title="No Actions" description="System is idle. All projects are on track." />
         ) : (
-          <div className="space-y-4">
+ <div className="space-y-4">
             {recommendations.map((rec, i) => (
               <div
                 key={i}
-                className="flex items-center justify-between p-4 bg-elevated rounded-12 border border-border-main hover:bg-white/5 transition-colors"
+ className="flex items-center justify-between p-4 bg-elevated rounded-card border border-border-main hover:bg-white/5 transition-colors"
               >
-                <div className="flex items-center gap-4">
-                  <span className="text-h3 font-bold text-text-dim w-8">{i + 1}.</span>
+ <div className="flex items-center gap-4">
+ <span className="text-h3 font-bold text-text-dim w-8">{i + 1}.</span>
                   <div>
-                    <p className="font-semibold text-text-main">{rec.title}</p>
-                    <div className="flex items-center gap-3 mt-1">
-                      {rec.subtitle && <span className="text-small text-text-muted">{rec.subtitle}</span>}
+ <p className="font-semibold text-text-main">{rec.title}</p>
+ <div className="flex items-center gap-3 mt-1">
+ {rec.subtitle && <span className="text-small text-text-muted">{rec.subtitle}</span>}
                       {rec.riskBadge !== undefined && <RiskBadge score={rec.riskBadge} />}
                     </div>
                   </div>
@@ -159,27 +159,27 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
       <Panel>
         <SectionHeader
           title="Ledger Events"
-          action={<span className="text-caption text-text-dim">{ledgerEntries.length} total entries</span>}
+ action={<span className="text-caption text-text-dim">{ledgerEntries.length} total entries</span>}
         />
         {recentLedger.length === 0 ? (
           <EmptyState icon={Activity} title="No Ledger Events" description="No financial events recorded yet." />
         ) : (
-          <div className="space-y-0 pl-8 border-l-2 border-border-main ml-4 max-h-[400px] overflow-y-auto">
+ <div className="space-y-0 pl-8 border-l-2 border-border-main ml-4 max-h-[400px] overflow-y-auto">
             {recentLedger.map((entry) => {
               const evt = formatLedgerEvent(entry, projectMap, contractorMap);
               return (
-                <div key={entry.id} className="relative py-4 pl-8 -ml-[41px]">
-                  <div className={`absolute -left-[41px] top-4 w-8 h-8 rounded-full flex items-center justify-center ${evt.dotBg}`}>
-                    <evt.icon size={16} className={evt.dotColor} />
+ <div key={entry.id} className="relative py-4 pl-8 -ml-[41px]">
+ <div className={`absolute -left-[41px] top-4 w-8 h-8 rounded-full flex items-center justify-center ${evt.dotBg}`}>
+ <evt.icon size={16} className={evt.dotColor} />
                   </div>
-                  <p className="text-small font-medium text-text-main">{evt.text}</p>
-                  <div className="flex items-center gap-3 mt-1">
-                    <p className="text-caption text-text-dim">{evt.time}</p>
+ <p className="text-small font-medium text-text-main">{evt.text}</p>
+ <div className="flex items-center gap-3 mt-1">
+ <p className="text-caption text-text-dim">{evt.time}</p>
                     {entry.amount && (
-                      <span className={`text-caption font-semibold ${evt.amountColor}`}>{money(entry.amount)}</span>
+ <span className={`text-caption font-semibold ${evt.amountColor}`}>{money(entry.amount)}</span>
                     )}
                     {entry.metadata?.txHash && (
-                      <span className="text-micro text-text-dim font-mono">tx: {entry.metadata.txHash.substring(0, 10)}...</span>
+ <span className="text-micro text-text-dim font-mono">tx: {entry.metadata.txHash.substring(0, 10)}...</span>
                     )}
                   </div>
                 </div>

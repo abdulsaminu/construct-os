@@ -11,5 +11,5 @@ export const RecommendationBadge: React.FC<Props> = ({ type }) => {
     hold: 'bg-warning/20 text-warning border-warning/30',
     skip: 'bg-white/10 text-text-dim border-border-main',
   };
-  return <span className={`px-3 py-1 rounded-badge text-caption font-bold border ${styles[type]}`}>{type.toUpperCase()}</span>;
+ return <span className={`px-3 py-1 rounded-badge text-caption font-bold border ${styles[type]}`}>{type.toUpperCase()}</span>;
 };

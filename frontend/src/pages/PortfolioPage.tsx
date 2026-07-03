@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { fetcher } from '../lib/api';
 import { Project, RiskScore } from '../types';
 import { PageHeader } from '../components/layout/PageHeader';
@@ -33,18 +33,18 @@ export const PortfolioPage: React.FC<Props> = ({ onSelectProject, onNavigate }) 
     load();
   }, []);
 
-  const filteredProjects = projects.filter(p => {
+  const filteredProjects = useMemo(() => projects.filter(p => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
     const matchStatus = statusFilter === 'all' || p.status === statusFilter;
     return matchSearch && matchStatus;
-  });
+  }), [projects, search, statusFilter]);
 
   return (
     <div>
       <PageHeader 
         title="Portfolio" 
         action={
-          <button onClick={() => onNavigate('new-project')} className="bg-primary hover:bg-primary-hover text-white px-4 py-3 rounded-12 text-small font-medium flex items-center gap-2 transition-colors">
+ <button onClick={() => onNavigate('new-project')} className="btn-primary">
             <Plus size={16} /> New Project
           </button>
         }
@@ -53,13 +53,13 @@ export const PortfolioPage: React.FC<Props> = ({ onSelectProject, onNavigate }) 
       <PortfolioFilters search={search} onSearchChange={setSearch} statusFilter={statusFilter} onStatusChange={setStatusFilter} />
 
       {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {[1,2,3].map(i => <div key={i} className="bg-surface rounded-card border border-border-main h-48 animate-pulse" />)}
+ <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+ {[1,2,3].map(i => <div key={i} className="bg-surface rounded-card border border-border-main h-48 animate-pulse" />)}
         </div>
       ) : filteredProjects.length === 0 ? (
         <EmptyState icon={FolderKanban} title="No Projects Yet" description="Create your first construction project." />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+ <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredProjects.map(p => (
             <ProjectCard key={p.id} project={p} risk={risks[p.id]} onSelect={onSelectProject} />
           ))}

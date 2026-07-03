@@ -9,21 +9,21 @@ interface Props {
 }
 
 export const PortfolioFilters: React.FC<Props> = ({ search, onSearchChange, statusFilter, onStatusChange }) => (
-  <div className="flex flex-col sm:flex-row gap-4 mb-6">
-    <div className="relative flex-1">
-      <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
+ <div className="flex flex-col sm:flex-row gap-4 mb-6">
+ <div className="relative flex-1">
+ <Search aria-hidden='true' size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
       <input
         type="text"
         value={search}
         onChange={e => onSearchChange(e.target.value)}
         placeholder="Search projects..."
-        className="w-full bg-elevated border border-border-main rounded-12 pl-10 pr-4 py-3 text-small text-text-main outline-none focus:border-primary transition-colors"
+ className="w-full bg-elevated border border-border-main rounded-card pl-10 pr-4 py-3 text-small text-text-main outline-none focus:border-primary transition-colors"
       />
     </div>
     <select
       value={statusFilter}
       onChange={e => onStatusChange(e.target.value)}
-      className="bg-elevated border border-border-main rounded-12 px-4 py-3 text-small text-text-main outline-none focus:border-primary appearance-none cursor-pointer"
+ className="bg-elevated border border-border-main rounded-card px-4 py-3 text-small text-text-main outline-none focus:border-primary appearance-none cursor-pointer"
       aria-label="Filter by status"
     >
       <option value="all">All Status</option>

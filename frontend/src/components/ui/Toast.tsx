@@ -79,18 +79,18 @@ const ToastItemComponent: React.FC<{
     <div
       role="alert"
       aria-live="polite"
-      className={`toast-enter ${exiting ? 'toast-exit' : ''} bg-surface rounded-card border shadow-raised flex items-start gap-3 w-80 p-4 ${typeStyles[item.type]}`}
+ className={`toast-enter ${exiting ? 'toast-exit' : ''} bg-surface rounded-card border shadow-raised flex items-start gap-3 w-80 p-4 ${typeStyles[item.type]}`}
     >
-      <Icon size={20} className="shrink-0 mt-1" />
-      <div className="flex-1 min-w-0">
-        <p className="text-small font-semibold text-text-main">{item.title}</p>
+ <Icon aria-hidden='true' size={20} className="shrink-0 mt-1" />
+ <div className="flex-1 min-w-0">
+ <p className="text-small font-semibold text-text-main">{item.title}</p>
         {item.description && (
-          <p className="text-caption text-text-muted mt-1 leading-relaxed">{item.description}</p>
+ <p className="text-caption text-text-muted mt-1 leading-relaxed">{item.description}</p>
         )}
       </div>
       <button
         onClick={handleDismiss}
-        className="shrink-0 p-1 rounded-8 hover:bg-white/10 text-text-dim hover:text-text-main transition-colors duration-fast"
+ className="shrink-0 p-1 rounded-8 hover:bg-white/10 text-text-dim hover:text-text-main transition-colors duration-fast"
         aria-label="Dismiss notification"
       >
         <X size={16} />
@@ -122,9 +122,9 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     <ToastContext.Provider value={{ toast }}>
       {children}
       {/* Toast container – fixed top-right, stacked */}
-      <div className="fixed top-6 right-6 z-50 flex flex-col gap-3 pointer-events-none">
+ <div className="fixed top-6 right-6 z-50 flex flex-col gap-3 pointer-events-none">
         {toasts.map((t) => (
-          <div key={t.id} className="pointer-events-auto">
+ <div key={t.id} className="pointer-events-auto">
             <ToastItemComponent item={t} onDismiss={dismiss} />
           </div>
         ))}

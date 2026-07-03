@@ -12,7 +12,7 @@ interface Props {
 export const NavigationItem = memo<Props>(({ icon: Icon, label, active, collapsed, onClick }) => (
   <button
     onClick={onClick}
-    className={`
+ className={`
       w-full flex items-center gap-3 h-11 px-3 rounded-btn text-left text-small
       transition-all duration-fast ease-out
       active:scale-[0.98]
@@ -24,14 +24,14 @@ export const NavigationItem = memo<Props>(({ icon: Icon, label, active, collapse
       ${collapsed ? 'justify-center' : ''}
     `}
     title={collapsed ? label : undefined}
-    aria-current={active ? 'page' : undefined}
+    aria-label={label} aria-current={active ? 'page' : undefined}
   >
-    <Icon size={24} strokeWidth={2} className="shrink-0" />
+ <Icon size={24} strokeWidth={2} className="shrink-0" />
     {!collapsed && (
-      <span className="truncate transition-opacity duration-normal ease-out">{label}</span>
+ <span className="truncate transition-opacity duration-normal ease-out">{label}</span>
     )}
     {active && (
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary rounded-r-full" />
+ <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary rounded-r-full" />
     )}
   </button>
 ));

@@ -25,30 +25,30 @@ export const RiskMonitor: React.FC<Props> = ({ risks, allocations, projects }) =
   const getAllocation = (id: string) => allocations.find(a => a.projectId === id);
 
   return (
-    <Panel className="lg:col-span-4 col-span-12">
+ <Panel className="lg:col-span-4 col-span-12">
       <SectionHeader title="Risk Monitor" />
       {entries.length === 0 ? (
         <EmptyState icon={ShieldCheck} title="No Active Risks" description="System is operating within normal parameters." />
       ) : (
-        <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+ <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
           {entries.map(([id, r]) => {
             const category = getCategory(r.composite);
             const alloc = getAllocation(id);
             return (
-              <div key={id} className="p-4 bg-elevated rounded-12 border border-border-main">
-                <div className="flex justify-between items-start mb-3">
-                  <p className="text-small font-medium text-text-main leading-tight pr-2">{getProjectName(id)}</p>
-                  <span className={`px-3 py-1 rounded-badge text-caption font-bold whitespace-nowrap ${category.styles}`}>
+ <div key={id} className="p-4 bg-elevated rounded-card border border-border-main">
+ <div className="flex justify-between items-start mb-3">
+ <p className="text-small font-medium text-text-main leading-tight pr-2">{getProjectName(id)}</p>
+ <span className={`px-3 py-1 rounded-badge text-caption font-bold whitespace-nowrap ${category.styles}`}>
                     {category.text}
                   </span>
                 </div>
-                <div className="flex items-end justify-between">
+ <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-display font-bold text-text-main leading-none">{r.composite}</p>
-                    <p className="text-caption text-text-dim -mt-1">/ 100</p>
+ <p className="text-display font-bold text-text-main leading-none">{r.composite}</p>
+ <p className="text-caption text-text-dim -mt-1">/ 100</p>
                   </div>
                   {alloc && (
-                    <p className="text-caption text-text-muted text-right max-w-[100px]">{alloc.reason}</p>
+ <p className="text-caption text-text-muted text-right max-w-[100px]">{alloc.reason}</p>
                   )}
                 </div>
               </div>

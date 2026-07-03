@@ -29,13 +29,13 @@ export const SystemHealthPage: React.FC<SystemHealthPageProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+ <div className="space-y-6">
+ <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-surface rounded-card border border-border-main p-6 h-36 animate-pulse" />
+ <div key={i} className="bg-surface rounded-card border border-border-main p-6 h-36 animate-pulse" />
           ))}
         </div>
-        <div className="bg-surface rounded-card border border-border-main p-6 h-64 animate-pulse" />
+ <div className="bg-surface rounded-card border border-border-main p-6 h-64 animate-pulse" />
       </div>
     );
   }
@@ -43,14 +43,14 @@ export const SystemHealthPage: React.FC<SystemHealthPageProps> = ({
   if (error) {
     return (
       <Panel>
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <AlertTriangle size={32} className="text-warning mb-4" />
-          <h4 className="text-body-lg font-semibold text-text-main mb-2">System Health Unavailable</h4>
-          <p className="text-small text-text-muted mb-6">{error}</p>
+ <div className="flex flex-col items-center justify-center py-12 text-center">
+ <AlertTriangle size={32} className="text-warning mb-4" />
+ <h4 className="text-body-lg font-semibold text-text-main mb-2">System Health Unavailable</h4>
+ <p className="text-small text-text-muted mb-6">{error}</p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-12 font-semibold hover:bg-primary-hover transition-colors text-small"
+ className="inline-flex items-center gap-2 px-4 py-3 bg-primary text-white rounded-btn font-semibold hover:bg-primary-hover transition-colors text-small"
             >
               <RefreshCw size={16} />
               Retry
@@ -62,9 +62,9 @@ export const SystemHealthPage: React.FC<SystemHealthPageProps> = ({
   }
 
   return (
-    <div className="space-y-6">
+ <div className="space-y-6">
       {/* Core Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+ <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <MetricCard
           title="Ledger Entries"
           value={String(ledgerEntryCount)}

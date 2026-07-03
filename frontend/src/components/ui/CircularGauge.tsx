@@ -17,9 +17,9 @@ export const CircularGauge = memo<Props>(({ value, size = 120, stroke = 8 }) => 
   else if (value > 30) color = 'text-primary';
 
   return (
-    <div className="relative" style={{ width: size, height: size }} role="img" aria-label={`Score: ${value} out of 100`}>
-      <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="currentColor" strokeWidth={stroke} className="text-elevated" />
+ <div className="relative" style={{ width: size, height: size }} role="img" aria-label={`Score: ${value} out of 100`}>
+ <svg width={size} height={size} className="-rotate-90">
+ <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="currentColor" strokeWidth={stroke} className="text-elevated" />
         <circle
           cx={size/2}
           cy={size/2}
@@ -29,13 +29,13 @@ export const CircularGauge = memo<Props>(({ value, size = 120, stroke = 8 }) => 
           strokeWidth={stroke}
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className={`${color} transition-all duration-slow ease-out`}
+ className={`${color} transition-all duration-slow ease-out`}
           strokeLinecap="round"
         />
       </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className={`text-title font-bold ${color} tabular-nums`}>{value}</span>
-        <span className="text-caption text-text-dim -mt-1">/ 100</span>
+ <div className="absolute inset-0 flex flex-col items-center justify-center">
+ <span className={`text-title font-bold ${color} tabular-nums`}>{value}</span>
+ <span className="text-caption text-text-dim -mt-1">/ 100</span>
       </div>
     </div>
   );

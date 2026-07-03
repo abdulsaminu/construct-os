@@ -16,8 +16,6 @@ export const poster = async <T>(url: string, body: unknown): Promise<T> => {
 };
 
 // Spec-mandated financial formatter. Presentation only. No math.
-export const money = (value: string | number): string => 
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  }).format(Number(value));
+const _fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+export const money = (value: string | number): string =>
+  _fmt.format(Number(value));

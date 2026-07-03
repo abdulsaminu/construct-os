@@ -15,31 +15,31 @@ export const ForecastsPage = () => {
   return (
     <div>
       <PageHeader title="Forecasts" />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-surface rounded-card border border-border-main p-6 shadow-soft">
-          <h3 className="text-h3 font-semibold text-text-main mb-6 flex items-center gap-2">
-            <TrendingUp className="text-primary" size={24} /> 30-Day Cash Flow
+ <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+ <div className="bg-surface rounded-card border border-border-main p-6 shadow-surface">
+ <h3 className="text-h3 font-semibold text-text-main mb-6 flex items-center gap-2">
+ <TrendingUp className="text-primary" size={20} /> 30-Day Cash Flow
           </h3>
-          <div className="space-y-3">
+ <div className="space-y-3">
             {forecast.cash.days.map((day: number, i: number) => (
-              <div key={day} className="flex items-center justify-between p-3 bg-elevated rounded-12">
-                <span className="text-text-muted text-small w-20">Day {day}</span>
-                <div className="flex-1 mx-4">
-                  <div className="w-full bg-bg rounded-full h-2 max-w-xs ml-auto">
-                    <div className="bg-primary h-2 rounded-full" style={{ width: `${(parseInt(forecast.cash.available[i]) / parseInt(forecast.cash.available[0])) * 100}%` }} />
+ <div key={day} className="flex items-center justify-between p-3 bg-elevated rounded-card">
+ <span className="text-text-muted text-small w-20">Day {day}</span>
+ <div className="flex-1 mx-4">
+ <div className="w-full bg-bg rounded-full h-2 max-w-xs ml-auto">
+ <div className="bg-primary h-2 rounded-full" style={{ width: `${(parseInt(forecast.cash.available[i]) / parseInt(forecast.cash.available[0])) * 100}%` }} />
                   </div>
                 </div>
-                <span className="text-text-main font-semibold w-32 text-right">{money(forecast.cash.available[i])}</span>
+ <span className="text-text-main font-semibold w-32 text-right">{money(forecast.cash.available[i])}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-surface rounded-card border border-border-main p-6 shadow-soft">
-          <h3 className="text-h3 font-semibold text-text-main mb-6">Settlement Summary</h3>
-          <div className="bg-elevated p-6 rounded-12 text-center">
-            <p className="text-caption text-text-dim uppercase tracking-wide mb-2">Total Settled</p>
-            <p className="text-display font-bold text-success">{money(forecast.settlement.totalSettled)}</p>
+ <div className="bg-surface rounded-card border border-border-main p-6 shadow-surface">
+ <h3 className="text-h3 font-semibold text-text-main mb-6">Settlement Summary</h3>
+ <div className="bg-elevated p-6 rounded-card text-center">
+ <p className="text-caption text-text-dim uppercase tracking-wide mb-2">Total Settled</p>
+ <p className="text-display font-bold text-success">{money(forecast.settlement.totalSettled)}</p>
           </div>
         </div>
       </div>

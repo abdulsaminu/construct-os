@@ -22,5 +22,5 @@ export const RiskBadge: React.FC<Props> = ({ score }) => {
     styles = 'bg-danger/20 text-danger';
   }
 
-  return <span className={`px-3 py-1 rounded-badge text-caption font-bold ${styles}`}>{text}</span>;
+ return <span className={`px-3 py-1 rounded-badge text-caption font-bold ${styles}`}>{text}</span>;
 };

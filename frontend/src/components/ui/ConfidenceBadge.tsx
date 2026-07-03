@@ -16,7 +16,7 @@ export const ConfidenceBadge: React.FC<Props> = ({ value }) => {
   }
 
   return (
-    <span className={`px-3 py-1 rounded-badge text-caption font-bold ${color}`}>
+ <span className={`px-3 py-1 rounded-badge text-caption font-bold ${color}`}>
       {value}%
     </span>
   );

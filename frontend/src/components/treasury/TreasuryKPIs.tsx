@@ -11,11 +11,11 @@ interface Props {
 }
 
 export const TreasuryKPIs: React.FC<Props> = ({ economy, isLoading }) => {
-  if (isLoading) return <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"><CardSkeleton /><CardSkeleton /><CardSkeleton /><CardSkeleton /></div>;
+ if (isLoading) return <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"><CardSkeleton /><CardSkeleton /><CardSkeleton /><CardSkeleton /></div>;
   if (!economy) return null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+ <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
       <MetricCard title="Total Capital" value={money(economy.totalCapital)} footer="Capital deposited into treasury" icon={Wallet} color="text-primary" />
       <MetricCard title="Available Liquidity" value={money(economy.availableCapital)} footer="Available for project funding" icon={TrendingUp} color="text-success" />
       <MetricCard title="Capital in Escrow" value={money(economy.lockedCapital)} footer="Allocated to funded milestones" icon={Lock} color="text-warning" />
