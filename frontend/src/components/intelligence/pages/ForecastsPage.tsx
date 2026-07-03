@@ -107,8 +107,8 @@ export const ForecastsPage: React.FC<ForecastsPageProps> = ({ forecast, projects
           if (idx === -1) return null;
           return (
  <div key={targetDay} className="bg-surface rounded-card border border-border-main p-6 shadow-surface transition-transform duration-fast">
- <p className="text-text-dim text-caption uppercase tracking-wide mb-2">{label}</p>
- <p className="text-title font-bold text-success">{money(forecast.cash.available[idx])}</p>
+ <p className="text-text-dim text-label mb-2">{label}</p>
+ <p className="text-display-md font-bold text-success tabular-nums">{money(forecast.cash.available[idx])}</p>
  <div className="flex items-center gap-2 mt-2">
  <span className="text-caption text-text-dim">Locked:</span>
  <span className="text-caption font-semibold text-warning">{money(forecast.cash.locked[idx])}</span>
@@ -148,12 +148,12 @@ export const ForecastsPage: React.FC<ForecastsPageProps> = ({ forecast, projects
           <SectionHeader title="Settlement Forecast" />
  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div className="bg-elevated rounded-card p-6 text-center">
- <p className="text-text-dim text-caption uppercase tracking-wide mb-2">Expected Total Settled</p>
- <p className="text-h1 font-bold text-success leading-none">{money(forecast.settlement.totalSettled)}</p>
+ <p className="text-text-dim text-label mb-2">Expected Total Settled</p>
+ <p className="text-display-md font-bold text-success leading-none tabular-nums">{money(forecast.settlement.totalSettled)}</p>
  <p className="text-caption text-text-dim mt-2">{settledMilestones} of {totalMilestones} milestones settled</p>
             </div>
  <div className="bg-elevated rounded-card p-6 text-center">
- <p className="text-text-dim text-caption uppercase tracking-wide mb-2">Settlement Confidence</p>
+ <p className="text-text-dim text-label mb-2">Settlement Confidence</p>
  <div className="flex justify-center mt-2">
                 <CircularGauge value={settlementConfidence} size={80} stroke={6} />
               </div>

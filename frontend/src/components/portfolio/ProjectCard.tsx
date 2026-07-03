@@ -52,21 +52,21 @@ export const ProjectCard = React.memo<Props>(({ project, risk, onSelect }) => {
 
  <div className="grid grid-cols-3 gap-4 mb-6 text-small">
         <div>
- <p className="text-text-dim text-caption mb-1">Budget</p>
+ <p className="text-text-dim text-label mb-1">Budget</p>
  <p className="font-semibold text-text-main">{money(project.totalBudget)}</p>
         </div>
         <div>
- <p className="text-text-dim text-caption mb-1 flex items-center gap-1"><ListChecks size={16} /> Milestones</p>
+ <p className="text-text-dim text-label mb-1 flex items-center gap-1"><ListChecks size={16} /> Milestones</p>
  <p className="font-semibold text-text-main">{project.milestones.length}</p>
         </div>
         <div>
- <p className="text-text-dim text-caption mb-1 flex items-center gap-1"><Calendar size={16} /> Created</p>
+ <p className="text-text-dim text-label mb-1 flex items-center gap-1"><Calendar size={16} /> Created</p>
  <p className="font-semibold text-text-main">{daysAgo === 0 ? 'Today' : `${daysAgo}d ago`}</p>
         </div>
       </div>
 
  <div className="mb-4">
- <div className="flex justify-between text-caption text-text-dim mb-2">
+ <div className="flex justify-between text-label text-text-dim mb-2">
           <span>Progress</span>
  <span className="font-medium text-text-muted">{progressPercent}%</span>
         </div>

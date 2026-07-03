@@ -16,10 +16,10 @@ export default function SystemPage() {
 
   return (
     <div>
- <h2 className="text-h2 font-bold mb-6">System Analytics</h2>
+ <h2 className="text-page-title mb-6">System Analytics</h2>
  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
  <div className="bg-surface p-6 rounded-card border border-border-main shadow-surface">
- <h3 className="text-title font-semibold mb-4">Capital Allocation Rank</h3>
+ <h3 className="text-h2 mb-4">Capital Allocation Rank</h3>
           {allocations.length === 0 ? (
  <p className="text-text-dim text-small">No active projects requiring allocation.</p>
           ) : (
@@ -39,7 +39,7 @@ export default function SystemPage() {
           )}
         </div>
  <div className="bg-surface p-6 rounded-card border border-border-main shadow-surface">
- <h3 className="text-title font-semibold mb-4">System Risk Map</h3>
+ <h3 className="text-h2 mb-4">System Risk Map</h3>
           {Object.keys(risk).length === 0 ? (
  <p className="text-text-dim text-small">All projects completed.</p>
           ) : (

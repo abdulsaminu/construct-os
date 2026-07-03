@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetcher, money } from '../lib/api';
 import { Project, LedgerEntry } from '../types';
 import { PageHeader } from '../components/layout/PageHeader';
-import { CheckCircle, ExternalLink } from 'lucide-react';
+import { CheckCircle, ExternalLink, Receipt } from 'lucide-react';
 
 export const SettlementsPage = () => {
   const [settlements, setSettlements] = useState<(LedgerEntry & { projectName: string })[]>([]);
@@ -23,11 +23,11 @@ export const SettlementsPage = () => {
 
   return (
     <div>
-      <PageHeader title="Arc Settlements" />
+      <PageHeader title="Arc Settlements" icon={Receipt} />
       {settlements.length === 0 ? (
  <div className="bg-surface rounded-card border border-border-main p-12 text-center shadow-surface">
  <ExternalLink size={32} className="mx-auto text-text-dim mb-4" />
- <h3 className="text-h3 font-semibold text-text-main">No On-Chain Settlements</h3>
+ <h3 className="text-h2 text-text-main">No On-Chain Settlements</h3>
  <p className="text-text-muted mt-2">Completed project milestones will appear here with Arc TX hashes.</p>
         </div>
       ) : (
@@ -42,7 +42,7 @@ export const SettlementsPage = () => {
                 </div>
               </div>
  <div className="sm:text-right text-left">
- <p className="text-h3 font-bold text-success">{money(s.amount)}</p>
+ <p className="text-title font-bold text-success tabular-nums">{money(s.amount)}</p>
  <a href={`https://arbiscan.io/tx/${s.metadata?.txHash}`} target="_blank" className="text-primary text-caption font-mono hover:underline flex items-center gap-1 justify-end mt-1">
                   {s.metadata?.txHash?.slice(0, 16)}... <ExternalLink size={16}/>
                 </a>

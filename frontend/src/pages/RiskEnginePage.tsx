@@ -15,11 +15,11 @@ export const RiskEnginePage = () => {
 
   return (
     <div>
-      <PageHeader title="Risk Engine" />
+      <PageHeader title="Risk Engine" icon={ShieldAlert} />
       {entries.length === 0 ? (
  <div className="bg-surface rounded-card border border-border-main p-12 text-center shadow-surface">
  <ShieldAlert size={32} className="mx-auto text-text-dim mb-4" />
- <h3 className="text-h3 font-semibold text-text-main">All Clear</h3>
+ <h3 className="text-h2 text-text-main">All Clear</h3>
  <p className="text-text-muted mt-2">No active projects require risk monitoring.</p>
         </div>
       ) : (
@@ -50,7 +50,7 @@ const RiskRow = ({ label, value, large }: { label: string; value: number; large?
     <div>
  <div className="flex justify-between text-small mb-2">
  <span className="text-text-muted">{label}</span>
- <span className={`font-bold ${large ? 'text-h2 text-text-main' : 'text-text-main'}`}>{value}/100</span>
+ <span className={`font-bold ${large ? 'text-display-md text-text-main tabular-nums' : 'text-text-main'}`}>{value}/100</span>
       </div>
  <div className="w-full bg-elevated rounded-full h-2">
  <div className={`${color} h-2 rounded-full transition-all`} style={{ width: `${value}%` }} />

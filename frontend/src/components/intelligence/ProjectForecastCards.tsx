@@ -69,8 +69,8 @@ export const ProjectForecastCards: React.FC<Props> = ({ projects }) => {
  <p className="text-small font-semibold text-text-main mb-4">{p.name}</p>
  <div className="flex items-center justify-between">
                   <div>
- <p className="text-text-dim text-caption uppercase tracking-wide mb-1">Est. Completion</p>
- <p className="text-h3 font-bold text-text-main">
+ <p className="text-text-dim text-label mb-1">Est. Completion</p>
+ <p className="text-title font-bold text-text-main tabular-nums">
                       {f.completionDays !== null ? `${f.completionDays}d` : 'N/A'}
                     </p>
                   </div>

@@ -26,7 +26,7 @@ export const NavigationItem = memo<Props>(({ icon: Icon, label, active, collapse
     title={collapsed ? label : undefined}
     aria-label={label} aria-current={active ? 'page' : undefined}
   >
- <Icon size={24} strokeWidth={2} className="shrink-0" />
+ <Icon size={20} strokeWidth={2} className="shrink-0" />
     {!collapsed && (
  <span className="truncate transition-opacity duration-normal ease-out">{label}</span>
     )}

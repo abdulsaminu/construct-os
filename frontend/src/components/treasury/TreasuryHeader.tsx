@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RefreshCw, Wifi } from 'lucide-react';
+import { RefreshCw, Wifi, Landmark } from 'lucide-react';
 
 interface Props {
   onRefresh: () => void;
@@ -16,9 +16,12 @@ export const TreasuryHeader: React.FC<Props> = ({ onRefresh, isLoading }) => {
 
   return (
  <div className="flex items-start justify-between mb-8">
-      <div>
- <h1 className="text-h2 font-bold text-text-main leading-none">Treasury</h1>
- <p className="text-body text-text-muted mt-2">Capital pool management and treasury operations</p>
+      <div className="flex items-center gap-3">
+        <Landmark size={28} className="text-primary" strokeWidth={2} />
+        <div>
+ <h1 className="text-page-title text-text-main leading-none">Treasury</h1>
+ <p className="text-small text-text-muted mt-2">Capital pool management and treasury operations</p>
+        </div>
       </div>
  <div className="flex items-center gap-4 pt-2">
  <div className="text-right hidden sm:block">

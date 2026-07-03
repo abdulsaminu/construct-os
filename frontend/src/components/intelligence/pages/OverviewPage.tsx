@@ -11,7 +11,7 @@ import { HealthBadge } from '../../ui/HealthBadge';
 import {
   Wallet, ShieldAlert, AlertTriangle, DollarSign,
   BarChart3, TrendingUp, Zap, Activity, Landmark,
-  Coins, ArrowDownCircle, ArrowUpCircle
+  Coins, ArrowDownCircle, ArrowUpCircle, BrainCircuit
 } from 'lucide-react';
 
 interface OverviewPageProps {
@@ -106,9 +106,12 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
  <div className="space-y-8">
       {/* Hero with System Health Indicator */}
  <div className="bg-surface rounded-card border border-border-main p-8 flex items-center justify-between flex-wrap gap-4">
-        <div>
- <h1 className="text-h2 font-bold text-text-main leading-none">CFEL Intelligence</h1>
- <p className="text-body-lg text-text-muted mt-2">Construction Finance Economic Layer</p>
+        <div className="flex items-center gap-3">
+          <BrainCircuit size={28} className="text-primary" strokeWidth={2} />
+          <div>
+ <h1 className="text-page-title text-text-main leading-none">CFEL Intelligence</h1>
+ <p className="text-small text-text-muted mt-2">Construction Finance Economic Layer</p>
+          </div>
         </div>
  <div className="text-right flex flex-col items-end gap-1">
           <HealthBadge status={systemHealth.status} />

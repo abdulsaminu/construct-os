@@ -42,7 +42,8 @@ export const PortfolioPage: React.FC<Props> = ({ onSelectProject, onNavigate }) 
   return (
     <div>
       <PageHeader 
-        title="Portfolio" 
+        title="Portfolio"
+        icon={FolderKanban} 
         action={
  <button onClick={() => onNavigate('new-project')} className="btn-primary">
             <Plus size={16} /> New Project

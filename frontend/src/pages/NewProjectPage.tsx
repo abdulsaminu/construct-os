@@ -106,7 +106,7 @@ export const NewProjectPage: React.FC<Props> = ({ onBack, onCreated }) => {
         {step === 2 && (
  <div className="space-y-4">
  <div className="flex justify-between items-center mb-2">
- <h3 className="text-h3 text-text-main">Milestones</h3>
+ <h3 className="text-h2 text-text-main">Milestones</h3>
  <button onClick={addMilestone} className="text-small text-primary hover:text-primary-hover font-medium flex items-center gap-1"><Plus size={16} /> Add</button>
             </div>
             

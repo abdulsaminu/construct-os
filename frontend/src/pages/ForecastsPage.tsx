@@ -14,10 +14,10 @@ export const ForecastsPage = () => {
 
   return (
     <div>
-      <PageHeader title="Forecasts" />
+      <PageHeader title="Forecasts" icon={TrendingUp} />
  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
  <div className="bg-surface rounded-card border border-border-main p-6 shadow-surface">
- <h3 className="text-h3 font-semibold text-text-main mb-6 flex items-center gap-2">
+ <h3 className="text-h2 text-text-main mb-6 flex items-center gap-2">
  <TrendingUp className="text-primary" size={20} /> 30-Day Cash Flow
           </h3>
  <div className="space-y-3">
@@ -36,10 +36,10 @@ export const ForecastsPage = () => {
         </div>
 
  <div className="bg-surface rounded-card border border-border-main p-6 shadow-surface">
- <h3 className="text-h3 font-semibold text-text-main mb-6">Settlement Summary</h3>
+ <h3 className="text-h2 text-text-main mb-6">Settlement Summary</h3>
  <div className="bg-elevated p-6 rounded-card text-center">
- <p className="text-caption text-text-dim uppercase tracking-wide mb-2">Total Settled</p>
- <p className="text-display font-bold text-success">{money(forecast.settlement.totalSettled)}</p>
+ <p className="text-label text-text-dim mb-2">Total Settled</p>
+ <p className="text-display-md font-bold text-success tabular-nums">{money(forecast.settlement.totalSettled)}</p>
           </div>
         </div>
       </div>

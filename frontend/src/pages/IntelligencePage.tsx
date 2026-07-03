@@ -211,7 +211,7 @@ export const IntelligencePage: React.FC<Props> = ({ defaultTab }) => {
 
  <div className="bg-surface rounded-card border border-border-main p-12 text-center">
  <AlertTriangle size={32} className="mx-auto text-warning mb-4" />
- <h3 className="text-h3 font-semibold text-text-main mb-2">{error}</h3>
+ <h3 className="text-h2 text-text-main mb-2">{error}</h3>
  <p className="text-text-muted mb-6">Check that the backend is running on port 3001.</p>
           <button
             onClick={loadData}

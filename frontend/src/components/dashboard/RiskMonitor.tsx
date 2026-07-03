@@ -44,7 +44,7 @@ export const RiskMonitor: React.FC<Props> = ({ risks, allocations, projects }) =
                 </div>
  <div className="flex items-end justify-between">
                   <div>
- <p className="text-display font-bold text-text-main leading-none">{r.composite}</p>
+ <p className="text-display-md font-bold text-text-main leading-none tabular-nums">{r.composite}</p>
  <p className="text-caption text-text-dim -mt-1">/ 100</p>
                   </div>
                   {alloc && (

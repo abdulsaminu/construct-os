@@ -124,7 +124,7 @@ export default function ProjectsPage({ onSelect }: { onSelect: (id: string) => v
 
  <div className="bg-slate-900 p-3 rounded flex justify-between items-center">
  <span className="text-slate-400 font-medium">Auto-Calculated Total Budget:</span>
- <span className="text-h3 font-bold text-success">{money(totalBudget)}</span>
+ <span className="text-title font-bold text-success tabular-nums">{money(totalBudget)}</span>
           </div>
 
  <button type="submit" className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white p-3 rounded font-bold text-body-lg transition">

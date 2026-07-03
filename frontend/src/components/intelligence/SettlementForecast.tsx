@@ -23,8 +23,8 @@ export const SettlementForecast: React.FC<Props> = ({ forecast, isLoading, proje
  <Panel className="lg:col-span-4 col-span-12">
       <SectionHeader title="Settlement Forecast" />
  <div className="bg-elevated rounded-card p-6 text-center mb-6">
- <p className="text-caption text-text-dim uppercase tracking-wide mb-2">Total Settled Capital</p>
- <p className="text-h1 font-bold text-success leading-none">{money(forecast.totalSettled)}</p>
+ <p className="text-label text-text-dim mb-2">Total Settled Capital</p>
+ <p className="text-display-md font-bold text-success leading-none tabular-nums">{money(forecast.totalSettled)}</p>
       </div>
       
  <div className="space-y-3">

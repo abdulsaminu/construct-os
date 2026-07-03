@@ -7,7 +7,7 @@ import { ContractorTable } from '../components/contractors/ContractorTable';
 import { ContractorDetailDrawer } from '../components/contractors/ContractorDetailDrawer';
 import { EmptyState } from '../components/ui/EmptyState';
 import { TableSkeleton } from '../components/ui/Skeleton';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Users } from 'lucide-react';
 
 export const ContractorsPage = () => {
   const [contractors, setContractors] = useState<Contractor[]>([]);
@@ -31,7 +31,8 @@ export const ContractorsPage = () => {
   return (
     <div>
       <PageHeader 
-        title="Contractors" 
+        title="Contractors"
+        icon={Users} 
         action={
  <button onClick={() => setIsRegisterOpen(true)} className="btn-primary">
             <UserPlus size={16} /> Register Contractor

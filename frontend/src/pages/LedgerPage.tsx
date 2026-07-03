@@ -78,7 +78,7 @@ export const LedgerPage = () => {
 
   return (
     <div>
-      <PageHeader title="Global Ledger" />
+      <PageHeader title="Global Ledger" icon={ScrollText} />
       
       <LedgerToolbar 
         search={search} onSearchChange={setSearch}

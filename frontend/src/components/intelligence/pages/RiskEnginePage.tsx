@@ -102,7 +102,7 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
       {/* Top Metrics */}
  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <Panel>
- <p className="text-text-dim text-caption uppercase tracking-wide mb-4">Portfolio Risk</p>
+ <p className="text-text-dim text-label mb-4">Portfolio Risk</p>
           {highestRisk ? (
  <div className="flex items-center gap-4">
               <CircularGauge value={highestRisk[1].composite} size={72} stroke={6} />
@@ -117,7 +117,7 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
         </Panel>
 
         <Panel>
- <p className="text-text-dim text-caption uppercase tracking-wide mb-4">Lowest Risk</p>
+ <p className="text-text-dim text-label mb-4">Lowest Risk</p>
           {lowestRisk ? (
  <div className="flex items-center gap-4">
               <CircularGauge value={lowestRisk[1].composite} size={72} stroke={6} />
@@ -132,14 +132,14 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
         </Panel>
 
         <Panel>
- <p className="text-text-dim text-caption uppercase tracking-wide mb-4">Milestones Tracked</p>
- <p className="text-display font-bold text-text-main leading-none">{fundedMilestones}<span className="text-title text-text-dim font-normal">/{totalMilestones}</span></p>
+ <p className="text-text-dim text-label mb-4">Milestones Tracked</p>
+ <p className="text-display-md font-bold text-text-main leading-none tabular-nums">{fundedMilestones}<span className="text-title text-text-dim font-normal">/{totalMilestones}</span></p>
  <p className="text-caption text-text-muted mt-2">Funded of total monitored</p>
         </Panel>
 
         <Panel>
- <p className="text-text-dim text-caption uppercase tracking-wide mb-4">Highest Score</p>
- <p className="text-display font-bold text-text-main leading-none">{highestRisk ? highestRisk[1].composite : '—'}</p>
+ <p className="text-text-dim text-label mb-4">Highest Score</p>
+ <p className="text-display-md font-bold text-text-main leading-none tabular-nums">{highestRisk ? highestRisk[1].composite : '—'}</p>
  <p className="text-caption text-text-muted mt-2">Out of 100</p>
         </Panel>
       </div>
@@ -153,7 +153,7 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
  <div className="overflow-x-auto">
  <table className="w-full text-left" role="table" aria-label="Project risk matrix">
               <thead>
- <tr className="border-b border-border-main text-text-dim text-caption uppercase tracking-wider">
+ <tr className="border-b border-border-main text-text-dim text-small">
  <th className="pb-3 font-medium pr-4" scope="col">Project</th>
  <th className="pb-3 font-medium px-4" scope="col">Risk Score</th>
  <th className="pb-3 font-medium px-4" scope="col">Funding</th>

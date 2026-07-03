@@ -104,7 +104,7 @@ export const ProjectDetailPage: React.FC<Props> = ({ id, onBack }) => {
 
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
  <div className="lg:col-span-2 bg-surface rounded-card border border-border-main p-6">
- <h3 className="text-h3 text-text-main mb-6">Milestone Execution Timeline</h3>
+ <h3 className="text-h2 text-text-main mb-6">Milestone Execution Timeline</h3>
           <MilestoneTimeline 
             milestones={project.milestones} 
             contractors={contractors} 
