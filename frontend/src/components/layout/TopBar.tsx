@@ -36,11 +36,11 @@ export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => 
         </div>
 
         <button
- className="relative p-2.5 text-text-muted hover:text-text-main transition-all duration-fast ease-out active:scale-[0.98]"
+ className="relative p-2 text-text-muted hover:text-text-main transition-all duration-fast ease-out active:scale-[0.98]"
           aria-label="Notifications"
         >
           <Bell aria-hidden='true' size={24} strokeWidth={2} />
- <span className="absolute top-2 right-1.5 w-2 h-2 bg-primary rounded-full"></span><span className="sr-only">1 unread</span>
+ <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span><span className="sr-only">1 unread</span>
         </button>
 
         <button
