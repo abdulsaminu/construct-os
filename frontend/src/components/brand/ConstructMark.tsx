@@ -14,7 +14,7 @@ interface Props {
  * - Upward central pillar → capital flow & project completion
  *
  * Color treatment (no gradients, pure SVG):
- * - Outer ring: primary blue (#356DFF)
+ * - Outer ring: primary blue (#2563EB)
  * - Inner geometry: cyan accent (#22D3EE)
  * - Capital flow highlight: gold (#FACC15)
  */
@@ -31,7 +31,7 @@ export const ConstructMark: React.FC<Props> = ({ size = 28, className = '' }) =>
     {/* Hexagon outer ring — engineering & structure */}
     <path
       d="M16 1.5L28.5 8.75V23.25L16 30.5L3.5 23.25V8.75L16 1.5Z"
-      stroke="#356DFF"
+      stroke="#2563EB"
       strokeWidth="1.5"
       fill="none"
     />

@@ -70,7 +70,7 @@ export const RegisterDrawer: React.FC<Props> = ({ isOpen, onClose, onSuccess }) 
             </div>
             <div>
               <label htmlFor="notes" className="block text-small text-text-muted mb-2">Notes</label>
-              <textarea id="notes" value={form.notes} onChange={e => setForm({...form, notes: e.target.value})} rows={3} className="w-full bg-elevated border border-border-main rounded-input p-3 text-small text-text-main outline-none focus:border-primary resize-none" placeholder="Internal notes..." />
+              <textarea id="notes" value={form.notes} onChange={e => setForm({...form, notes: e.target.value})} rows={3} className="w-full bg-elevated border border-border-main rounded-input px-4 py-3 h-12 text-small text-text-main outline-none focus:border-primary resize-none" placeholder="Internal notes..." />
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@ const InputField = ({ label, value, onChange, placeholder, required, type = 'tex
       value={value}
       onChange={e => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`w-full bg-elevated border border-border-main rounded-input p-3 text-small text-text-main outline-none focus:border-primary transition-colors ${isMono ? 'font-mono' : ''}`}
+      className={`w-full bg-elevated border border-border-main rounded-input px-4 py-3 h-12 text-small text-text-main outline-none focus:border-primary transition-colors ${isMono ? 'font-mono' : ''}`}
     />
   </div>
   );

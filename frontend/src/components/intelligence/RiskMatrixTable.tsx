@@ -27,7 +27,7 @@ export const RiskMatrixTable: React.FC<Props> = ({ risks, projectMap, isLoading 
  <caption className="sr-only">Risk assessment matrix</caption>
         <table className="w-full text-left">
             <thead>
- <tr className="border-b border-border-main text-text-dim text-caption uppercase tracking-wider">
+ <tr className="border-b border-border-main text-text-dim text-label uppercase tracking-wider">
  <th scope="col" className="pb-3 font-medium pr-4">Project</th>
  <th scope="col" className="pb-3 font-medium px-4">Schedule</th>
  <th scope="col" className="pb-3 font-medium px-4">Liquidity</th>
@@ -41,14 +41,14 @@ export const RiskMatrixTable: React.FC<Props> = ({ risks, projectMap, isLoading 
  <tbody className="divide-y divide-border-main/50">
               {entries.map(([id, r]) => (
  <tr key={id} className="hover:bg-elevated/50 transition-colors">
- <td className="py-3 pr-4 text-small font-medium text-text-main whitespace-nowrap">
+ <td className="py-3 pr-4 text-body font-medium text-text-main whitespace-nowrap">
                     {projectMap[id] || `${id.substring(0, 8)}...`}
                   </td>
- <td className="py-3 px-4 text-small text-text-muted font-mono">{r.scheduleRisk}</td>
- <td className="py-3 px-4 text-small text-text-muted font-mono">{r.liquidityRisk}</td>
- <td className="py-3 px-4 text-small text-text-muted font-mono">{r.fundingRisk}</td>
- <td className="py-3 px-4 text-small text-text-muted font-mono">{r.contractorRisk}</td>
- <td className="py-3 px-4 text-small font-bold text-text-main font-mono">{r.composite}</td>
+ <td className="py-3 px-4 text-body text-text-muted font-mono">{r.scheduleRisk}</td>
+ <td className="py-3 px-4 text-body text-text-muted font-mono">{r.liquidityRisk}</td>
+ <td className="py-3 px-4 text-body text-text-muted font-mono">{r.fundingRisk}</td>
+ <td className="py-3 px-4 text-body text-text-muted font-mono">{r.contractorRisk}</td>
+ <td className="py-3 px-4 text-body font-bold text-text-main font-mono">{r.composite}</td>
  <td className="py-3 pl-4"><CategoryBadge score={r.composite} /></td>
  <td className="py-3 pl-4 text-caption text-text-dim">—</td>
                 </tr>

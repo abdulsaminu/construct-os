@@ -21,12 +21,12 @@ export const Table = memo<Props>(({ columns, data, emptyMessage = "No data avail
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left">
-        <thead>
+        <thead className="sticky top-0 bg-surface z-10">
           <tr className="border-b border-border-main text-text-dim text-label uppercase tracking-wider">
             {columns.map((col) => (
               <th
                 key={col.key}
-                className={`pb-3 pt-1 font-medium ${col.align === 'right' ? 'text-right' : ''}`}
+                className={`pb-3 pt-1 font-normal ${col.align === 'right' ? 'text-right' : ''}`}
                 scope="col"
               >
                 {col.header}

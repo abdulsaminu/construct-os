@@ -186,8 +186,8 @@ export const RiskEnginePage: React.FC<RiskEnginePageProps> = ({ risks, projectMa
  <span className="text-small font-bold text-text-main font-mono">{r.composite}</span>
                         </div>
                       </td>
- <td className="py-3 px-4 text-small text-text-muted">{getFundingStatus(r.fundingRisk)}</td>
- <td className="py-3 px-4 text-small text-text-muted font-mono">{getMilestoneStatus(id)}</td>
+ <td className="py-3 px-4 text-body text-text-muted">{getFundingStatus(r.fundingRisk)}</td>
+ <td className="py-3 px-4 text-body text-text-muted font-mono">{getMilestoneStatus(id)}</td>
  <td className="py-3 px-4">{getTrendIcon(r.composite)}</td>
  <td className="py-3 px-4">
                         <RecommendationBadge type={r.composite > 70 ? 'skip' : r.composite > 40 ? 'hold' : 'fund'} />

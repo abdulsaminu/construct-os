@@ -45,7 +45,7 @@ export const AppShell: React.FC<Props> = ({ activePage, onNavigate, children }) 
             description={meta.description}
             onMenuClick={() => setMobileOpen(true)}
           />
-          <main id="main-content" className="flex-1 p-8 overflow-y-auto">
+          <main id="main-content" className="flex-1 p-8 overflow-y-auto text-body">
             <div key={activePage} className="page-enter">
               {children}
             </div>

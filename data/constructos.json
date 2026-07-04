@@ -4,10 +4,10 @@
       "__bi": "1500000"
     },
     "lockedCapital": {
-      "__bi": "70000"
+      "__bi": "0"
     },
     "settledCapital": {
-      "__bi": "250000"
+      "__bi": "320000"
     }
   },
   "projects": [
@@ -113,7 +113,7 @@
           "id": "034a9186-2192-4b64-bb8e-29f62a5cc240",
           "funded": true,
           "claimed": true,
-          "settled": false,
+          "settled": true,
           "claimedAt": 1782866484376
         },
         {
@@ -444,6 +444,22 @@
       },
       "id": "9310d1f4-9f2a-43e8-918b-dc5e9304e645",
       "timestamp": 1782866484376
+    },
+    {
+      "projectId": "47e9ff14-c1c7-41fa-9657-02cbe137a387",
+      "type": "SETTLEMENT",
+      "amount": {
+        "__bi": "70000"
+      },
+      "payeeId": "b3ddeb9c-0641-406c-801b-03ebda58b609",
+      "milestoneId": "034a9186-2192-4b64-bb8e-29f62a5cc240",
+      "id": "e1760072-86a2-4814-af95-a50c3fa1b685",
+      "timestamp": 1783149442645,
+      "metadata": {
+        "txHash": "0x062084febfd1cf5b29e15f38b9cc3078365bdb08154da655f40c6f17bfc91017",
+        "blockNumber": 18942600,
+        "gasUsed": "183349"
+      }
     }
   ]
 }

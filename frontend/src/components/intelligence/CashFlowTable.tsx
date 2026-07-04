@@ -25,7 +25,7 @@ export const CashFlowTable: React.FC<Props> = ({ forecast, isLoading }) => {
  <caption className="sr-only">Cash flow summary</caption>
         <table className="w-full text-left">
           <thead>
- <tr className="border-b border-border-main text-text-dim text-caption uppercase tracking-wider">
+ <tr className="border-b border-border-main text-text-dim text-label uppercase tracking-wider">
  <th scope="col" className="pb-3 font-medium pr-4">Day</th>
  <th scope="col" className="pb-3 font-medium px-4 text-right">Available</th>
  <th scope="col" className="pb-3 font-medium px-4 text-right">Locked</th>
@@ -35,10 +35,10 @@ export const CashFlowTable: React.FC<Props> = ({ forecast, isLoading }) => {
  <tbody className="divide-y divide-border-main/50">
             {forecast.days.map((day, i) => (
  <tr key={day} className="hover:bg-elevated/50 transition-colors">
- <td className="py-3 pr-4 text-small font-medium text-text-main">{day}</td>
- <td className="py-3 px-4 text-small font-semibold text-success text-right">{money(forecast.available[i])}</td>
- <td className="py-3 px-4 text-small font-semibold text-warning text-right">{money(forecast.locked[i])}</td>
- <td className="py-3 pl-4 text-small font-semibold text-primary text-right">{money(forecast.settled[i])}</td>
+ <td className="py-3 pr-4 text-body font-medium text-text-main">{day}</td>
+ <td className="py-3 px-4 text-body font-semibold text-success text-right">{money(forecast.available[i])}</td>
+ <td className="py-3 px-4 text-body font-semibold text-warning text-right">{money(forecast.locked[i])}</td>
+ <td className="py-3 pl-4 text-body font-semibold text-primary text-right">{money(forecast.settled[i])}</td>
               </tr>
             ))}
           </tbody>

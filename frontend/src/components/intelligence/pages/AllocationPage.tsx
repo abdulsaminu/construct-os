@@ -75,7 +75,7 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
  <div className="overflow-x-auto">
  <table className="w-full text-left" role="table" aria-label="Capital allocation priority table">
               <thead>
- <tr className="border-b border-border-main text-text-dim text-caption uppercase tracking-wider">
+ <tr className="border-b border-border-main text-text-dim text-label uppercase tracking-wider">
  <th className="pb-3 font-medium pr-4" scope="col">Rank</th>
  <th className="pb-3 font-medium px-4" scope="col">Project</th>
  <th className="pb-3 font-medium px-4" scope="col">Recommended</th>
@@ -93,14 +93,14 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
 
                   return (
  <tr key={a.projectId} className="hover:bg-elevated/50 transition-colors" role="row">
- <td className="py-3 pr-4 text-small font-bold text-text-dim">{i + 1}</td>
+ <td className="py-3 pr-4 text-body font-bold text-text-dim">{i + 1}</td>
  <td className="py-3 px-4">
  <div className="flex items-center gap-3">
  <span className="text-small font-medium text-text-main">{a.projectName}</span>
                           <RecommendationBadge type={a.recommendation} />
                         </div>
                       </td>
- <td className="py-3 px-4 text-small font-semibold text-success">{money(a.requestableCap)}</td>
+ <td className="py-3 px-4 text-body font-semibold text-success">{money(a.requestableCap)}</td>
  <td className="py-3 px-4">
  <div className="flex items-center gap-2">
  <div className="w-16 h-2 bg-elevated rounded-full overflow-hidden">
@@ -113,7 +113,7 @@ export const AllocationPage: React.FC<AllocationPageProps> = ({ allocations, eco
                         </div>
                       </td>
  <td className="py-3 px-4"><ConfidenceBadge value={a.score} /></td>
- <td className="py-3 pl-4 text-small text-text-dim max-w-xs truncate">{a.reason}</td>
+ <td className="py-3 pl-4 text-body text-text-dim max-w-xs truncate">{a.reason}</td>
                     </tr>
                   );
                 })}

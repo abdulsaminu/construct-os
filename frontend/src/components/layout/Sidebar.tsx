@@ -63,7 +63,7 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
         aria-label="Main navigation"
       >
         {/* Brand Block */}
-        <div className="h-20 flex items-center px-6 border-b border-sidebar-border shrink-0">
+        <div className="h-[72px] flex items-center px-6 border-b border-sidebar-border shrink-0">
           <div className={`flex items-center gap-3 transition-all duration-normal ease-out ${collapsed ? 'justify-center w-full' : ''}`}>
             <ConstructMark size={28} />
             {!collapsed && (
@@ -76,10 +76,10 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2" aria-label="Primary">
+        <nav className="flex-1 overflow-y-auto py-5 px-3 space-y-1" aria-label="Primary">
           <div className="mb-2">
             {!collapsed && (
-              <p className="text-micro font-medium text-sidebar-text-dim uppercase tracking-widest px-3 mb-3 transition-opacity duration-normal ease-out">
+              <p className="text-micro font-medium text-sidebar-text-dim uppercase tracking-[0.08em] px-3 mb-2 transition-opacity duration-normal ease-out">
                 Main
               </p>
             )}
@@ -95,9 +95,9 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
             ))}
           </div>
 
-          <div className="border-t border-sidebar-border pt-6">
+          <div className="border-t border-sidebar-border pt-5">
             {!collapsed && (
-              <p className="text-micro font-medium text-sidebar-text-dim uppercase tracking-widest px-3 mb-3 transition-opacity duration-normal ease-out">
+              <p className="text-micro font-medium text-sidebar-text-dim uppercase tracking-[0.08em] px-3 mb-2 transition-opacity duration-normal ease-out">
                 System
               </p>
             )}
@@ -115,7 +115,7 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
         </nav>
 
         {/* Bottom Settings & Collapse */}
-        <div className="border-t border-sidebar-border p-4 space-y-2 shrink-0">
+        <div className="border-t border-sidebar-border p-4 space-y-1 shrink-0">
           <NavigationItem icon={Settings} label="Settings" collapsed={collapsed} onClick={() => {}} />
 
           {/* Collapse Button — Desktop Only */}
@@ -123,7 +123,7 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
             onClick={onToggleCollapse}
             className="hidden lg:flex w-full items-center justify-center h-10 rounded-btn text-sidebar-text-dim
                        hover:bg-sidebar-hover hover:text-sidebar-text
-                       active:scale-[0.98]
+                      
                        transition-all duration-fast ease-out"
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >

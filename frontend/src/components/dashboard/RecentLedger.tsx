@@ -16,7 +16,7 @@ export const RecentLedger: React.FC<Props> = ({ entries }) => {
  <div className="overflow-x-auto">
  <table className="w-full text-left">
           <thead>
- <tr className="text-text-dim border-b border-border-main text-caption uppercase tracking-wider">
+ <tr className="text-text-dim border-b border-border-main text-label uppercase tracking-wider">
  <th scope="col" className="pb-3 font-medium">Status</th>
  <th scope="col" className="pb-3 font-medium">Project</th>
  <th scope="col" className="pb-3 font-medium">Event</th>
@@ -31,12 +31,12 @@ export const RecentLedger: React.FC<Props> = ({ entries }) => {
                   {e.metadata?.txHash ? (
  <span className="flex items-center gap-2 text-success text-caption font-semibold"><CheckCircle size={16} /> On Chain</span>
                   ) : (
- <span className="text-text-dim text-caption">Local</span>
+ <span className="text-text-dim text-label">Local</span>
                   )}
                 </td>
- <td className="py-3 pr-4 text-text-main font-medium text-small">{e.projectName || 'System'}</td>
- <td className="py-3 pr-4 text-text-muted font-mono text-caption">{e.type.replace(/_/g, ' ')}</td>
- <td className="py-3 pr-4 text-text-main font-medium text-small text-right whitespace-nowrap">
+ <td className="py-3 pr-4 text-text-main font-medium text-body">{e.projectName || 'System'}</td>
+ <td className="py-3 pr-4 text-text-muted font-mono text-body">{e.type.replace(/_/g, ' ')}</td>
+ <td className="py-3 pr-4 text-text-main font-medium text-body text-right whitespace-nowrap">
                   {e.amount !== '0' ? money(e.amount) : '-'}
                 </td>
  <td className="py-3 text-text-dim text-caption text-right whitespace-nowrap">

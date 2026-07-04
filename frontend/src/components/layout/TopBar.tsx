@@ -13,13 +13,13 @@ export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => 
       <div className="flex items-center gap-4">
         <button
           onClick={onMenuClick}
-          className="lg:hidden text-text-muted hover:text-text-main transition-all duration-fast ease-out active:scale-[0.98]"
+          className="lg:hidden text-text-muted hover:text-text-main transition-all duration-fast ease-out"
           aria-label="Open menu"
         >
           <Menu aria-hidden='true' size={20} strokeWidth={2} />
         </button>
         <div>
-          <h2 className="text-page-title font-semibold text-text-main leading-tight">{title}</h2>
+          <h2 className="text-page-title font-bold text-text-main leading-tight">{title}</h2>
           <p className="text-small text-text-dim">{description}</p>
         </div>
       </div>
@@ -36,7 +36,7 @@ export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => 
         </div>
 
         <button
-          className="relative p-2 text-text-muted hover:text-text-main transition-all duration-fast ease-out active:scale-[0.98]"
+          className="relative p-2 text-text-muted hover:text-text-main transition-all duration-fast ease-out"
           aria-label="Notifications"
         >
           <Bell aria-hidden='true' size={20} strokeWidth={2} />
@@ -44,7 +44,7 @@ export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => 
         </button>
 
         <button
-          className="w-9 h-9 rounded-full bg-elevated border border-border-main flex items-center justify-center text-text-muted hover:text-text-main transition-all duration-fast ease-out active:scale-[0.98]"
+          className="w-9 h-9 rounded-full bg-elevated border border-border-main flex items-center justify-center text-text-muted hover:text-text-main transition-all duration-fast ease-out"
           aria-label="User menu"
         >
           <User aria-hidden='true' size={18} strokeWidth={2} />
