@@ -43,7 +43,7 @@ export const SettlementsPage = () => {
               </div>
  <div className="sm:text-right text-left">
  <p className="text-title font-bold text-success tabular-nums">{money(s.amount)}</p>
- <a href={`https://arbiscan.io/tx/${s.metadata?.txHash}`} target="_blank" className="text-primary text-caption font-mono hover:underline flex items-center gap-1 justify-end mt-1">
+ <a href={`https://testnet.arcscan.app/tx/${s.metadata?.txHash}`} target="_blank" className="text-primary text-caption font-mono hover:underline flex items-center gap-1 justify-end mt-1">
                   {s.metadata?.txHash?.slice(0, 16)}... <ExternalLink size={16}/>
                 </a>
  <p className="text-caption text-text-dim mt-1">Block #{s.metadata?.blockNumber?.toLocaleString()}</p>

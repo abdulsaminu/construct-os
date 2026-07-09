@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, Bell, Menu, User } from 'lucide-react';
+import { ConnectWalletButton } from '../wallet/ConnectWalletButton';
 
 interface Props {
   title: string;
@@ -8,6 +9,13 @@ interface Props {
 }
 
 export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => {
+      const [searchTerm, setSearchTerm] = useState('');
+      const handleSearch = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && searchTerm.trim()) {
+          window.dispatchEvent(new CustomEvent('app-search', { detail: searchTerm.trim() }));
+          setSearchTerm('');
+        }
+      };
   return (
     <header className="h-16 bg-surface border-b border-border-main flex items-center justify-between px-8 sticky top-0 z-30">
       <div className="flex items-center gap-4">
@@ -25,7 +33,7 @@ export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => 
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="search-input hidden md:flex items-center bg-elevated rounded-input px-3 h-10 w-64 border border-border-main transition-colors">
+        <div className="search-input hidden md:flex items-center bg-elevated rounded-input px-3 h-10 w-64 border border-border-main transition-colors" onKeyDown={handleSearch}>
           <Search aria-hidden='true' size={18} strokeWidth={2} className="text-text-dim mr-2" />
           <input
             type="search"
@@ -34,6 +42,8 @@ export const TopBar: React.FC<Props> = ({ title, description, onMenuClick }) => 
             className="bg-transparent w-full text-small text-text-main outline-none placeholder:text-text-dim"
           />
         </div>
+
+        <ConnectWalletButton />
 
         <button
           className="relative p-2 text-text-muted hover:text-text-main transition-all duration-fast ease-out"

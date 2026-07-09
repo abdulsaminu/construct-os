@@ -5,7 +5,6 @@ import {
   LucideIcon
 } from 'lucide-react';
 import { NavigationItem } from './NavigationItem';
-import { ConstructMark } from '../brand/ConstructMark';
 
 interface PageConfig {
   id: string;
@@ -65,11 +64,10 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
         {/* Brand Block */}
         <div className="h-[72px] flex items-center px-6 border-b border-sidebar-border shrink-0">
           <div className={`flex items-center gap-3 transition-all duration-normal ease-out ${collapsed ? 'justify-center w-full' : ''}`}>
-            <ConstructMark size={28} />
             {!collapsed && (
               <div className="overflow-hidden transition-opacity duration-normal ease-out">
                 <h1 className="text-h2 font-semibold text-sidebar-text-active leading-tight">ConstructOS</h1>
-                <p className="text-caption text-sidebar-text-dim leading-tight tracking-wide">Construction Finance OS</p>
+                <p className="text-caption text-sidebar-text-dim leading-tight tracking-wide">Autonomous Construction Finance & Settlement Platform</p>
               </div>
             )}
           </div>

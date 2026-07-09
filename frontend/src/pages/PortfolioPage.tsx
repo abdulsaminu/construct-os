@@ -33,6 +33,10 @@ export const PortfolioPage: React.FC<Props> = ({ onSelectProject, onNavigate }) 
     load();
   }, []);
 
+  const handleProjectDeleted = (id: string) => {
+    setProjects(prev => prev.filter(p => p.id !== id));
+  };
+
   const filteredProjects = useMemo(() => projects.filter(p => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
     const matchStatus = statusFilter === 'all' || p.status === statusFilter;
@@ -41,9 +45,9 @@ export const PortfolioPage: React.FC<Props> = ({ onSelectProject, onNavigate }) 
 
   return (
     <div>
-      <PageHeader 
+      <PageHeader
         title="Portfolio"
-        icon={FolderKanban} 
+        icon={FolderKanban}
         action={
  <button onClick={() => onNavigate('new-project')} className="btn-primary">
             <Plus size={16} /> New Project
@@ -62,7 +66,7 @@ export const PortfolioPage: React.FC<Props> = ({ onSelectProject, onNavigate }) 
       ) : (
  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredProjects.map(p => (
-            <ProjectCard key={p.id} project={p} risk={risks[p.id]} onSelect={onSelectProject} />
+            <ProjectCard key={p.id} project={p} risk={risks[p.id]} onSelect={onSelectProject} onDeleted={handleProjectDeleted} />
           ))}
         </div>
       )}

@@ -29,3 +29,8 @@ download/
 upload/
 tool-results/
 worklog.md
+
+# AI checkpoint dumps / local dev artifacts
+AI_CHECKPOINT/
+*.bak
+*:Zone.Identifier

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetcher, poster } from '../lib/api';
+import { fetcher, poster, deleter } from '../lib/api';
 import { Project, Milestone, Contractor, RiskScore, LedgerEntry } from '../types';
 import { ProjectOverviewCards } from '../components/project/ProjectOverviewCards';
 import { MilestoneTimeline } from '../components/project/MilestoneTimeline';
@@ -21,7 +21,8 @@ export const ProjectDetailPage: React.FC<Props> = ({ id, onBack }) => {
   const [ledger, setLedger] = useState<LedgerEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  
+  const [milestoneError, setMilestoneError] = useState('');
+
   const [isSettling, setIsSettling] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
@@ -45,13 +46,26 @@ export const ProjectDetailPage: React.FC<Props> = ({ id, onBack }) => {
   useEffect(() => { loadData(); }, [id]);
 
   const handleFund = async (mId: string) => {
+    setMilestoneError('');
     setError('');
     const res = await poster<{ error?: string }>(`/projects/${id}/milestones/fund`, { milestoneId: mId });
+    if (res.error) {
+      setMilestoneError(res.error);
+    } else {
+      loadData();
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!confirm('Delete this draft project? This cannot be undone.')) return;
+    setError('');
+    const res = await deleter<{ error?: string }>(`/projects/${id}`);
     if (res.error) setError(res.error);
-    else loadData();
+    else onBack();
   };
 
   const handleClaim = async (mId: string, cId: string) => {
+    setMilestoneError('');
     setError('');
     const res = await poster<{ error?: string }>(`/projects/${id}/milestones/claim`, { milestoneId: mId, contractorId: cId });
     if (res.error) setError(res.error);
@@ -72,47 +86,53 @@ export const ProjectDetailPage: React.FC<Props> = ({ id, onBack }) => {
     }
   };
 
- if (isLoading) return <div className="p-8 space-y-6"><Skeleton className="h-10 w-1/3" /><div className="grid grid-cols-2 lg:grid-cols-4 gap-4">{[1,2,3,4].map(i=><Skeleton key={i} className="h-24" />)}</div><Skeleton className="h-64" /></div>;
- if (!project) return <div className="p-8 text-danger">{error || "Project not found"}</div>;
+  if (isLoading) return <div className="p-8 space-y-6"><Skeleton className="h-10 w-1/3" /><div className="grid grid-cols-2 lg:grid-cols-4 gap-4">{[1,2,3,4].map(i=><Skeleton key={i} className="h-24" />)}</div><Skeleton className="h-64" /></div>;
+  if (!project) return <div className="p-8 text-danger">{error || "Project not found"}</div>;
 
   return (
- <div>
- {error && <div className="bg-danger/10 border border-danger/50 text-danger px-4 py-3 rounded-card mb-6 text-small">{error}</div>}
+    <div>
+      {project?.status === 'draft' && (
+        <button onClick={handleDelete} className="mb-4 flex items-center gap-2 text-danger hover:bg-danger/10 px-4 py-2 rounded-btn text-small font-medium transition-colors">
+          Delete Project
+        </button>
+      )}
+      {error && <div className="bg-danger/10 border border-danger/50 text-danger px-4 py-3 rounded-card mb-6 text-small">{error}</div>}
 
       {/* Clean Header: Back -> Title -> Event History */}
- <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-8">
- <div className="flex items-center gap-4">
-          <button 
-            onClick={onBack} 
- className="p-3 rounded-btn bg-elevated border border-border-main hover:bg-border-main text-text-muted hover:text-text-main transition-colors"
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-8">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={onBack}
+            className="p-3 rounded-btn bg-elevated border border-border-main hover:bg-border-main text-text-muted hover:text-text-main transition-colors"
             aria-label="Go back to portfolio"
           >
             <ArrowLeft size={20} />
           </button>
           <div>
- <h1 className="text-page-title font-semibold text-text-main leading-tight">{project.name}</h1>
- <p className="text-small text-text-dim mt-1">Project Execution & Settlement</p>
+            <h1 className="text-page-title font-semibold text-text-main leading-tight">{project.name}</h1>
+            <p className="text-small text-text-dim mt-1">Project Execution & Settlement</p>
           </div>
         </div>
-        
- <button onClick={() => setIsHistoryOpen(true)} className="flex items-center gap-2 text-text-muted hover:text-text-main text-small transition-colors">
+
+        <button onClick={() => setIsHistoryOpen(true)} className="flex items-center gap-2 text-text-muted hover:text-text-main text-small transition-colors">
           <History size={20} /> Event History
         </button>
       </div>
 
       <ProjectOverviewCards project={project} risk={risk || undefined} />
 
- <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
- <div className="lg:col-span-2 bg-surface rounded-card border border-border-main p-6">
- <h3 className="text-h2 text-text-main mb-6">Milestone Execution Timeline</h3>
-          <MilestoneTimeline 
-            milestones={project.milestones} 
-            contractors={contractors} 
-            onFund={handleFund} 
-            onClaim={handleClaim} 
-            onSettle={handleSettle} 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="lg:col-span-2 bg-surface rounded-card border border-border-main p-6">
+          <h3 className="text-h2 text-text-main mb-6">Milestone Execution Timeline</h3>
+          <MilestoneTimeline
+            milestones={project.milestones}
+            contractors={contractors}
+            onFund={handleFund}
+            onClaim={handleClaim}
+            onSettle={handleSettle}
             isSettling={isSettling}
             projectStatus={project.status}
+            lastError={milestoneError}
           />
         </div>
         <ContractorPanel project={project} contractors={contractors} />
@@ -121,12 +141,12 @@ export const ProjectDetailPage: React.FC<Props> = ({ id, onBack }) => {
       <ProjectLedger ledger={ledger} isLoading={false} />
 
       <Drawer isOpen={isHistoryOpen} onClose={() => setIsHistoryOpen(false)} title="Project Event History">
- <div className="space-y-4">
+        <div className="space-y-4">
           {[...ledger].sort((a,b) => a.timestamp - b.timestamp).map(e => (
- <div key={e.id} className="border-l-2 border-border-main pl-4">
- <p className="text-small font-medium text-text-main">{e.type.replace(/_/g, ' ')}</p>
- <p className="text-caption text-text-dim mt-1">{new Date(e.timestamp).toLocaleString()}</p>
- {e.metadata?.txHash && <p className="text-caption text-primary font-mono mt-1 break-all">Tx: {e.metadata.txHash}</p>}
+            <div key={e.id} className="border-l-2 border-border-main pl-4">
+              <p className="text-small font-medium text-text-main">{e.type.replace(/_/g, ' ')}</p>
+              <p className="text-caption text-text-dim mt-1">{new Date(e.timestamp).toLocaleString()}</p>
+              {e.metadata?.txHash && <p className="text-caption text-primary font-mono mt-1 break-all">Tx: {e.metadata.txHash}</p>}
             </div>
           ))}
         </div>

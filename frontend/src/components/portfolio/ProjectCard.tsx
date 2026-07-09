@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Project, RiskScore } from '../../types';
 import { StatusBadge } from '../ui/StatusBadge';
 import { ProgressBar } from '../ui/ProgressBar';
-import { money } from '../../lib/api';
-import { ArrowRight, Calendar, ListChecks } from 'lucide-react';
+import { money, deleter } from '../../lib/api';
+import { ArrowRight, Calendar, ListChecks, Trash2 } from 'lucide-react';
 
 interface Props {
   project: Project;
   risk?: RiskScore;
   onSelect: (id: string) => void;
+  onDeleted?: (id: string) => void;
 }
 
-export const ProjectCard = React.memo<Props>(({ project, risk, onSelect }) => {
+export const ProjectCard = React.memo<Props>(({ project, risk, onSelect, onDeleted }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [error, setError] = useState('');
+
   // UI geometry only. Pending backend completionPercent field.
   const fundedCount = project.milestones.filter(m => m.funded).length;
   const totalCount = project.milestones.length || 1;
   const progressPercent = Math.round((fundedCount / totalCount) * 100);
-  
+
   const getRiskStyles = () => {
     if (!risk) return 'bg-elevated text-text-dim';
     if (risk.composite > 80) return 'bg-danger/20 text-danger';
@@ -33,22 +37,59 @@ export const ProjectCard = React.memo<Props>(({ project, risk, onSelect }) => {
 
   const daysAgo = Math.floor((Date.now() - project.createdAt) / (1000 * 60 * 60 * 24));
 
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setError('');
+
+    if (!window.confirm(`Delete "${project.name}"? This cannot be undone. (Projects with funded milestones cannot be deleted.)`)) {
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      const res = await deleter<{ error?: string }>(`/projects/${project.id}`);
+      if (res?.error) {
+        setError(res.error);
+        setIsDeleting(false);
+      } else {
+        onDeleted?.(project.id);
+      }
+    } catch {
+      setError('Failed to delete project.');
+      setIsDeleting(false);
+    }
+  };
+
   return (
-    <div 
+    <div
       onClick={() => onSelect(project.id)}
- className="bg-surface rounded-card border border-border-main p-6 shadow-surface transition-all duration-fast cursor-pointer group"
+ className="bg-surface rounded-card border border-border-main p-6 shadow-surface transition-all duration-fast cursor-pointer group relative"
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && onSelect(project.id)}
       aria-label={`Open project ${project.name}`}
     >
- <div className="flex items-start justify-between mb-4">
+      <button
+        onClick={handleDelete}
+        disabled={isDeleting}
+        className="absolute top-4 right-4 p-2 text-text-dim hover:text-danger hover:bg-danger/10 rounded-8 transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-50 z-10"
+        aria-label={`Delete project ${project.name}`}
+        title="Delete project"
+      >
+        <Trash2 size={16} aria-hidden="true" />
+      </button>
+
+ <div className="flex items-start justify-between mb-4 pr-8">
         <div>
  <h3 className="text-body-lg font-semibold text-text-main group-hover:text-primary transition-colors">{project.name}</h3>
           <StatusBadge status={project.status} />
         </div>
  <span className={`px-3 py-1 rounded-badge text-caption font-bold ${getRiskStyles()}`}>Risk: {getRiskLabel()}</span>
       </div>
+
+      {error && (
+        <p className="text-caption text-danger mb-3">{error}</p>
+      )}
 
  <div className="grid grid-cols-3 gap-4 mb-6 text-small">
         <div>

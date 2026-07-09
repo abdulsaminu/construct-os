@@ -123,7 +123,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6">
         <MetricCard title="Total Capital" value={economy ? money(economy.totalCapital) : '---'} footer="Capital deposited" icon={Wallet} color="text-primary" />
         <MetricCard title="Available Liquidity" value={economy ? money(economy.availableCapital) : '---'} footer="Available for funding" icon={TrendingUp} color="text-success" />
-        <MetricCard title="Active Exposure" value={economy ? money(economy.lockedCapital) : '---'} footer="Awaiting completion" icon={AlertTriangle} color="text-warning" />
+        <MetricCard title="Active Exposure" value={economy ? money(economy.lockedCapital) : '---'} footer="No active escrows" icon={AlertTriangle} color="text-warning" />
         <MetricCard title="Settled Capital" value={economy ? money(economy.settledCapital) : '---'} footer="Blockchain confirmed" icon={DollarSign} color="text-success" />
         <MetricCard title="Active Projects" value={String(activeProjects.length)} footer="Under execution" icon={ShieldAlert} color="text-primary" />
         <MetricCard title="Fund Signals" value={String(fundRecommendations.length)} footer={`${allocations.length} total signals`} icon={BarChart3} color="text-primary" />

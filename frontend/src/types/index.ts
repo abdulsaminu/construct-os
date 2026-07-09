@@ -19,11 +19,25 @@ export interface Milestone {
 export interface Project {
   id: string;
   name: string;
+  description?: string;
   totalBudget: string;
   status: 'draft' | 'active' | 'completed' | 'at_risk';
   createdAt: number;
   completedAt?: number;
+  estimatedDurationDays: number;
+  plannedStartDate?: number;
+  plannedFinishDate?: number;
   milestones: Milestone[];
+}
+
+export interface AssignedProject {
+  id: string;
+  name: string;
+  status: string;
+  totalBudget: string;
+  completionPercent: number;
+  currentMilestone: string;
+  assignmentDate: number;
 }
 
 export interface Contractor {
@@ -31,12 +45,13 @@ export interface Contractor {
   name: string;
   payoutAddress: string;
   registeredAt: number;
+  assignedProjects?: AssignedProject[];
 }
 
 export interface LedgerEntry {
   id: string;
   projectId: string;
-  type: 'CAPITAL_DEPOSIT' | 'MILESTONE_FUNDED' | 'MILESTONE_CLAIMED' | 'SETTLEMENT';
+  type: 'CAPITAL_DEPOSIT' | 'PROJECT_CREATED' | 'CONTRACTOR_ASSIGNED' | 'MILESTONE_FUNDED' | 'MILESTONE_CLAIMED' | 'SETTLEMENT' | 'PROJECT_CLOSED' | 'PROJECT_DELETED' | 'CAPITAL_RELEASED';
   amount: string;
   timestamp: number;
   payeeId?: string;
@@ -46,6 +61,10 @@ export interface LedgerEntry {
     blockNumber?: number;
     gasUsed?: string;
     milestoneName?: string;
+    contractorName?: string;
+    settlementMode?: 'real' | 'demo';
+    demoReason?: string;
+    confirmedAt?: number;
   };
 }
 
@@ -55,6 +74,16 @@ export interface RiskScore {
   fundingRisk: number;
   contractorRisk: number;
   composite: number;
+  healthStatus?: 'healthy' | 'at_risk' | 'delayed' | 'completed';
+  scheduleVariance?: number;
+  expectedProgress?: number;
+  actualProgress?: number;
+  daysElapsed?: number;
+  daysRemaining?: number;
+  deliveryConfidence?: number;
+  plannedStartDate?: number;
+  plannedFinishDate?: number;
+  totalDurationDays?: number;
 }
 
 export interface AllocationRecommendation {
@@ -90,3 +119,8 @@ export interface ServiceStatus {
   status: 'Healthy' | 'Warning' | 'Offline' | 'Syncing';
   latency: string;
 }
+
+// Arc Testnet Explorer URL helper
+export const getArcExplorerTxUrl = (txHash: string): string => {
+  return `https://explorer.testnet.arc.network/tx/${txHash}`;
+};

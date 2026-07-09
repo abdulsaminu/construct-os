@@ -30,30 +30,35 @@ export const ContractorsPage = () => {
 
   return (
     <div>
-      <PageHeader 
+      <PageHeader
         title="Contractors"
-        icon={Users} 
+        icon={Users}
         action={
- <button onClick={() => setIsRegisterOpen(true)} className="btn-primary">
+          <button onClick={() => setIsRegisterOpen(true)} className="btn-primary">
             <UserPlus size={16} /> Register Contractor
           </button>
         }
       />
 
       {isLoading ? (
- <div className="bg-surface rounded-card border border-border-main p-6">
+        <div className="bg-surface rounded-card border border-border-main p-6">
           <TableSkeleton rows={5} />
         </div>
       ) : contractors.length === 0 ? (
         <EmptyState icon={UserPlus} title="No Contractors" description="Register your first contractor to assign payouts." />
       ) : (
- <div className="bg-surface rounded-card border border-border-main p-6">
+        <div className="bg-surface rounded-card border border-border-main p-6">
           <ContractorTable contractors={contractors} onSelect={setSelectedContractor} />
         </div>
       )}
 
       <RegisterDrawer isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} onSuccess={loadData} />
-      <ContractorDetailDrawer isOpen={!!selectedContractor} contractor={selectedContractor} onClose={() => setSelectedContractor(null)} />
+      <ContractorDetailDrawer 
+        isOpen={!!selectedContractor} 
+        contractor={selectedContractor} 
+        onClose={() => setSelectedContractor(null)} 
+        onUpdate={loadData} 
+      />
     </div>
   );
 };

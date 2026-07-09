@@ -9,6 +9,8 @@ export * from './risk.js';
 export * from './forecast.js';
 export * from './allocation.js';
 export * from './settlement.js';
-export * from './settlement-arc.js';
+// NOTE: settlement-arc.ts exports SettlementReceipt which conflicts.
+// Import ArcSettlementAdapter directly if needed.
+export { ArcSettlementAdapter } from './settlement-arc.js';
 export * from './events.js';
 export * from './multi-tenant.js';

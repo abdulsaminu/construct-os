@@ -62,9 +62,18 @@ export const PortfolioPanel: React.FC<Props> = ({ projects, risks, onSelectProje
  <p className="text-caption text-text-dim mt-1">Budget: {money(p.totalBudget)}</p>
                   </div>
  <div className="flex items-center gap-2">
- <span className={`px-3 py-1 rounded-badge text-caption font-bold ${getRiskColor(p.id)}`}>
-                      {risks[p.id]?.composite ? `Risk ${risks[p.id].composite}` : 'Healthy'}
+ <span className={`px-3 py-1 rounded-badge text-caption font-bold ${
+                      risks[p.id]?.healthStatus === 'delayed' ? 'bg-danger/20 text-danger' : 
+                      risks[p.id]?.healthStatus === 'at_risk' ? 'bg-warning/20 text-warning' : 
+                      'bg-success/20 text-success'
+                    }`}>
+                      {risks[p.id]?.healthStatus === 'delayed' ? 'Delayed' : risks[p.id]?.healthStatus === 'at_risk' ? 'At Risk' : 'Healthy'}
                     </span>
+                    {/* Phase 5: AI Metrics */}
+                    <div className="flex items-center gap-4 text-caption text-text-dim mt-1">
+                      <span>Current: {p.milestones.find(m => !m.claimed)?.name || 'Completed'}</span>
+                      <span>Remaining: {risks[p.id]?.daysRemaining || 0}d</span>
+                    </div>
  <ArrowRight size={16} className="text-text-dim group-hover:text-primary transition-colors mt-1" />
                   </div>
                 </div>
