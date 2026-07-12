@@ -18,19 +18,19 @@ export const DEMO_PROJECT = {
   id: 'demo-project-001',
   name: 'Abuja Smart Housing Estate - Phase I',
   description: 'Construction of a residential housing estate financed through milestone-based capital allocation.',
-  totalBudget: 50n, // $50 total — sized for testnet demo liquidity
+  totalBudget: 20n, // $20 total — one faucet visit covers a full cycle
   status: 'draft' as const,
   createdAt: Date.now(),
   estimatedDurationDays: 90,
   plannedStartDate: Date.now(),
   plannedFinishDate: Date.now() + 90 * 24 * 60 * 60 * 1000,
   milestones: [
-    { id: 'demo-ms-001', name: 'Foundation', budget: 10n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
-    { id: 'demo-ms-002', name: 'Superstructure', budget: 10n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
-    { id: 'demo-ms-003', name: 'Roofing', budget: 10n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
-    { id: 'demo-ms-004', name: 'Mechanical, Electrical & Plumbing (MEP)', budget: 10n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
-    { id: 'demo-ms-005', name: 'Finishes', budget: 5n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
-    { id: 'demo-ms-006', name: 'Practical Completion', budget: 5n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
+    { id: 'demo-ms-001', name: 'Foundation', budget: 4n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
+    { id: 'demo-ms-002', name: 'Superstructure', budget: 4n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
+    { id: 'demo-ms-003', name: 'Roofing', budget: 4n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
+    { id: 'demo-ms-004', name: 'Mechanical, Electrical & Plumbing (MEP)', budget: 4n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
+    { id: 'demo-ms-005', name: 'Finishes', budget: 2n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
+    { id: 'demo-ms-006', name: 'Practical Completion', budget: 2n, funded: false, claimed: false, settled: false, payeeId: DEMO_CONTRACTOR.id },
   ]
 };
 
