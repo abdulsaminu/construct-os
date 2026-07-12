@@ -13,17 +13,17 @@ interface Props {
 export const MetricCard = memo<Props>(({ title, value, footer, icon: Icon, color, change }) => (
   <div className="bg-surface rounded-card border border-border-main p-6 shadow-surface card-interactive flex flex-col justify-between h-full">
     <div className="flex items-start justify-between mb-4">
-      <p className="text-label text-text-dim">{title}</p>
+      <p className="text-label text-text-dim uppercase">{title}</p>
       <div className="p-3 rounded-input bg-elevated border border-border-main">
         <Icon aria-hidden='true' size={24} strokeWidth={1.75} className={color} />
       </div>
     </div>
     <div>
-      <p className="text-display-md font-bold text-text-main leading-none mb-2 tabular-nums truncate">{value}</p>
+      <p className="text-metric-lg metric-value text-text-main leading-none mb-2 truncate">{value}</p>
       <div className="flex items-center gap-2">
         <p className="text-small text-text-muted">{footer}</p>
         {change && (
-          <span className={`text-caption font-bold ${change.startsWith('-') ? 'text-danger' : 'text-success'}`}>
+          <span className={`text-caption font-bold metric-value ${change.startsWith('-') ? 'text-danger' : 'text-success'}`}>
             {change}
           </span>
         )}

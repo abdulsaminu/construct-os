@@ -23,11 +23,13 @@ export function handleApiRequest(state: CFELState, req: ApiRequest): ApiResponse
     }};
   }
 
+  // REMOVED: trusted/unverified deposits. Every deposit must now be a real,
+  // verified on-chain transaction (see /economy/deposit-onchain in server.ts).
   if (method === 'POST' && path === '/economy/deposit') {
-    const { amount } = body as any;
-    const result = dispatch(state, { type: 'DEPOSIT_CAPITAL', payload: { amount: BigInt(amount) } });
-    if (!result.success) return { statusCode: 400, body: { error: result.error } };
-    return { statusCode: 200, body: result.state.economy, newState: result.state };
+    return {
+      statusCode: 410,
+      body: { error: 'Trusted deposits have been removed. Use /economy/deposit-onchain with a real, verified transaction hash instead.' },
+    };
   }
 
   // NOTE: On-chain-verified deposits (wallet-connect flow) are handled directly

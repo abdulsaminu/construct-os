@@ -26,6 +26,19 @@ export const ContractorsPage = () => {
     }
   };
 
+  const handleContractorUpdate = async () => {
+    setIsLoading(true);
+    try {
+      const fresh = await fetcher<Contractor[]>('/contractors');
+      setContractors(fresh);
+      setSelectedContractor(prev => (prev ? fresh.find(c => c.id === prev.id) || null : null));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => { loadData(); }, []);
 
   return (
@@ -39,7 +52,6 @@ export const ContractorsPage = () => {
           </button>
         }
       />
-
       {isLoading ? (
         <div className="bg-surface rounded-card border border-border-main p-6">
           <TableSkeleton rows={5} />
@@ -51,13 +63,12 @@ export const ContractorsPage = () => {
           <ContractorTable contractors={contractors} onSelect={setSelectedContractor} />
         </div>
       )}
-
       <RegisterDrawer isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} onSuccess={loadData} />
-      <ContractorDetailDrawer 
-        isOpen={!!selectedContractor} 
-        contractor={selectedContractor} 
-        onClose={() => setSelectedContractor(null)} 
-        onUpdate={loadData} 
+      <ContractorDetailDrawer
+        isOpen={!!selectedContractor}
+        contractor={selectedContractor}
+        onClose={() => setSelectedContractor(null)}
+        onUpdate={handleContractorUpdate}
       />
     </div>
   );

@@ -5,7 +5,6 @@ import { poster } from '../../lib/api';
 import { Plus, AlertCircle, Wallet } from 'lucide-react';
 import { useAccount, useWriteContract } from 'wagmi';
 import { USDC_ABI, USDC_ADDRESS, TREASURY_ADDRESS } from '../../lib/web3';
-import { useWalletMode } from '../../lib/walletMode';
 
 interface Props {
   onDepositSuccess: () => void;
@@ -18,38 +17,20 @@ export const DepositCard: React.FC<Props> = ({ onDepositSuccess }) => {
   const [error, setError] = useState('');
   const [step, setStep] = useState<Step>('idle');
 
-  const { mode } = useWalletMode();
   const { address, isConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
 
   const isDepositing = step !== 'idle';
 
-  const validateAmount = (): string | null => {
+  const handleDeposit = async () => {
+    setError('');
     const rawAmount = amount.replace(/[^0-9]/g, '');
-    if (!rawAmount) return null;
-    return rawAmount;
-  };
 
-  const handleDemoDeposit = async (rawAmount: string) => {
-    setStep('verifying');
-    try {
-      const res = await poster<{ error?: string }>('/economy/deposit', { amount: rawAmount });
-      if (res.error) {
-        setError(res.error);
-      } else {
-        setAmount('');
-        onDepositSuccess();
-      }
-    } catch {
-      setError('Unable to complete deposit. API timeout.');
-    } finally {
-      setStep('idle');
-    }
-  };
+    if (!rawAmount) { setError('Amount required'); return; }
+    if (parseInt(rawAmount, 10) <= 0) { setError('Amount must be greater than zero'); return; }
 
-  const handleUserDeposit = async (rawAmount: string) => {
     if (!isConnected) {
-      setError('Connect a wallet first (top right) to deposit as yourself.');
+      setError('Connect a wallet (top right) to deposit — every deposit must be a real on-chain transaction.');
       return;
     }
     if (!TREASURY_ADDRESS) {
@@ -88,23 +69,7 @@ export const DepositCard: React.FC<Props> = ({ onDepositSuccess }) => {
     }
   };
 
-  const handleDeposit = async () => {
-    setError('');
-    const rawAmount = validateAmount();
-
-    if (!rawAmount) { setError('Amount required'); return; }
-    if (parseInt(rawAmount, 10) <= 0) { setError('Amount must be greater than zero'); return; }
-
-    if (mode === 'demo') {
-      await handleDemoDeposit(rawAmount);
-    } else {
-      await handleUserDeposit(rawAmount);
-    }
-  };
-
-  const buttonLabel = mode === 'demo'
-    ? (isDepositing ? 'Processing...' : 'Deposit Capital')
-    : !isConnected
+  const buttonLabel = !isConnected
     ? 'Connect Wallet to Deposit'
     : step === 'awaiting-wallet'
     ? 'Confirm in wallet...'
@@ -118,11 +83,9 @@ export const DepositCard: React.FC<Props> = ({ onDepositSuccess }) => {
  <div className="mt-8 space-y-4">
         <div className="flex items-center justify-between">
  <label htmlFor="deposit-amount" className="block text-small text-text-muted">
-            Deposit Amount {mode === 'user' ? '(USDC, on-chain)' : ''}
+            Deposit Amount (USDC, on-chain)
           </label>
-          <span className="text-caption text-text-dim">
-            {mode === 'demo' ? 'ConstructOS Treasury' : 'Your Wallet'}
-          </span>
+          <span className="text-caption text-text-dim">Your Wallet</span>
         </div>
         <div>
           <input
@@ -132,13 +95,13 @@ export const DepositCard: React.FC<Props> = ({ onDepositSuccess }) => {
             autoComplete="off"
             value={amount}
             onChange={e => { setAmount(e.target.value.replace(/[^0-9]/g, '')); setError(''); }}
-            placeholder={mode === 'demo' ? 'e.g. 1000000' : 'e.g. 20'}
+            placeholder="e.g. 20"
  className="w-full bg-elevated border border-border-main rounded-card p-3 text-text-main outline-none focus:border-primary transition-colors font-mono"
             aria-label="Deposit amount"
           />
         </div>
 
-        {mode === 'user' && isConnected && address && (
+        {isConnected && address && (
           <p className="text-caption text-text-muted font-mono">
             Connected: {address.slice(0, 6)}...{address.slice(-4)}
           </p>
@@ -157,7 +120,7 @@ export const DepositCard: React.FC<Props> = ({ onDepositSuccess }) => {
  className="w-full bg-primary hover:bg-primary-hover text-white p-4 rounded-btn font-semibold flex items-center justify-center gap-2 transition-colors duration-fast disabled:opacity-50"
           aria-label="Submit deposit"
         >
-          {mode === 'user' && !isConnected ? <Wallet aria-hidden='true' size={20} /> : <Plus aria-hidden='true' size={20} />}
+          {!isConnected ? <Wallet aria-hidden='true' size={20} /> : <Plus aria-hidden='true' size={20} />}
           {buttonLabel}
         </button>
       </div>

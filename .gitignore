@@ -34,3 +34,5 @@ worklog.md
 AI_CHECKPOINT/
 *.bak
 *:Zone.Identifier
+ai-checkpoint.sh
+data/constructos.json

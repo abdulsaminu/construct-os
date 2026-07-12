@@ -99,105 +99,13 @@ body {
     @apply shadow-surface;
   }
 
-  /* --- Button Primary --- */
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-white
-           rounded-btn font-semibold text-small
-           hover:bg-primary-hover hover:shadow-raised
-           active:scale-[0.98]
-           disabled:opacity-40 disabled:pointer-events-none
-           transition-all duration-fast ease-out
-           focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
-  }
-
-  /* --- Button Ghost --- */
-  .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-3 bg-transparent text-text-muted
-           rounded-btn font-semibold text-small
-           hover:bg-elevated hover:text-text-main
-           active:scale-[0.98]
-           disabled:opacity-40 disabled:pointer-events-none
-           transition-all duration-fast ease-out;
-  }
-
-  /* --- Search Input --- */
-  .search-input {
-    @apply transition-all duration-normal ease-out;
-  }
-  .search-input:focus-within {
-    @apply border-primary shadow-[0_0_0_3px_rgba(53,109,255,0.15)];
-  }
-  .search-input:focus-within input::placeholder {
-    @apply opacity-0 transition-opacity duration-fast;
-  }
-
-  /* --- Form Input --- */
-  .form-input {
-    @apply w-full bg-surface border border-border-main text-text-main
-           rounded-input px-3 py-3 text-small
-           placeholder:text-text-dim
-           focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(53,109,255,0.15)]
-           transition-all duration-fast ease-out
-           disabled:opacity-40 disabled:pointer-events-none;
-  }
-
-  /* --- Dropdown --- */
-  .dropdown-panel {
-    @apply animate-scale-in origin-top;
-  }
-
-  /* --- Dialog --- */
-  .dialog-backdrop {
-    @apply bg-black/40 backdrop-blur-sm;
-    animation: fade-in 250ms ease-out;
-  }
-  .dialog-content {
-    @apply animate-scale-in;
-    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  /* --- Drawer --- */
-  .drawer-panel {
-    @apply animate-slide-in-right;
-    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  /* --- Toast --- */
-  .toast-enter {
-    @apply animate-toast-in;
-  }
-  .toast-exit {
-    @apply animate-toast-out;
-  }
-
-  /* --- Progress Bar --- */
-  .progress-bar-fill {
-    animation: progress-fill 350ms ease-out forwards;
-  }
-
-  /* --- Page Transition --- */
-  .page-enter {
-    animation: fade-in 250ms ease-out;
-  }
-
-  /* --- Accordion Content --- */
-  .accordion-content {
-    @apply overflow-hidden transition-all duration-normal ease-out;
-  }
-
-  /* --- Table Row Fade --- */
-  .table-row {
-    animation: fade-in 250ms ease-out;
-  }
-}
-
-/* ===== Responsive: Mobile Sidebar as Bottom Sheet ===== */
-@media (max-width: 639px) {
-  .sidebar-mobile-drawer {
-    @apply fixed inset-x-0 bottom-0 top-auto h-auto max-h-[70vh]
-           rounded-t-16 rounded-b-none border-t border-sidebar-border border-l-0 border-r-0
-           z-50;
-    animation: fade-in 250ms ease-out;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+  /* --- Metric Value — the headline number in a KPI card or emphasis moment.
+     Geist Mono for engineered numeral precision + tabular-nums so digits
+     always align, tight tracking so large figures don't feel loose. Use
+     alongside text-metric or text-metric-lg for the actual size. --- */
+  .metric-value {
+    font-family: theme('fontFamily.mono');
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
   }
 }

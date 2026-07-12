@@ -34,8 +34,11 @@ export const DEMO_PROJECT = {
   ]
 };
 
-// Treasury in WHOLE USDC (engine uses whole numbers, settlement converts to minor units)
-export const DEMO_TREASURY_BALANCE = 100n; // 100 USDC
+// Treasury starts at zero — no fictional seed balance. Every dollar shown as
+// available/locked/settled capital should be traceable to a real deposit
+// (either a trusted Demo Mode deposit you actually control, or a verified
+// on-chain deposit via a connected wallet).
+export const DEMO_TREASURY_BALANCE = 0n;
 
 export function createDemoState(): CFELState {
   return {

@@ -1,149 +1,89 @@
 # Design System
 
-ConstructOS uses a strict design token system defined in `frontend/tailwind.config.js` and `frontend/src/index.css`. All components must use these tokens — no raw pixel values, no default Tailwind scales, no arbitrary hex colors.
-
-## Color Palette
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `bg` | `#0B1220` | Page background |
-| `surface` | `#111827` | Card/panel backgrounds |
-| `elevated` | `#1A2438` | Input fields, hover states |
-| `primary` | `#356DFF` | Primary actions, links, active states |
-| `primary-hover` | `#2554CC` | Primary button hover |
-| `success` | `#22C55E` | Positive states, low risk |
-| `warning` | `#FACC15` | Caution states, medium risk |
-| `danger` | `#EF4444` | Errors, critical risk |
-| `info` | `#3B82F6` | Informational states |
-| `text-main` | `#F9FAFB` | Primary text |
-| `text-muted` | `#9CA3AF` | Secondary text |
-| `text-dim` | `#8B95A5` | Placeholder, tertiary text |
-| `border-main` | `#1F2937` | Borders, dividers |
-
 ## Typography
 
-The type scale has 11 levels. Use semantic names, never default Tailwind sizes (`text-sm`, `text-base`, `text-lg`, etc.).
+**Primary font:** Geist (loaded via CDN in `index.html`) — a modern, precise grotesk
+chosen for its association with trust and engineering rigor (Vercel's font, widely used
+across developer/fintech tooling). Falls back to `system-ui` if the CDN is unavailable.
 
-| Token | Size | Weight | Line Height | Usage |
-|-------|------|--------|-------------|-------|
-| `text-display-lg` | 56px | 700 | 1.05 | Hero numbers, major KPIs |
-| `text-display` | 44px | 700 | 1.1 | Dashboard hero |
-| `text-h1` | 36px | 600 | 1.2 | Page titles |
-| `text-h2` | 30px | 600 | 1.3 | Section headings |
-| `text-h3` | 24px | 600 | 1.4 | Subsection headings |
-| `text-title` | 20px | 500 | 1.5 | Card titles, important labels |
-| `text-body-lg` | 16px | 500 | 1.5 | Emphasized body text |
-| `text-body` | 16px | 400 | 1.5 | Default body text |
-| `text-small` | 14px | 400 | 1.5 | Secondary content, table cells |
-| `text-caption` | 12px | 400 | 1.5 | Labels, metadata, timestamps |
-| `text-micro` | 10px | 500 | 1.5 | Badges, tiny labels |
+**Numeral font:** Geist Mono — used specifically for financial figures (KPI values,
+table amounts, transaction hashes). Distinct monospaced numerals are a deliberate signal
+of precision, matching the pattern used by Stripe, Mercury, and similar financial products.
+Applied via the `.metric-value` component class (combines `font-mono`, `tabular-nums`,
+and tight letter-spacing) — use this class alongside a size token whenever displaying a
+monetary or numeric figure that should read as authoritative.
 
-**Font family**: Inter (with system-ui fallback).
+### Type Scale
 
-## Spacing
+| Token | Size | Weight | Use |
+|---|---|---|---|
+| `display-lg` | 48px | 700 | Rare — largest hero numbers only |
+| `display` | 44px | 700 | Page-level hero figures |
+| `display-md` | 24px | 700 | Secondary display figures |
+| `metric-lg` | 40px | 700 | **The headline number in a KPI card.** Out-ranks page titles — this is what an executive should see first. |
+| `metric` | 30px | 700 | Secondary metric figures (smaller KPI cards, inline stats) |
+| `page-title` | 28px | 700 | Page headers (TopBar title) |
+| `h1` | 22px | 600 | Section headers |
+| `h2` | 28px | 600 | Rare — large section breaks |
+| `h3` / `title` | 18px | 500 | Card/panel titles |
+| `body-lg` | 16px | 400 | Emphasized body text |
+| `body` | 14px | 400 | Default body text |
+| `small` | 12px | 500 | Secondary text, table cells, form labels |
+| `label` | 11px | 600, uppercase, tracked | **Overline captions only** — KPI card titles, table column headers. Never body content. |
+| `caption` | 12px | 700 | Badges, small emphasized tags |
+| `micro` | 11px | 500 | Rare — smallest supporting text |
 
-The spacing scale uses a strict 4px base grid. Only these values are valid:
+**Fixed in this pass:** `label` was previously 18px/600 — nearly as large as a metric
+value itself, which inverted the intended hierarchy everywhere it was used (`MetricCard`'s
+KPI title, `Table`'s column headers). It's now correctly small, quiet, and uppercase — the
+overline it was always meant to be. This is a token-level fix; no component code needed to
+change for it to take effect everywhere the token is already used.
 
-| Token | Value |
-|-------|-------|
-| `1` | 4px |
-| `2` | 8px |
-| `3` | 12px |
-| `4` | 16px |
-| `6` | 24px |
-| `8` | 32px |
-| `12` | 48px |
-| `16` | 64px |
+### Hierarchy Principle
 
-Non-token values like `p-2.5`, `gap-1.5`, `mt-0.5` are prohibited. Use the nearest token value.
+The single most important number on any given screen (a KPI, a project budget, a
+settlement amount) should be the loudest thing on that screen — louder than the page
+title. That's why `metric-lg` (40px) exceeds `page-title` (28px). A judge or executive
+glancing at the Dashboard should see the wallet balance before they consciously read
+any label around it.
 
-## Border Radius
+## Spacing System
 
-Use semantic aliases wherever possible:
+### Cards
 
-| Alias | Value | Usage |
-|-------|-------|-------|
-| `rounded-btn` | 6px | Buttons, small interactive elements |
-| `rounded-input` | 8px | Form inputs |
-| `rounded-card` | 12px | Cards, panels |
-| `rounded-dialog` | 16px | Dialogs, drawers, modals |
-| `rounded-badge` | 999px | Pills, badges, tags |
+- **Padding:** `24px` (`p-6`) — consistent across `MetricCard`, `Panel`, and all card-style containers
+- **Grid gap:** `24px` (`gap-6`) — the standard rhythm between cards in a KPI row or card grid
+- Named tokens (`card-padding`, `card-gap`) are available in `tailwind.config.js` for
+  documentation clarity, aliasing the same `24px` value already in consistent use
 
-Raw values (`rounded-6`, `rounded-8`, `rounded-12`, `rounded-16`) are available but semantic aliases are preferred. Never use `rounded-lg`, `rounded-xl`, or `rounded-2xl` (Tailwind defaults).
+### Tables
 
-## Shadows
+- **Cell padding:** `16px` vertical (`py-4`), horizontal inherited from parent — consistent
+  across all `Table.tsx` usages
+- **Header:** `pb-3 pt-1`, uppercase, tracked, now correctly small (`text-label`, 11px)
+- Named tokens (`table-cell-y`, `table-cell-x`) available for the same reason as above
 
-Four elevation levels, from flat to floating:
+### Section Rhythm
 
-| Token | Visual | Usage |
-|-------|--------|-------|
-| `shadow-surface` | Subtle (1px offset) | Default card state |
-| `shadow-raised` | Medium (4px offset) | Hovered cards, dropdowns |
-| `shadow-floating` | High (12px offset) | Drawers, popovers |
-| `shadow-overlay` | Maximum (24px offset) | Dialogs, modals |
+- **Between major page sections:** `32px` (`gap-8` / `space-y-8`) — named as `section-gap`
 
-**Card hover pattern**: Use the `.card-interactive` CSS class instead of `hover:-translate-y-*`. It applies `shadow-raised` on hover and `shadow-surface` on active for a natural elevation change.
+These tokens formalize spacing values that were already in consistent use across the
+codebase — they don't change existing layout, they make the existing rhythm
+self-documenting so future components can reference `theme('spacing.card-padding')`
+instead of remembering "24px" by convention.
 
-## Animation
+## Applying This Elsewhere
 
-### Durations
+The `label` token fix cascades automatically to every existing usage — no other files
+need to change for that specific fix. For any *new* component displaying a headline
+metric (a new KPI card, a settlement total, a treasury figure), use:
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `duration-fast` | 150ms | Button press, toggle |
-| `duration-normal` | 250ms | Page transitions, expand/collapse |
-| `duration-slow` | 350ms | Drawer open, dialog appear |
+```tsx
+<p className="text-metric-lg metric-value text-text-main">{value}</p>
+```
 
-Never use raw durations like `duration-200`, `duration-300`, `duration-500`.
+For overline captions (section eyebrows, table headers, KPI titles):
 
-### Easing
-
-| Token | Curve | Usage |
-|-------|-------|-------|
-| `ease-out` | `cubic-bezier(0, 0, 0.2, 1)` | Entering elements |
-| `ease-in` | `cubic-bezier(0.4, 0, 1, 1)` | Exiting elements |
-| `ease-panel` | `cubic-bezier(0.2, 0.8, 0.2, 1)` | Panels, drawers |
-
-### Built-in Animations
-
-| Class | Keyframes | Duration |
-|-------|-----------|----------|
-| `animate-fade-in` | opacity 0→1, translateY 8px→0 | 250ms |
-| `animate-scale-in` | opacity 0→1, scale 0.98→1 | 250ms |
-| `animate-slide-in-right` | translateX 100%→0 | 350ms |
-| `animate-toast-in` | translateX 100%→0 | 350ms |
-| `animate-shimmer` | background position -200%→200% | 2s infinite |
-
-### Reduced Motion
-
-All animations respect `prefers-reduced-motion: reduce`. When enabled, durations collapse to 0.01ms and iteration counts become 1.
-
-## Component Classes
-
-Defined in `index.css` `@layer components`:
-
-| Class | Purpose |
-|-------|---------|
-| `.btn-primary` | Primary action button |
-| `.btn-ghost` | Secondary/ghost button |
-| `.form-input` | Text inputs, textareas |
-| `.search-input` | Search field with expanding behavior |
-| `.card-interactive` | Hoverable card with shadow elevation |
-| `.panel` | Surface card wrapper (via `<Panel>` component) |
-| `.drawer-panel` | Right-side drawer animation |
-| `.dialog-backdrop` | Modal backdrop with blur |
-| `.dialog-content` | Modal content scale-in |
-| `.toast-enter` / `.toast-exit` | Toast notification animations |
-| `.skeleton-shimmer` | Loading placeholder animation |
-| `.page-enter` | Page transition fade-in |
-| `.table-row` | Staggered table row entrance |
-
-## Accessibility
-
-- **Focus**: All interactive elements show a 2px `#356DFF` outline on `:focus-visible` (WCAG AA).
-- **Screen readers**: `.sr-only` class for visually hidden labels. `aria-label` on all icon-only buttons.
-- **Tables**: All `<th>` elements use `scope="col"`.
-- **Progress**: `<ProgressBar>` uses `role="progressbar"` with `aria-valuenow`.
-- **Drawers**: Focus trap + ESC close + `aria-modal`.
-- **Select**: Keyboard navigation (Arrow keys, Enter, Escape) with `role="listbox"`.
-- **Toasts**: `role="alert"` for screen reader announcements.
+```tsx
+<p className="text-label text-text-dim uppercase">{label}</p>
+```
