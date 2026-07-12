@@ -64,7 +64,7 @@ export const Sidebar: React.FC<Props> = ({ activePage, onNavigate, collapsed, on
           <div className={`flex items-center gap-3 transition-all duration-normal ease-out ${collapsed ? 'justify-center w-full' : ''}`}>
             {!collapsed && (
               <div className="overflow-hidden transition-opacity duration-normal ease-out">
-                <h1 className="text-h3 font-semibold text-sidebar-text-active leading-tight">ConstructOS</h1>
+                <h1 className="text-page-title font-bold text-sidebar-text-active leading-tight">ConstructOS</h1>
                 <p className="text-caption text-sidebar-text-dim leading-tight tracking-wide">Autonomous Construction Finance & Settlement Platform</p>
               </div>
             )}

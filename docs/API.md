@@ -41,30 +41,6 @@ Returns the capital treasury overview.
 }
 ```
 
-### `POST /economy/deposit`
-
-Deposit capital into the treasury via the trusted path (Demo Treasury Mode — no
-on-chain verification, the amount is trusted as given).
-
-**Request Body**
-```json
-{ "amount": "50" }
-```
-
-**Response** `200`
-```json
-{
-  "totalCapital": "150",
-  "lockedCapital": "30",
-  "settledCapital": "10"
-}
-```
-
-**Error** `400`
-```json
-{ "error": "Invalid amount" }
-```
-
 ### `POST /economy/deposit-onchain`
 
 Deposit capital via the verified path (User Wallet Mode). The caller supplies a real

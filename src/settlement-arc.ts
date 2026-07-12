@@ -104,10 +104,8 @@ export class ArcSettlementAdapter {
 
       return await this._awaitReceipt(txHash);
     } catch (error) {
-      // Real mode: report the real failure honestly. We deliberately do NOT
-      // fall back to a fake "confirmed" mock receipt here — the whole point
-      // of this adapter is that a milestone is only marked settled when a
-      // genuine on-chain transaction backs it up.
+      // Real mode: report the failure honestly. A milestone is only marked settled
+      // when a genuine on-chain transaction confirms it.
       console.error('[ArcSettlement] Real settlement failed:', error);
       return { id: crypto.randomUUID(), status: 'failed', reason: String(error) };
     }

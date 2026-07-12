@@ -247,7 +247,6 @@ cd frontend && npm run build
 |--------|----------|-------------|
 | GET | `/` | Health check + version |
 | GET | `/economy` | Capital treasury overview |
-| POST | `/economy/deposit` | Deposit capital (trusted — Demo Treasury Mode) |
 | POST | `/economy/deposit-onchain` | Deposit capital (verified against a real on-chain transaction — User Wallet Mode) |
 | GET | `/projects` | List all projects |
 | POST | `/projects` | Create a new project |
