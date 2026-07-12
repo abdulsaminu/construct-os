@@ -317,3 +317,31 @@ ConstructOS uses USDC as a single, dollar-denominated settlement asset. This pro
 1. Document RPC rate limits and result caps explicitly in the Arc docs – this would save hours of debugging for future builders.
 2. Provide a higher-limit faucet or one-time larger distribution (e.g., $100 USDC) specifically for hackathon participants to enable meaningful multi-settlement demos.
 3. Publish a clear chain support matrix for Circle Wallets, Gateway, and other products specific to Arc, so builders know what is available without trial and error.
+
+---
+
+## Planned: Circle Wallet Integration
+
+ConstructOS is designed to support Circle Wallets as the primary wallet and settlement orchestration layer. This integration is planned as the next feature post-hackathon, not as a last-minute addition.
+
+### Why Not Now
+
+The current submission uses direct viem-based wallet control for settlement. This is a proven, tested, and independently verifiable path — every transaction has been confirmed on Arc Testnet with real USDC. Replacing it with an untested SDK integration within the submission window would introduce unnecessary risk with marginal demo benefit.
+
+### The Plan
+
+- **Developer-Controlled Wallets** — Create a Circle Wallet Set for each construction project, giving each project its own managed treasury wallet on Arc Testnet.
+- **Programmatic Settlement** — Replace direct viem transfers with Circle's `createTransaction` API, using the project's Circle Wallet as the funding source.
+- **Contractor Onboarding** — Use Circle Wallets to provide non-crypto-native contractors with embedded wallet experiences (email-based authentication, no MetaMask required).
+- **Audit Integration** — Map Circle transaction IDs back to ConstructOS ledger entries for a unified audit trail.
+
+### Prerequisites
+
+- Circle Developer Account (✅ verified)
+- `@circle-fin/developer-controlled-wallets` SDK
+- Confirmed USDC token ID for Arc Testnet in Circle's system
+- Circle Wallet Set and wallet creation flow tested against Arc Testnet
+
+### Architecture Target
+
+The event-sourced engine, immutable ledger, and settlement split architecture remain unchanged. Only the signing and submission layer swaps out.
