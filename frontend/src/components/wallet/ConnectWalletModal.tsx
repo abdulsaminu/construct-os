@@ -77,13 +77,6 @@ export const ConnectWalletModal: React.FC<Props> = ({ open, onClose }) => {
             </div>
           )}
 
-          <div
-            className="w-full flex items-center gap-3 bg-elevated/50 border border-border-main rounded-btn px-4 py-3 opacity-50 cursor-not-allowed"
-            title="Circle Wallets integration pending — see docs/CIRCLE_WALLETS.md"
-          >
-            <Wallet size={20} aria-hidden="true" />
-            <span className="font-semibold text-text-main">Circle Wallet (coming soon)</span>
-          </div>
 
           <button
             onClick={handleDemoMode}

@@ -273,8 +273,6 @@ See [`docs/API.md`](docs/API.md) for detailed request/response schemas.
 ## Roadmap
 
 - [ ] PostgreSQL persistence (migration scaffold exists, not yet wired up)
-- [ ] Circle Wallets integration — pending confirmation of Arc Testnet chain support in Circle's console (see `docs/CIRCLE_WALLETS.md`)
-- [ ] URL-based routing with React Router
 - [ ] Authentication layer
 - [ ] WebSocket real-time updates
 - [ ] Export to Excel/PDF reports
