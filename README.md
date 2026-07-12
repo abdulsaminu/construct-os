@@ -290,3 +290,30 @@ See [`docs/DeveloperGuide.md`](docs/DeveloperGuide.md) for contribution guidelin
 ## Author
 
 Built with CFEL Architecture — a deterministic, event-sourced financial operating system for construction, with real settlement on Arc Testnet.
+
+---
+
+## Circle Product Feedback
+
+### Why You Chose These Products for Your Use Case
+
+ConstructOS uses USDC as a single, dollar-denominated settlement asset. This provides predictable and transparent accounting for construction payments – where margins are tight and amounts are exact. Contractors and project owners see exactly what they pay and receive, with no currency conversion ambiguity.
+
+### What Worked Well During Development
+
+- **Native transfer simplicity** — No ERC-20 approval steps needed – just sign and send. This keeps the settlement experience friction-free.
+- **Deterministic finality** — Settlement status is immediately certain, which is critical for milestone-based releases where a contractor needs to know they can draw funds the moment work is verified.
+- **Gas predictability** — Consistent ~21k gas per settlement transaction, making cost modelling straightforward.
+- **Overall developer experience** — The Arc developer experience for basic transfers is clean and well-documented. Tooling (viem, wagmi) integrates seamlessly.
+
+### What Could Be Improved
+
+- **Undocumented RPC limits** — Arc Testnet RPC has a 20,000-result cap on eth_getLogs and a 10,000-block range cap. These are not documented anywhere and were discovered only through trial and error.
+- **Testnet faucet constraints** — The faucet has a 2-hour cooldown and distributes ~$10 USDC per claim. For a workflow demo requiring multiple settlements, this forces teams to either wait 4+ hours or work with artificially small amounts.
+- **Ambiguous Wallet support** — Circle Wallets chain support for Arc is referenced in hackathon materials, but there is no clear documentation confirming Arc is a supported chain in the Wallets product console.
+
+### Recommendations for Improvement
+
+1. Document RPC rate limits and result caps explicitly in the Arc docs – this would save hours of debugging for future builders.
+2. Provide a higher-limit faucet or one-time larger distribution (e.g., $100 USDC) specifically for hackathon participants to enable meaningful multi-settlement demos.
+3. Publish a clear chain support matrix for Circle Wallets, Gateway, and other products specific to Arc, so builders know what is available without trial and error.
