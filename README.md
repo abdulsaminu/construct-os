@@ -310,7 +310,7 @@ ConstructOS uses USDC as a single, dollar-denominated settlement asset. This pro
 
 - **Undocumented RPC limits** — Arc Testnet RPC has a 20,000-result cap on eth_getLogs and a 10,000-block range cap. These are not documented anywhere and were discovered only through trial and error.
 - **Testnet faucet constraints** — The faucet has a 2-hour cooldown and distributes ~$10 USDC per claim. For a workflow demo requiring multiple settlements, this forces teams to either wait 4+ hours or work with artificially small amounts.
-- **Ambiguous Wallet support** — Circle Wallets chain support for Arc is referenced in hackathon materials, but there is no clear documentation confirming Arc is a supported chain in the Wallets product console.
+- **Wallet support (resolved)** — Circle Wallets chain support for Arc was ambiguous during the original hackathon submission; Circle's documentation now explicitly confirms Arc Testnet as a supported chain for both EOA and SCA account types. See the Circle Wallet Integration section below.
 
 ### Recommendations for Improvement
 
@@ -320,28 +320,33 @@ ConstructOS uses USDC as a single, dollar-denominated settlement asset. This pro
 
 ---
 
-## Planned: Circle Wallet Integration
+## Circle Wallet Integration — Proof of Concept Complete
 
-ConstructOS is designed to support Circle Wallets as the primary wallet and settlement orchestration layer. This integration is planned as the next feature post-hackathon, not as a last-minute addition.
+ConstructOS now has a working, additive integration with Circle's Developer-Controlled Wallets, built alongside (not replacing) the existing viem-based settlement path in `settlement-arc.ts`.
 
-### Why Not Now
+### What's Implemented
 
-The current submission uses direct viem-based wallet control for settlement. This is a proven, tested, and independently verifiable path — every transaction has been confirmed on Arc Testnet with real USDC. Replacing it with an untested SDK integration within the submission window would introduce unnecessary risk with marginal demo benefit.
+- **Entity secret registered** — one-time setup via `registerEntitySecretCiphertext`, with recovery file secured outside the repo.
+- **Treasury wallet set created** — a Circle Wallet Set (`ConstructOS Treasury`) containing a developer-controlled EOA wallet on Arc Testnet, named and tagged via `updateWallet`.
+- **Funded and balance-verified** — treasury wallet funded via the Circle faucet, balance independently confirmed through `getWalletTokenBalance`.
+- **Real on-chain transfer executed** — a live USDC transfer sent via `createTransaction`, polled to `COMPLETE`, and independently verified via its `txHash` on `testnet.arcscan.app`.
+- **Wallet metadata persisted** — Circle wallet IDs, addresses, and wallet set IDs stored in `data/circle-wallets.json` (gitignored), following the same pattern as the existing `JsonFileStore`, without touching the core `CFELState` reducer or ledger.
 
-### The Plan
+### New Files
 
-- **Developer-Controlled Wallets** — Create a Circle Wallet Set for each construction project, giving each project its own managed treasury wallet on Arc Testnet.
-- **Programmatic Settlement** — Replace direct viem transfers with Circle's `createTransaction` API, using the project's Circle Wallet as the funding source.
-- **Contractor Onboarding** — Use Circle Wallets to provide non-crypto-native contractors with embedded wallet experiences (email-based authentication, no MetaMask required).
-- **Audit Integration** — Map Circle transaction IDs back to ConstructOS ledger entries for a unified audit trail.
+- `scripts/circle-register-entity-secret.ts` — one-time entity secret registration
+- `scripts/circle-create-wallet.ts` — wallet set + wallet creation
+- `scripts/circle-tag-wallet.ts` — name/refId assignment
+- `scripts/circle-save-wallet.ts` / `src/circle-wallet-store.ts` — local persistence layer
+- `scripts/circle-check-balance.ts` — balance verification
+- `scripts/circle-send-test-transfer.ts` / `scripts/circle-get-tx.ts` — transfer execution and verification
 
-### Prerequisites
+### What's Not Yet Done
 
-- Circle Developer Account (✅ verified)
-- `@circle-fin/developer-controlled-wallets` SDK
-- Confirmed USDC token ID for Arc Testnet in Circle's system
-- Circle Wallet Set and wallet creation flow tested against Arc Testnet
+- Not wired into the live `COMPLETE_PROJECT` / `CONFIRM_SETTLEMENT` flow — this is a standalone, verified proof of concept, not yet an alternative settlement path selectable via an env flag (e.g. a future `SETTLEMENT_MODE=circle`).
+- No per-project wallet provisioning yet (currently one shared treasury wallet, not one wallet per project).
+- Contractor onboarding via embedded/email-based wallets is out of scope for this pass — that requires the separate `@circle-fin/user-controlled-wallets` package, not developer-controlled wallets.
 
-### Architecture Target
+### A Note on SDK Ergonomics
 
-The event-sourced engine, immutable ledger, and settlement split architecture remain unchanged. Only the signing and submission layer swaps out.
+`createTransaction` expects `amounts` (plural array) and `tokenId`, not `amount`/`tokenAddress` as some Circle documentation examples show. Passing the wrong field name returns a generic `"API parameter invalid"` (code 2) with no field-level detail — worth knowing before debugging a similar error from scratch.
