@@ -4,6 +4,7 @@ import { JsonFileStore } from './store.js';
 import { handleApiRequest, ApiResponse } from './api.js';
 import { CFELState, dispatch, getSettlementCandidates } from './engine.js';
 import { ArcSettlementAdapter } from './settlement-arc.js';
+import { CircleSettlementAdapter } from './settlement-circle.js';
 import { serializeBigInts } from './serialize.js';
 
 const PORT = parseInt(process.env.PORT || '3001');
@@ -11,6 +12,8 @@ const STATE_FILE = process.env.STATE_FILE || './data/constructos.json';
 
 const store = new JsonFileStore(STATE_FILE);
 const arcSettlement = new ArcSettlementAdapter();
+const SETTLEMENT_MODE = process.env.SETTLEMENT_MODE === 'circle' ? 'circle' : 'arc';
+const circleSettlement = SETTLEMENT_MODE === 'circle' ? new CircleSettlementAdapter() : null;
 
 const safeStringify = (obj: any) => JSON.stringify(obj, (key, value) => typeof value === 'bigint' ? value.toString() : value);
 
@@ -134,7 +137,9 @@ const server = http.createServer(async (req, res) => {
         }
 
         try {
-          const receipt = await arcSettlement.submitSettlement(walletAddress, BigInt(settlement.amount));
+          const receipt = SETTLEMENT_MODE === 'circle' && circleSettlement
+            ? await circleSettlement.submitSettlement(walletAddress, BigInt(settlement.amount))
+            : await arcSettlement.submitSettlement(walletAddress, BigInt(settlement.amount));
 
           if (receipt.status === 'confirmed' && receipt.txHash) {
             const confirmResult = dispatch(currentState, {
@@ -197,6 +202,7 @@ server.listen(PORT, () => {
   console.log(`ConstructOS v0.4.0 (Demo Ready)`);
   console.log(`Listening on http://localhost:${PORT}`);
   console.log(`Arc Mode: ${process.env.ARC_MODE || 'mock'}`);
+  console.log(`Settlement Mode: ${SETTLEMENT_MODE}`);
 });
 
 process.on('SIGTERM', () => { server.close(() => process.exit(0)); });

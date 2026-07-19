@@ -42,7 +42,7 @@ export class CircleSettlementAdapter {
         walletId,
         tokenId: ARC_TESTNET_USDC_TOKEN_ID,
         destinationAddress: payeeAddress,
-        amounts: [amount.toString()],
+        amount: [amount.toString()],
         fee: { type: 'level', config: { feeLevel: 'MEDIUM' } },
       });
 
