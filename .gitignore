@@ -36,3 +36,5 @@ AI_CHECKPOINT/
 *:Zone.Identifier
 ai-checkpoint.sh
 data/constructos.json
+recovery/
+data/circle-wallets.json
