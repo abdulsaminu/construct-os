@@ -142,6 +142,13 @@ retryable, rather than falsely showing as paid."
 - Click through to `testnet.arcscan.app` with that hash — show the real transaction,
   sender (treasury), recipient (contractor), amount
 
+**Optional, if a judge asks about Circle:** This demo runs with `SETTLEMENT_MODE=arc`
+(direct viem transfer). Restarting the backend with `SETTLEMENT_MODE=circle` routes the
+exact same settlement flow through Circle's Developer-Controlled Wallets `createTransaction`
+API instead - same reducer, same ledger, same UI, different signing path. Both are real,
+independently verifiable on-chain transactions; `arc` is the default because it has the
+longer track record in this project, not because `circle` is less reliable.
+
 ### 8. Cash Flow Forecast (30 seconds)
 
 **Navigate:** Intelligence → "Forecasts" tab

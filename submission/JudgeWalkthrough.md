@@ -39,6 +39,11 @@ Start with the README. It contains:
 - `verifyIncomingUSDCTransfer()` — validates a deposit's transaction hash against the chain (correct recipient, correct amount, real sender that isn't the treasury itself) before it's trusted
 - Falls back to instant mock receipts only when `ARC_MODE` is unset or `mock`
 
+**Look at `src/settlement-circle.ts`** — the Circle Developer-Controlled Wallets integration:
+- Implements the same `submitSettlement(payeeAddress, amount)` signature as `ArcSettlementAdapter`, so it is a drop-in alternative, not a separate code path
+- Submits via Circle's `createTransaction` API and polls `getTransaction()` within a bounded wait window before returning a receipt
+- Selected instead of the Arc adapter by setting `SETTLEMENT_MODE=circle` (default is `arc`) — see `src/server.ts` for the selection logic
+
 ### 3. Examine the Frontend (`frontend/src/`)
 
 **Look at `lib/api.ts`** — Typed HTTP client:
@@ -137,6 +142,13 @@ A: The current `JsonFileStore` with atomic writes (temp file + rename) is suffic
 
 **Q: Is the settlement really on-chain, or simulated?**
 A: Real, when `ARC_MODE=real` — which is the intended running mode, not a special demo flag. Every settlement's ledger entry includes a genuine `txHash` you can paste into `testnet.arcscan.app` to verify independently of anything ConstructOS itself reports. It falls back to instant simulated receipts only when explicitly run in `mock` mode (useful for offline UI development).
+
+**Q: Is Circle Wallets actually part of the settlement flow, or just a proof of concept?**
+A: It's wired into the live settlement flow. Setting `SETTLEMENT_MODE=circle` routes real
+settlements through Circle's Developer-Controlled Wallets `createTransaction` API instead
+of the direct viem path - same reducer, same ledger, same UI, verified end-to-end through
+the actual product, not a standalone script. `arc` remains the default because it has the
+longer track record in this project.
 
 **Q: What happens if a blockchain transaction fails or times out?**
 A: The milestone stays claimed-but-unsettled, a `SETTLEMENT_FAILED` audit entry is recorded with the failure reason, and completing the project again will retry it. It will never show as settled without a real confirmed receipt behind it.

@@ -30,7 +30,7 @@ The system is built on CFEL (Construction Finance Economic Layer), a financial o
 | Backend dependencies | 3 runtime (`viem`, `pg`, `dotenv`), zero framework |
 | Financial precision | Native BigInt, zero floating point |
 | State management | Pure reducer, immutable transitions |
-| Settlement | Real Arc Testnet transactions by default; milestone only marked settled after a confirmed on-chain receipt |
+| Settlement | Real Arc Testnet transactions by default; milestone only marked settled after a confirmed on-chain receipt. Selectable via `SETTLEMENT_MODE=arc\|circle` - Circle's Developer-Controlled Wallets `createTransaction` API is a drop-in alternative to the direct viem path, verified end-to-end through the live product |
 | Wallet connectivity | `wagmi`/`viem`, MetaMask + optional WalletConnect, non-custodial |
 | Frontend | 165KB main chunk (53KB gzipped); zero financial *value* computation, but signs real transactions when a wallet is connected |
 | Design system | 11-level type scale, 4-level shadow system, WCAG AA |

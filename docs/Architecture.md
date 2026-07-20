@@ -103,10 +103,22 @@ with no matching on-chain transaction. The current design makes that impossible 
 construction: the reducer itself has no code path that marks something settled without a
 `txHash` argument, and that argument only ever comes from a real confirmed receipt.
 
-The settlement layer is abstracted behind the `SettlementAdapter` interface in
-`src/settlement.ts`; `ArcSettlementAdapter` in `src/settlement-arc.ts` is the concrete
-implementation for Arc Testnet, and falls back to instant mock receipts only when
-`ARC_MODE` is unset or explicitly `mock`.
+`src/server.ts` selects between two concrete settlement implementations at runtime via
+the `SETTLEMENT_MODE` environment variable, defaulting to `arc`:
+
+- **`ArcSettlementAdapter`** (`src/settlement-arc.ts`) — submits a direct viem transaction
+  to Arc Testnet, and falls back to instant mock receipts only when `ARC_MODE` is unset or
+  explicitly `mock`.
+- **`CircleSettlementAdapter`** (`src/settlement-circle.ts`) — submits the same settlement
+  via Circle's Developer-Controlled Wallets `createTransaction` API, polling for a
+  confirmed receipt within a bounded wait window, selected with `SETTLEMENT_MODE=circle`.
+
+Both implementations expose the same `submitSettlement(payeeAddress, amount) ->
+SettlementReceipt` signature, so `server.ts` can swap between them with a single
+conditional and no change to the reducer, the ledger, or the settlement-confirmation flow
+above. (A generic `SettlementAdapter` interface exists in `src/settlement.ts` from early
+scaffolding but is not the mechanism actually used for this swap — `server.ts` references
+the concrete adapter classes directly.)
 
 ## Risk Engine
 
